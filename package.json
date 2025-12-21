@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "import:ghost": "node scripts/import-ghost.js"
+    "import:ghost": "node scripts/import-ghost.js",
+    "images:download": "node scripts/download-ghost-images.js",
+    "images:dry-run": "node scripts/download-ghost-images.js --dry-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -17,6 +19,11 @@
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
     "sharp": "^0.34.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "turndown": "^7.2.2"
+  },
+  "devDependencies": {
+    "glob": "^11.0.0",
+    "yaml": "^2.7.0"
   }
 }

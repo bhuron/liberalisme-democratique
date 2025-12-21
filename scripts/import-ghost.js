@@ -14,21 +14,62 @@
  * - Parse the Ghost export JSON
  * - Convert posts to markdown files with frontmatter matching the blog schema
  * - Save files to `src/content/blog/`
- * - Handle images (requires manual copy of images to `public/images/`)
+ * - Handle images (requires manual copy of images to `src/assets/ghost-images/`)
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import TurndownService from 'turndown';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.join(__dirname, '..');
 
+// Initialize Turndown for HTML to Markdown conversion
+const turndownService = new TurndownService({
+  headingStyle: 'atx',
+  codeBlockStyle: 'fenced',
+  emDelimiter: '*',
+  strongDelimiter: '**',
+  linkStyle: 'inlined'
+});
+
 // Configuration
 const GHOST_EXPORT_PATH = path.join(projectRoot, 'ghost-export.json');
 const OUTPUT_DIR = path.join(projectRoot, 'src/content/blog');
-const IMAGE_BASE_URL = '/images/'; // Where Ghost images will be placed in public/
+
+// Ghost URL configuration
+// Replace with your actual Ghost site URL (e.g., 'https://yourblog.ghost.io')
+// This replaces __GHOST_URL__ placeholders in the export
+const GHOST_URL = 'https://www.liberalisme-democratique.fr'; // Leave empty if you don't have a Ghost URL
+
+// Image handling options
+const IMAGE_HANDLING = 'remote'; // 'remote', 'local', or 'hybrid'
+// For 'local': images will be referenced as ../../assets/ghost-images/filename.jpg
+// For 'remote': original Ghost image URLs will be kept
+// For 'hybrid': try to download images automatically (requires additional setup)
+
+const IMAGE_BASE_URL = '../../assets/ghost-images/'; // Used only if IMAGE_HANDLING is 'local'
+// const ASSETS_IMAGES_DIR = path.join(projectRoot, 'src/assets/ghost-images'); // Unused for now
+
+/**
+ * Replace __GHOST_URL__ placeholders with actual Ghost URL
+ */
+function replaceGhostUrl(text) {
+  if (!text || typeof text !== 'string') {
+    return text;
+  }
+
+  if (!GHOST_URL) {
+    // If no Ghost URL provided, warn and keep placeholder
+    // This will cause build errors but allows user to fix later
+    return text;
+  }
+
+  // Replace __GHOST_URL__ with actual URL
+  return text.replace(/__GHOST_URL__/g, GHOST_URL);
+}
 
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
@@ -94,7 +135,7 @@ function convertContentToMarkdown(post) {
   if (post.mobiledoc) {
     try {
       const mobiledoc = JSON.parse(post.mobiledoc);
-      return convertMobileDocToMarkdown(mobiledoc);
+      return replaceGhostUrl(convertMobileDocToMarkdown(mobiledoc));
     } catch (error) {
       console.warn(`Failed to parse mobiledoc for post "${post.title}", falling back to HTML`);
     }
@@ -102,11 +143,11 @@ function convertContentToMarkdown(post) {
 
   // Fallback to HTML content
   if (post.html) {
-    return convertHtmlToMarkdown(post.html);
+    return replaceGhostUrl(convertHtmlToMarkdown(post.html));
   }
 
   // Fallback to plain text
-  return post.plaintext || '';
+  return replaceGhostUrl(post.plaintext || '');
 }
 
 /**
@@ -114,7 +155,7 @@ function convertContentToMarkdown(post) {
  * This handles common card types. You may need to extend this.
  */
 function convertMobileDocToMarkdown(mobiledoc) {
-  const { cards, sections } = mobiledoc;
+  const { cards: _cards, sections } = mobiledoc;
   let markdown = '';
 
   for (const section of sections) {
@@ -156,35 +197,39 @@ function convertMobileDocToMarkdown(mobiledoc) {
 }
 
 /**
- * Basic HTML to Markdown conversion
- * For simple HTML. Consider using a library like 'turndown' for complex content.
+ * HTML to Markdown conversion using Turndown
  */
 function convertHtmlToMarkdown(html) {
-  // Simple replacements for common HTML tags
-  return html
-    .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n')
-    .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n')
-    .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n')
-    .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
-    .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
-    .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
-    .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
-    .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
-    .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
-    .replace(/<pre[^>]*>(.*?)<\/pre>/gi, '```\n$1\n```')
-    .replace(/<ul[^>]*>(.*?)<\/ul>/gi, (match, content) =>
-      content.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n') + '\n')
-    .replace(/<ol[^>]*>(.*?)<\/ol>/gi, (match, content) =>
-      content.replace(/<li[^>]*>(.*?)<\/li>/gi, (match, item, index) => `${index + 1}. ${item}\n`) + '\n')
-    .replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n')
-    .replace(/<br[^>]*>/gi, '\n')
-    .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .trim();
+  try {
+    return turndownService.turndown(html);
+  } catch (error) {
+    console.warn('Turndown conversion failed, falling back to basic conversion:', error.message);
+    // Fallback to basic conversion
+    return html
+      .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n')
+      .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n')
+      .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n')
+      .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+      .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+      .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+      .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+      .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+      .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
+      .replace(/<pre[^>]*>(.*?)<\/pre>/gi, '```\n$1\n```')
+      .replace(/<ul[^>]*>(.*?)<\/ul>/gi, (_match, content) =>
+        content.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n') + '\n')
+      .replace(/<ol[^>]*>(.*?)<\/ol>/gi, (_match, content) =>
+        content.replace(/<li[^>]*>(.*?)<\/li>/gi, (_match, item, index) => `${index + 1}. ${item}\n`) + '\n')
+      .replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n')
+      .replace(/<br[^>]*>/gi, '\n')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .trim();
+  }
 }
 
 /**
@@ -205,18 +250,47 @@ function generateSlug(post) {
 }
 
 /**
- * Handle featured image
+ * Handle featured image based on IMAGE_HANDLING mode
  */
 function getFeaturedImage(post) {
-  if (post.feature_image) {
-    // Extract filename from URL
-    const filename = path.basename(post.feature_image);
-    return {
-      src: `${IMAGE_BASE_URL}${filename}`,
-      alt: post.feature_image_alt || post.title || 'Article image'
-    };
+  if (!post.feature_image) {
+    return null;
   }
-  return null;
+
+  const alt = post.feature_image_alt || post.title || 'Article image';
+  const imageUrl = replaceGhostUrl(post.feature_image);
+
+  switch (IMAGE_HANDLING) {
+    case 'remote':
+      // Keep original Ghost image URL (with __GHOST_URL__ replaced)
+      return {
+        src: imageUrl,
+        alt: alt
+      };
+
+    case 'local':
+      // Use local path in /images/ directory
+      const filename = path.basename(post.feature_image);
+      return {
+        src: `${IMAGE_BASE_URL}${filename}`,
+        alt: alt
+      };
+
+    case 'hybrid':
+      // Try to download image (placeholder - would need implementation)
+      console.warn(`⚠️  Hybrid mode not fully implemented for "${post.title}". Using remote URL.`);
+      return {
+        src: imageUrl,
+        alt: alt
+      };
+
+    default:
+      console.warn(`⚠️  Unknown IMAGE_HANDLING: ${IMAGE_HANDLING}. Using remote URL.`);
+      return {
+        src: imageUrl,
+        alt: alt
+      };
+  }
 }
 
 /**
@@ -276,6 +350,13 @@ async function main() {
   console.log('📥 Ghost to Astro Import Script');
   console.log('================================\n');
 
+  // Warn about empty GHOST_URL
+  if (!GHOST_URL) {
+    console.warn('⚠️  GHOST_URL is empty. __GHOST_URL__ placeholders will NOT be replaced.');
+    console.warn('   This will cause build errors. Set GHOST_URL in the script to your Ghost site URL.');
+    console.warn('   Example: const GHOST_URL = \'https://yourblog.ghost.io\';\n');
+  }
+
   // Parse Ghost export
   console.log('📋 Parsing Ghost export...');
   const { posts, tags, postsTags, users } = parseGhostExport();
@@ -320,9 +401,20 @@ async function main() {
 
   // Instructions for images
   console.log('\n📸 Image Handling:');
-  console.log('   1. Copy your Ghost images to public/images/');
-  console.log('   2. Update image paths in frontmatter if needed');
-  console.log('   3. Consider using Astro Image component for optimization');
+  console.log(`   Mode: ${IMAGE_HANDLING.toUpperCase()}`);
+
+  if (IMAGE_HANDLING === 'remote') {
+    console.log('   1. Images are using original Ghost URLs');
+    console.log('   2. Configure Astro for remote image optimization (see docs)');
+    console.log('   3. Or run image download script later if needed');
+  } else if (IMAGE_HANDLING === 'local') {
+    console.log('   1. Copy your Ghost images to src/assets/ghost-images/');
+    console.log('   2. Image paths in frontmatter reference ../../assets/ghost-images/filename.jpg');
+    console.log('   3. Astro Image component will optimize local images');
+  } else {
+    console.log('   1. Hybrid mode - using remote URLs as fallback');
+    console.log('   2. Consider running image download script');
+  }
 
   // Instructions for content review
   console.log('\n🔍 Next Steps:');
