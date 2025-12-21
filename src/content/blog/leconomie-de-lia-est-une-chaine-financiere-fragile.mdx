@@ -10,6 +10,9 @@ image:
   alt: L'économie de l'IA est une chaîne financière fragile
 ---
 
+import { Image } from "astro:assets";
+
+
 Comme l'explique [Ed Zitron](https://www.wheresyoured.at/premium-the-ways-the-ai-bubble-might-burst/), la bulle que connaît actuellement le secteur de l'intelligence artificielle a la forme d'une chaîne, une chaîne profondément vulnérable maintenue ensemble par la dette et le capital-risque. Pour comprendre la fragilité de cet écosystème, il faut en examiner chaque maillon.
 
 NVIDIA vend des GPU à une entreprise. Passé ce stade, la rentabilité s'évapore
@@ -32,7 +35,13 @@ faire fonctionner leurs services mais leurs coûts dépassent leurs revenus. Ell
 doivent ainsi elles aussi lever du capital-risque pour continuer à payer l'accès
 à ces modèles.
 
-![](https://www.liberalisme-democratique.fr/content/images/2025/12/chain-of-pain-infos.png)
+<Image 
+  src="https://www.liberalisme-democratique.fr/content/images/2025/12/chain-of-pain-infos.png" 
+  alt="La chaîne de l'IA" 
+  width={800} 
+  height={450} 
+  class="rounded-xl shadow-lg my-8 mx-auto" 
+/>
 
 Si l'on excepte les hyperscalers qui paient NVIDIA avec leurs flux de
 trésorerie, aucune partie de l'industrie de l'IA n'est alimentée par des

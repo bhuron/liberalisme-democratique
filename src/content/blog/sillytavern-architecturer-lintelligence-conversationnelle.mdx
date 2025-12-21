@@ -10,6 +10,9 @@ image:
   alt: SillyTavern — architecturer l'Intelligence Conversationnelle
 ---
 
+import { Image } from "astro:assets";
+
+
 SillyTavern est une [interface avancée](https://www.liberalisme-democratique.fr/sillytavern-linterface-ultime-des-modeles-de-langage/) pour modèles de langage. L'application fonctionne comme une plateforme de configuration granulaire permettant de sculpter le comportement des agents conversationnels par l'empilement stratégique de directives. Son potentiel dépasse ainsi largement le cadre du divertissement et peut s'étendre à la formation, à la création assistée ou même à la spécialisation professionnelle. Cet article analyse trois cas d'utilisation concrets démontrant comment, à travers la maîtrise des **cartes de personnage**, des **presets système** et des **extensions**, SillyTavern se transforme en un atelier de conception d'intelligences artificielles aux rôles et capacités délimités avec précision.
 
 ## Définir l'interlocuteur : la Carte de Personnage comme protocole d'interaction
@@ -28,7 +31,13 @@ Pour ce cas, on conçoit une entité — Lin Hao, un débatteur contradictoire. 
 fiche technique constitue le cahier des charges de son comportement, une persona
 opérationnelle avec un mandat clair.
 
-![](https://www.liberalisme-democratique.fr/content/images/2025/12/contrarian.png)
+<Image 
+  src="https://www.liberalisme-democratique.fr/content/images/2025/12/contrarian.png" 
+  alt="Lin Hao, débatteur contradictoire" 
+  width={800} 
+  height={450} 
+  class="rounded-xl shadow-lg my-8 mx-auto" 
+/>
 
 Lin Hao, débatteur contradictoire
 
@@ -55,7 +64,13 @@ deux niveaux. Il assemble dynamiquement les consignes envoyées au modèle en
 combinant la charte fixe et les options narratives sélectionnées par l'adulte
 superviseur.
 
-![](https://www.liberalisme-democratique.fr/content/images/2025/12/preset-enfant.png)
+<Image 
+  src="https://www.liberalisme-democratique.fr/content/images/2025/12/preset-enfant.png" 
+  alt="Preset enfant SillyTavern" 
+  width={800} 
+  height={450} 
+  class="rounded-xl shadow-lg my-8 mx-auto" 
+/>
 
 > **Un extrait de session**  
 > *Le modèle : «* Emma observa la photo attentivement. Le symbole lui semblait vaguement familier, comme si elle l'avait déjà vu quelque part… *»  
