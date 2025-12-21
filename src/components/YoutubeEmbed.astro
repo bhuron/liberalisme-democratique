@@ -1,0 +1,27 @@
+---
+interface Props {
+    url: string;
+    title?: string;
+}
+
+const { url, title = "YouTube video player" } = Astro.props;
+const videoId = url.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/,
+)?.[1];
+---
+
+{
+    videoId ? (
+        <div class="video-embed relative pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-lg my-8">
+            <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title={title}
+                loading="lazy"
+                allowfullscreen
+                class="absolute top-0 left-0 w-full h-full border-0"
+            />
+        </div>
+    ) : (
+        <p class="text-red-500 italic">Invalid YouTube URL</p>
+    )
+}
