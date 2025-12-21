@@ -13,10 +13,10 @@ The script parses a Ghost JSON export file and converts each post to a markdown 
    - Click "Export"
    - Save the JSON file as `ghost-export.json` in the project root
 
-2. **Images**: Ghost images are referenced by URL in the export. You'll need to:
-   - Download images from your Ghost site
-   - Place them in `public/images/` directory
-   - Or update image paths after import
+2. **Images**: Ghost images are referenced by URL in the export. You have three options:
+   - **Remote mode**: Keep original URLs (Astro can optimize them)
+   - **Local mode**: Download images manually to `src/assets/ghost-images/`
+   - **Auto-download**: Use the image download script after import
 
 ## Usage
 
@@ -37,6 +37,56 @@ This will:
 node scripts/import-ghost.js
 ```
 
+## Image Handling Modes
+
+The import script supports three image handling modes (configured in `scripts/import-ghost.js`):
+
+### 1. Remote Mode (Default)
+- **Setting**: `IMAGE_HANDLING = 'remote'`
+- **Behavior**: Keeps original Ghost image URLs
+- **Pros**: No manual downloading needed
+- **Cons**: Requires Astro remote image configuration
+- **Optimization**: Configure `astro.config.ts` for remote image optimization
+
+### 2. Local Mode
+- **Setting**: `IMAGE_HANDLING = 'local'`
+- **Behavior**: References local paths like `../../assets/ghost-images/filename.jpg`
+- **Pros**: Astro optimizes local images automatically
+- **Cons**: Need to manually download images to `src/assets/ghost-images/`
+- **Use when**: You want full control over images
+
+### 3. Hybrid Mode
+- **Setting**: `IMAGE_HANDLING = 'hybrid'`
+- **Behavior**: Uses remote URLs with option to download later
+- **Use with**: Image download script (`npm run images:download`)
+
+### Changing Modes
+Edit `scripts/import-ghost.js` and change the `IMAGE_HANDLING` constant (line ~33).
+
+## Image Download Script
+
+After importing with `IMAGE_HANDLING='remote'`, you can download images later:
+
+### Basic Usage
+```bash
+# Download all remote images and update frontmatter
+npm run images:download
+
+# Dry run - see what would be downloaded
+npm run images:dry-run
+```
+
+### Options
+- `--dry-run`: Show what would be downloaded without changes
+- `--output-dir=public/custom-images`: Custom output directory
+
+### How It Works
+1. Scans all markdown files in `src/content/blog/`
+2. Extracts remote image URLs from frontmatter
+3. Downloads images to `src/assets/ghost-images/` (or custom directory)
+4. Updates frontmatter with local paths
+5. Preserves image alt text and other metadata
+
 ## Output Format
 
 Each post is converted to a markdown file with:
@@ -49,7 +99,7 @@ pubDate: 'YYYY-MM-DD'
 updatedDate: 'YYYY-MM-DD' # Optional
 author: 'Author Name'
 image:
-  src: '/images/filename.jpg'
+  src: '../../assets/ghost-images/filename.jpg'
   alt: 'Image description'
 tags: ['tag1', 'tag2']
 draft: false
@@ -118,10 +168,21 @@ For better HTML to Markdown conversion:
 - Consider using the Turndown library for better HTML conversion
 
 ### Images not displaying
-- Download images from your Ghost site
-- Place in `public/images/`
-- Update image paths in frontmatter if needed
-- Consider using Astro's Image component for optimization
+
+#### For Remote Mode:
+1. Ensure `astro.config.ts` has remote image patterns configured
+2. Check that image URLs are accessible
+3. Build may fail if remote images are blocked
+
+#### For Local Mode:
+1. Download images from your Ghost site
+2. Place in `src/assets/ghost-images/`
+3. Update image paths in frontmatter if needed
+
+#### For All Modes:
+- Use the image download script: `npm run images:download`
+- Check image dimensions in frontmatter if Astro Image complains
+- Run `npm run build` to test optimization
 
 ## Post-Import Steps
 
@@ -142,7 +203,7 @@ The import script matches the blog collection schema in `src/content.config.ts`:
 | `published_at` | `pubDate` | Date of publication |
 | `updated_at` | `updatedDate` | Optional |
 | `author.name` | `author` | Defaults to "Benoît Huron" |
-| `feature_image` | `image.src` | Path to `/images/` |
+| `feature_image` | `image.src` | Path to `../../assets/ghost-images/` |
 | `feature_image_alt` | `image.alt` | Alt text |
 | `tags[*].name` | `tags` | Array of tag names |
 | `status` | `draft` | `status !== 'published'` |

@@ -1,0 +1,48 @@
+---
+title: Stratégie numérique pour l’éducation 2023-2027
+description: ""
+pubDate: 2024-02-19T12:44:27.000Z
+updatedDate: 2025-08-04T15:53:48.000Z
+author: Benoît Huron
+draft: false
+tags:
+  - Pédagogie
+image:
+  src: ../../assets/ghost-images/m-new-beginning-man-looking-to-the-future.jpg
+  alt: Stratégie numérique pour l’éducation 2023-2027
+---
+
+Le ministère de l’Éducation nationale a publié sa « [Stratégie numérique pour l’éducation 2023-2027](https://www.education.gouv.fr/strategie-du-numerique-pour-l-education-2023-2027-344263) ». Elle repose sur plusieurs axes :
+
+*   un renforcement de la coopération et de l’échange d’information entre les différents acteurs du numérique pour l’éducation ;
+*   un enseignement du numérique développant les compétences et l’esprit critique des enfants (l’essentiel des efforts portera sur le cycle 4 — de la 5e à la 3e) ;
+*   une amélioration de la formation et de l’offre numérique à destination des enseignants ;
+*   une accélération de la transformation numérique des services du ministère.
+
+Notre ministre insiste notamment sur le deuxième point :
+
+> Pour toutes ces raisons, une action globale, tout au long de la scolarité, sera mise en œuvre pour renforcer les compétences numériques. Ce sera particulièrement le cas au collège, où le renforcement des compétences numériques sera une des priorités de la transformation des classes de 5e, 4e, 3e.
+
+Bien. Peut-être qu’on va vraiment prendre le développement des compétences numériques des enfants (ainsi que le cadre réglementaire et moral des pratiques et outils) au sérieux cette fois.
+
+Ou alors on leur mettra juste plus de Pix. 😉
+
+Blague à part, la stratégie du ministère est cohérente et raisonnable. Reste à voir si les moyens seront à la hauteur des ambitions.
+
+## Les moyens du bord
+
+On peut être certain que non. On sait déjà que le financement ne suivra pas, qu’on n’aura pas les moyens d’embaucher du personnel qualifié, qu’on manquera de salles équipées et, surtout, qu’on n’aura pas assez de temps. Je veux dire, les programmes sont déjà assez chargés. On en supprimera quoi ? Quelle matière en fera les frais ?
+
+On gagnerait peut-être à envisager le problème sous un autre angle. Après tout, les équipes pédagogiques – les enseignants de mathématiques, physique, géographie, économie, etc. – sont *déjà* en mesure d’enseigner chacun au moins une partie des outils nécessaires à une culture numérique et ils peuvent l’enseigner en restant dans les contraintes de leur discipline. Le souci n’est pas leur manque de qualification – ce sont des gens intelligents –, le problème est que le « socle numérique » doit leur être présenté d’une manière qui fait sens pour leur matière.
+
+![](https://www.liberalisme-democratique.fr/content/images/2024/02/DALL-E-2023-05-04-10.52.11---a-drawing-of.png)
+
+Un enseignant de mathématiques veut enseigner les mathématiques. Pareil pour les autres. Une stratégie numérique pour l’éducation doit prendre leur discipline au sérieux – éviter les généralités pour, au contraire, trouver un moyen de s’[intégrer](https://www.bootstrapworld.org/materials/spring2019/Bootstrap-Overview.pdf) au programme déjà en place de chaque matière. Par exemple, une séquence d’un cours de mathématiques (disons, repérage dans le plan ou trigonométrie) pourrait prendre la forme de la construction d’un jeu vidéo où chaque étape du codage nécessiterait l’apprentissage, l’approfondissement ou la mise en pratique du concept mathématique étudié. Je ne parle même pas ici de la facilité avec laquelle il serait facile d’adapter les cours de statistiques ou de probabilités. En géographie et histoire ? On ferait de l’analyse de données et de la visualisation graphique sur le tourisme, le PIB, etc. Vous avez compris le truc.
+
+## La vision radicale d’une stratégie conservatrice
+
+L’objectif est bien sûr de faire des économies, de rendre une stratégie numérique pour l’éducation au moins envisageable dans un contexte de pénurie. Mais c’est aussi au fond la seule stratégie qui fait sens pour un enseignement au numérique dans le secondaire. Comme je l’ai déjà [écrit](https://liberalisme-democratique.fr/informatique-en-cycle-4/) :
+
+> Enseigner la programmation en soi n’est ni souhaitable, ni très motivant pour un public aussi jeune. Autant considérer dès l’abord l’informatique pour ce qu’elle est – un outil applicable dans quantité de domaines.
+
+On ne veut pas former de futurs informaticiens. On veut former des enfants à l’utilisation d’outils puissants qu’ils pourront utiliser dans leur vie professionnelle et sociale, quoi qu’ils décident de faire. On veut qu’ils aient été au moins exposés à de nouvelles façons de penser et de résoudre des problèmes. Et, oui, on veut peut-être aussi réformer certaines pratiques pédagogiques.
