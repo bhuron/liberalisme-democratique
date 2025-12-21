@@ -10,30 +10,62 @@ image:
   alt: "L'Intelligence Artificielle : un terme élastique"
 ---
 
-« L'Intelligence Artificielle » est devenue omniprésente. Le mot en tout cas. Des PDG de la Silicon Valley aux journalistes, de la publicité pour aspirateurs à nos conversations les plus ordinaires, impossible d'y échapper. Tout le monde parle d'IA. Mais le terme est un parapluie couvrant des concepts très différents et la confusion est délibérément entretenue par des acteurs intéressés, *e.g.* des entrepreneurs en quête de financements, des entreprises vendant des produits surévalués ou des médias en quête d'articles sensationnalistes. Derrière l'abus sémantique, on peut discerner au moins six définitions.
+« L'Intelligence Artificielle » est devenue omniprésente. Le mot en tout cas.
+Des PDG de la Silicon Valley aux journalistes, de la publicité pour aspirateurs
+à nos conversations les plus ordinaires, impossible d'y échapper. Tout le monde
+parle d'IA. Mais le terme est un parapluie couvrant des concepts très différents
+et la confusion est délibérément entretenue par des acteurs intéressés, *e.g.*
+des entrepreneurs en quête de financements, des entreprises vendant des produits
+surévalués ou des médias en quête d'articles sensationnalistes. Derrière l'abus
+sémantique, on peut discerner au moins six définitions.
 
 ### L'IA de Science-Fiction
 
-C'est l'IA des films, celle qu'on a tous en tête — HAL 9000, Skynet ou les replicants de Blade Runner, des machines conscientes, dotées d'émotions, capables de réfléchir comme des humains. Les entreprises technologiques exploitent ces images, cette réalité fantasmée, pour vendre leurs produits.
+C'est l'IA des films, celle qu'on a tous en tête — HAL 9000, Skynet ou les
+replicants de Blade Runner, des machines conscientes, dotées d'émotions,
+capables de réfléchir comme des humains. Les entreprises technologiques
+exploitent ces images, cette réalité fantasmée, pour vendre leurs produits.
 
 ### L’IA Théorique du Futur
 
-Il s'agit de systèmes hypothétiques, de ce que les systèmes numériques *pourraient* devenir à un moment ou à un autre d'ici la fin des temps. Ce sont les agents artificiels qui vont détruire notre espèce ou trouver des remèdes à toutes les maladies, créer de nouvelles sciences ou prendre notre travail. C'est la plus insidieuse des manipulations sémantiques car elle permet de dire n'importe quoi sans jamais vraiment mentir.
+Il s'agit de systèmes hypothétiques, de ce que les systèmes numériques
+*pourraient* devenir à un moment ou à un autre d'ici la fin des temps. Ce sont
+les agents artificiels qui vont détruire notre espèce ou trouver des remèdes à
+toutes les maladies, créer de nouvelles sciences ou prendre notre travail. C'est
+la plus insidieuse des manipulations sémantiques car elle permet de dire
+n'importe quoi sans jamais vraiment mentir.
 
 ### L'IA Opportuniste
 
-Ce sont des technologies souvent existantes depuis pas mal de temps, rebaptisées et repackagées pour profiter de l'hyper-médiatisation, de l'hyper-financement de tout ce qui est étiqueté IA dans le cycle actuel.
+Ce sont des technologies souvent existantes depuis pas mal de temps, rebaptisées
+et repackagées pour profiter de l'hyper-médiatisation, de l'hyper-financement de
+tout ce qui est étiqueté IA dans le cycle actuel.
 
 ### L'IA Étroite ou Spécialisée
 
-Ce sont des systèmes conçus pour des tâches très spécifiques : un programme qui joue aux échecs, un algorithme de recommandation Netflix, un système de reconnaissance faciale. Ces outils sont impressionnants dans leur domaine, mais limités. Présenter ces outils spécialisés comme « intelligents » est l'archétype de l'abus de langage.
+Ce sont des systèmes conçus pour des tâches très spécifiques : un programme qui
+joue aux échecs, un algorithme de recommandation Netflix, un système de
+reconnaissance faciale. Ces outils sont impressionnants dans leur domaine, mais
+limités. Présenter ces outils spécialisés comme « intelligents » est l'archétype
+de l'abus de langage.
 
 ### L'IA Générative
 
-Les systèmes qui produisent du texte, des images ou du code en s'appuyant sur des modèles statistiques entraînés sur d'énormes quantités de données. ChatGPT, Deepseek, Flux et leurs semblables entrent dans cette catégorie. Ce sont nos perroquets statistiques déguisés en artistes.
+Les systèmes qui produisent du texte, des images ou du code en s'appuyant sur
+des modèles statistiques entraînés sur d'énormes quantités de données. ChatGPT,
+Deepseek, Flux et leurs semblables entrent dans cette catégorie. Ce sont nos
+perroquets statistiques déguisés en artistes.
 
 ### L'AGI (Intelligence Artificielle Générale)
 
-Un système hypothétique, très peu défini, capable de comprendre, d'apprendre et de raisonner dans n'importe quel domaine comme le ferait un être humain. C'est le Saint Graal de la recherche en IA. Mentionner que l'on « travaille vers l'AGI » ou que certains progrès sont « des pas dans sa direction » permet de se placer à peu de frais à la pointe d'une course historique. 
+Un système hypothétique, très peu défini, capable de comprendre, d'apprendre et
+de raisonner dans n'importe quel domaine comme le ferait un être humain. C'est
+le Saint Graal de la recherche en IA. Mentionner que l'on « travaille vers l'AGI
+» ou que certains progrès sont « des pas dans sa direction » permet de se placer
+à peu de frais à la pointe d'une course historique. 
 
-Le flou artistique autour du terme d'IA permet d'attirer les investissements, de survendre les capacités réelles des systèmes existants et d'échapper à toute responsabilité en changeant de définition selon le contexte. Exiger plus de précision des médias, être soi-même plus prudent, plus précis dans l'utilisation du terme est probablement une bonne idée.
+Le flou artistique autour du terme d'IA permet d'attirer les investissements, de
+survendre les capacités réelles des systèmes existants et d'échapper à toute
+responsabilité en changeant de définition selon le contexte. Exiger plus de
+précision des médias, être soi-même plus prudent, plus précis dans l'utilisation
+du terme est probablement une bonne idée.

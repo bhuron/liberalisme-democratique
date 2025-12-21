@@ -9,7 +9,9 @@
     "astro": "astro",
     "import:ghost": "node scripts/import-ghost.js",
     "images:download": "node scripts/download-ghost-images.js",
-    "images:dry-run": "node scripts/download-ghost-images.js --dry-run"
+    "images:dry-run": "node scripts/download-ghost-images.js --dry-run",
+    "format:articles": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings",
+    "format:articles:dry-run": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings --dry-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

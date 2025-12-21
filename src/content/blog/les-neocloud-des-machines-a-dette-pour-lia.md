@@ -12,28 +12,65 @@ image:
 
 On a vu que l'économie de l'IA repose sur une [chaîne financière fragile](https://www.liberalisme-democratique.fr/leconomie-de-lia-est-une-chaine-financiere-fragile/), où la rentabilité s'évapore pour tous les acteurs en aval de NVIDIA. Si l'industrie dans son ensemble dépend de subventions (capital-risque, crédit privé, financement bancaire) car elle n'est pas alimentée par des profits, la situation des [neoclouds](https://blog.equinix.com/blog/2025/10/14/what-is-a-neocloud/) — ces fournisseurs indépendants de Bare Metal as a Service (BMaaS) comme CoreWeave, Lambda et Nebius — illustre cette fragilité de manière particulièrement frappante.
 
-Loin d'être des acteurs innovants simplement en concurrence avec les géants du cloud, les neoclouds fonctionnent comme un **mécanisme de subvention par la dette**, créé et soutenu par NVIDIA, dont l'unique objectif semble être d'alimenter la demande pour ses GPUs.
+Loin d'être des acteurs innovants simplement en concurrence avec les géants du
+cloud, les neoclouds fonctionnent comme un **mécanisme de subvention par la
+dette**, créé et soutenu par NVIDIA, dont l'unique objectif semble être
+d'alimenter la demande pour ses GPUs.
 
 ### La précarité économique du BMaaS
 
 Les neoclouds sont nés de la rareté globale de puissance de calcul haut de gamme et, surtout, d'une stratégie de diversification des revenus de NVIDIA. Ils offrent un déploiement rapide et des prix pouvant être jusqu'à 85 % inférieurs à ceux des hyperscalers (Google, Microsoft). Leur [modèle](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-evolution-of-neoclouds-and-their-next-moves#/) d'exploitation actuel est le Bare Metal as a Service (BMaaS). Ce modèle est cependant intrinsèquement banalisé (*commoditized*), entraînant une concurrence féroce basée sur les prix et une intensité de dépenses très élevée.
 
-Les marges sont ainsi insuffisantes, avec des marges brutes généralement comprises entre 55 % et 65 % avant amortissement, ne laissant aucune marge de sécurité. Une légère baisse des prix de location des GPUs ou un glissement de l'utilisation en dessous de 80 % neutralise les rendements. La situation devient critique si l'on prend en compte l'amortissement et le cycle d'investissement. Le cycle rapide de sortie des puces GPU fait chuter de moitié ou plus le prix des anciennes générations sur un horizon typique de cinq ans, obligeant les fournisseurs à réinvestir constamment pour rester compétitifs. Surtout, les coûts d'intérêt liés au financement par la dette effacent rapidement tout coussin résiduel.
+Les marges sont ainsi insuffisantes, avec des marges brutes généralement
+comprises entre 55 % et 65 % avant amortissement, ne laissant aucune marge de
+sécurité. Une légère baisse des prix de location des GPUs ou un glissement de
+l'utilisation en dessous de 80 % neutralise les rendements. La situation devient
+critique si l'on prend en compte l'amortissement et le cycle d'investissement.
+Le cycle rapide de sortie des puces GPU fait chuter de moitié ou plus le prix
+des anciennes générations sur un horizon typique de cinq ans, obligeant les
+fournisseurs à réinvestir constamment pour rester compétitifs. Surtout, les
+coûts d'intérêt liés au financement par la dette effacent rapidement tout
+coussin résiduel.
 
 ![](https://www.liberalisme-democratique.fr/content/images/2025/12/SVGZ-MCK251188_Neoclouds_Exhibits_V3-expandedB_Exh1.png)
 
 ### Le cycle de la dette et le soutien de NVIDIA
 
-La croissance des neoclouds dépend en effet de leur capacité à lever des montagnes de dettes, CoreWeave étant l'exemple le plus extrême. Les neoclouds contractent des prêts garantis par les GPUs qu'ils achètent. Ils utilisent aussi les contrats de puissance de calcul qu'ils signent (souvent avec les *hyperscalers* ou OpenAI) comme collatéral et preuve de revenus futurs. Toute cette dette se traduit en *revenu* pour NVIDIA via l'achat de GPUs supplémentaires, GPUs qui servent à lever encore plus de dette.
+La croissance des neoclouds dépend en effet de leur capacité à lever des
+montagnes de dettes, CoreWeave étant l'exemple le plus extrême. Les neoclouds
+contractent des prêts garantis par les GPUs qu'ils achètent. Ils utilisent aussi
+les contrats de puissance de calcul qu'ils signent (souvent avec
+les *hyperscalers* ou OpenAI) comme collatéral et preuve de revenus futurs.
+Toute cette dette se traduit en *revenu* pour NVIDIA via l'achat de GPUs
+supplémentaires, GPUs qui servent à lever encore plus de dette.
 
-Le rôle de NVIDIA dans ce mécanisme de levée de fonds est central. NVIDIA agit délibérément comme fournisseur, investisseur, et client des neoclouds. NVIDIA a investi dans CoreWeave, Lambda et Nebius. Surtout, NVIDIA signe des contrats massifs pour racheter la capacité de cloud non vendue (par exemple, 6,3 milliards de dollars pour CoreWeave sur plusieurs années). Ces accords de rachat par NVIDIA sont vagues et existent moins pour fournir de la puissance de calcul réelle que pour servir de garantie de prêt (*loan collateral*) aux neoclouds.
+Le rôle de NVIDIA dans ce mécanisme de levée de fonds est central. NVIDIA agit
+délibérément comme fournisseur, investisseur, et client des neoclouds. NVIDIA a
+investi dans CoreWeave, Lambda et Nebius. Surtout, NVIDIA signe des contrats
+massifs pour racheter la capacité de cloud non vendue (par exemple, 6,3
+milliards de dollars pour CoreWeave sur plusieurs années). Ces accords de rachat
+par NVIDIA sont vagues et existent moins pour fournir de la puissance de calcul
+réelle que pour servir de garantie de prêt (*loan collateral*) aux neoclouds.
 
 ### L'illusion de la demande et la dépendance aux ancres
 
 Le problème le plus préoccupant est que cette infrastructure de plusieurs milliards de dollars est financée en prévision d'une demande de marché pour la puissance de calcul qui [n'arrivera probablement jamais](https://www.wheresyoured.at/is-there-any-real-money-in-renting-out-ai-gpus/). En réalité, la demande de puissance de calcul de l'IA est presque entièrement concentrée chez les grandes entreprises technologiques (Mag7) et OpenAI.
 
-CoreWeave tire la majorité de ses revenus de Microsoft (plus de 60 % en 2024, fournissant du *compute* pour OpenAI) et de NVIDIA (15 % en 2024). Les trois principaux neoclouds (CoreWeave, Lambda, Nebius) affichent une absence de revenus réels en dehors de Microsoft, OpenAI, Meta, Amazon et NVIDIA.
+CoreWeave tire la majorité de ses revenus de Microsoft (plus de 60 % en 2024,
+fournissant du *compute* pour OpenAI) et de NVIDIA (15 % en 2024). Les trois
+principaux neoclouds (CoreWeave, Lambda, Nebius) affichent une absence de
+revenus réels en dehors de Microsoft, OpenAI, Meta, Amazon et NVIDIA.
 
-Sortir de ce modèle banalisé et précaire est probablement impossible. Un pivot des neoclouds vers le développement de couches logicielles natives de l'IA (plateformes d'inférence, outils de développement, services gérés) pour créer de la rétention et augmenter les marges les mettrait en concurrence directe avec des hyperscalers (Azure, AWS) qui sont aujourd'hui leurs clients principaux et nécessiterait en outre des ressources colossales.
+Sortir de ce modèle banalisé et précaire est probablement impossible. Un pivot
+des neoclouds vers le développement de couches logicielles natives de
+l'IA (plateformes d'inférence, outils de développement, services gérés) pour
+créer de la rétention et augmenter les marges les mettrait en concurrence
+directe avec des hyperscalers (Azure, AWS) qui sont aujourd'hui leurs clients
+principaux et nécessiterait en outre des ressources colossales.
 
-En conclusion, la croissance spectaculaire des neoclouds est financée par une bulle de crédit. Ce capital est canalisé directement vers NVIDIA pour l'achat de GPUs. Le jour où le crédit privé cessera de couler, l'incapacité de ces entreprises lourdement endettées à rembourser leur dette pourrait entraîner des conséquences systémiques non seulement pour NVIDIA, mais aussi pour ses partenaires et le système financier qui les soutient.
+En conclusion, la croissance spectaculaire des neoclouds est financée par
+une bulle de crédit. Ce capital est canalisé directement vers NVIDIA pour
+l'achat de GPUs. Le jour où le crédit privé cessera de couler, l'incapacité de
+ces entreprises lourdement endettées à rembourser leur dette pourrait entraîner
+des conséquences systémiques non seulement pour NVIDIA, mais aussi pour ses
+partenaires et le système financier qui les soutient.
