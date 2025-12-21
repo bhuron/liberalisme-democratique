@@ -81,6 +81,25 @@
     margin-top: 2.5em;
     margin-bottom: 1em;
   }
+
+  .prose blockquote {
+    font-style: normal !important;
+    font-weight: 400 !important;
+    border-left-width: 4px;
+    border-left-color: var(--typography-prose-quote-borders);
+    padding-left: 1.5rem;
+    color: var(--typography-prose-quotes);
+  }
+
+  .prose blockquote p {
+    font-style: normal !important;
+    font-weight: 400 !important;
+  }
+
+  .prose blockquote p::before,
+  .prose blockquote p::after {
+    content: none !important;
+  }
 }
 
 /* Custom utility classes */
