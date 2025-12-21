@@ -1,16 +1,19 @@
 ---
-import { Image } from 'astro:assets';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import { SITE_TITLE, SITE_AUTHOR } from '../consts';
+import { Image } from "astro:assets";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
+import { SITE_TITLE, SITE_AUTHOR } from "../consts";
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={`À propos - ${SITE_TITLE}`} description="Présentation du blog et de son auteur" />
+		<BaseHead
+			title={`À propos - ${SITE_TITLE}`}
+			description="Présentation du blog et de son auteur"
+		/>
 	</head>
 	<body class="min-h-screen bg-gray-50">
 		<Header />
@@ -27,42 +30,92 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 				</div>
 				<div class="p-6 md:p-8">
 					<header class="mb-8">
-						<h1 class="text-3xl md:text-4xl font-bold mb-4 text-black">À propos</h1>
+						<h1
+							class="text-3xl md:text-4xl font-bold mb-4 text-black"
+						>
+							À propos
+						</h1>
 						<hr class="border-gray-200 mb-6" />
 					</header>
 					<div class="prose prose-lg max-w-none">
 						<p>
-							Bienvenue sur <strong>{SITE_TITLE}</strong>, un espace dédié à l'exploration des idées du libéralisme politique
-							et de la démocratie. Ce blog a pour objectif de partager des analyses, des réflexions et des discussions
-							sur les institutions, les droits individuels, la gouvernance et les défis contemporains des sociétés libérales.
+							Bienvenue sur <strong>{SITE_TITLE}</strong>, un
+							espace de réflexion critique à l'intersection de la
+							politique, de l'économie et de la technologie. Loin
+							des discours conventionnels, ce blog explore les
+							tensions qui traversent nos sociétés contemporaines.
 						</p>
+
+						<h2>Souveraineté et Progrès Social</h2>
 						<p>
-							À travers des articles accessibles mais rigoureux, nous abordons des sujets tels que la séparation des pouvoirs,
-							la protection des libertés fondamentales, le rôle de l'État, les mécanismes de la démocratie représentative
-							et participative, ainsi que les critiques et les évolutions du modèle libéral-démocratique.
+							L'exercice de la démocratie est indissociable de la
+							souveraineté populaire. À travers mes analyses, je
+							défends l'idée que la Nation reste le cadre naturel
+							de délibération et de responsabilité. Restaurer les
+							mécanismes de souveraineté nationale est une
+							condition nécessaire pour assurer le contrôle
+							démocratique d’une économie tournée vers la justice
+							sociale et le progrès.
 						</p>
+
+						<h2>Décrypter l'Illusion Technologique</h2>
 						<p>
-							Ce blog est animé par <strong>{SITE_AUTHOR}</strong>, passionné par la philosophie politique et les débats
-							d'idées. L'approche se veut pédagogique, ouverte et constructive, dans le but d'éclairer les enjeux actuels
-							et de nourrir la réflexion citoyenne.
+							L'intelligence artificielle est souvent présentée
+							sous un jour messianique ou catastrophiste. Ici,
+							l'approche est plus pragmatique : analyser la
+							fragilité financière de l'écosystème de l'IA — une
+							chaîne maintenue par la dette et le capital-risque —
+							et comprendre la nature profonde des modèles de
+							langage. Il ne s'agit pas de rejeter l'outil, mais
+							d'en saisir les limites épistémologiques : les
+							machines produisent des probabilités, pas des
+							vérités.
 						</p>
+
+						<h2>Éducation et Esprit Critique</h2>
 						<p>
-							Vous y trouverez également des retours d'expérience sur des outils technologiques utilisés pour la diffusion
-							d'idées, comme ce site construit avec <a href="https://astro.build" class="text-accent hover:text-accent-dark">Astro</a>.
+							Face à l'automatisation de la pensée, le rôle de
+							l'enseignement est plus crucial que jamais. Je
+							m'intéresse particulièrement à la manière dont les
+							outils numériques transforment la pédagogie. L'enjeu
+							n'est pas seulement d'apprendre à utiliser ces
+							machines, mais de développer l'intuition et la
+							raison des élèves, en mettant l'accent sur la
+							vérification et l'explication plutôt que sur la
+							simple exécution.
 						</p>
+
+						<p>
+							Ce blog est animé par <strong>{SITE_AUTHOR}</strong
+							>. L'approche se veut pédagogique et rigoureuse,
+							avec l'ambition de nourrir une réflexion citoyenne
+							éclairée sur les défis du libéralisme démocratique
+							au XXIe siècle.
+						</p>
+
+						<p>
+							Le site est construit avec <a
+								href="https://astro.build"
+								class="text-accent hover:text-accent-dark"
+								>Astro</a
+							>, privilégiant la légèreté et la clarté.
+						</p>
+
 						<h2>Contact</h2>
 						<p>
-							Pour toute question, suggestion ou collaboration, vous pouvez utiliser les liens de réseaux sociaux présents
-							dans le pied de page. Les commentaires constructifs sont les bienvenus.
-						</p>
-						<p>
-							Merci de votre visite et bonne lecture !
+							Pour toute question, suggestion ou collaboration,
+							vous pouvez utiliser les liens de réseaux sociaux
+							présents dans le pied de page.
 						</p>
 					</div>
 				</div>
 			</article>
 			<nav class="mt-12">
-				<a href="/" class="text-accent hover:text-accent-dark font-medium">← Retour à l'accueil</a>
+				<a
+					href="/"
+					class="text-accent hover:text-accent-dark font-medium"
+					>← Retour à l'accueil</a
+				>
 			</nav>
 		</main>
 		<Footer />
