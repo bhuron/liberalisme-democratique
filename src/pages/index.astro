@@ -19,25 +19,25 @@ const featuredPosts = allPosts
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-gradient-gray">
+	<body class="min-h-screen bg-gray-50">
 		<Header />
 		<main class="max-w-6xl mx-auto px-4 py-12">
 			<!-- Hero section -->
 			<section class="text-center mb-16">
-				<h1 class="text-5xl md:text-6xl font-bold mb-6 text-black">{SITE_TITLE}</h1>
-				<p class="text-xl text-gray-dark max-w-2xl mx-auto mb-8">
+				<h1 class="text-4xl md:text-5xl font-semibold mb-8 text-black">{SITE_TITLE}</h1>
+				<p class="text-lg text-gray-800 max-w-2xl mx-auto mb-10">
 					{SITE_DESCRIPTION}
 				</p>
 				<div class="flex flex-wrap justify-center gap-4">
 					<a
 						href="/blog"
-						class="px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-dark transition-colors"
+						class="px-5 py-2 border border-accent text-accent font-medium rounded hover:bg-accent hover:text-white transition-colors"
 					>
 						Voir tous les articles
 					</a>
 					<a
 						href="/about"
-						class="px-6 py-3 border border-accent text-accent font-medium rounded-lg hover:bg-accent hover:text-white transition-colors"
+						class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded hover:bg-gray-100 transition-colors"
 					>
 						À propos
 					</a>
@@ -53,7 +53,7 @@ const featuredPosts = allPosts
 							const imageSrc = post.data.image?.src;
 							const imageAlt = post.data.image?.alt || '';
 							return (
-								<article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+								<article class="bg-white border border-gray-200 overflow-hidden hover:border-gray-300 transition-colors">
 									<a href={`/blog/${post.id}/`} class="block no-underline">
 										{imageSrc && (
 											<div class="w-full h-48 overflow-hidden">
@@ -70,11 +70,11 @@ const featuredPosts = allPosts
 											<h3 class="text-lg font-bold mb-2 text-black hover:text-accent transition-colors">
 												{post.data.title}
 											</h3>
-											<p class="text-gray mb-3 text-sm">
+											<p class="text-gray-600 mb-3 text-sm">
 												<FormattedDate date={post.data.pubDate} />
 												{post.data.author && ` • ${post.data.author}`}
 											</p>
-											<p class="text-gray-dark mb-0">{post.data.description}</p>
+											<p class="text-gray-800 mb-0">{post.data.description}</p>
 										</div>
 									</a>
 								</article>
@@ -83,7 +83,7 @@ const featuredPosts = allPosts
 					}
 				</div>
 				{featuredPosts.length === 0 ? (
-					<p class="text-center text-gray py-12">Aucun article publié pour le moment.</p>
+					<p class="text-center text-gray-600 py-12">Aucun article publié pour le moment.</p>
 				) : (
 					<div class="text-center mt-10">
 						<a
@@ -100,13 +100,13 @@ const featuredPosts = allPosts
 			</section>
 
 			<!-- About preview -->
-			<section class="bg-white rounded-lg shadow-lg p-8">
+			<section class="bg-white border border-gray-200 p-8">
 				<h2 class="text-3xl font-bold mb-4 text-black">À propos</h2>
-				<p class="text-gray-dark mb-4">
+				<p class="text-gray-800 mb-4">
 					Ce blog explore les idées du libéralisme politique et de la démocratie, avec des analyses,
 					des réflexions et des discussions sur les institutions, les droits individuels et la gouvernance.
 				</p>
-				<p class="text-gray-dark mb-6">
+				<p class="text-gray-800 mb-6">
 					Écrit par {SITE_AUTHOR}, ce site vise à partager des perspectives éclairées et à encourager
 					le débat constructif.
 				</p>

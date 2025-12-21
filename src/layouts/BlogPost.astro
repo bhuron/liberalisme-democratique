@@ -16,10 +16,10 @@ const { title, description, pubDate, updatedDate, image, tags, author } = Astro.
 		<BaseHead title={title} description={description} />
 	</head>
 
-	<body class="min-h-screen bg-gradient-gray">
+	<body class="min-h-screen bg-gray-50">
 		<Header />
 		<main class="max-w-4xl mx-auto px-4 py-8">
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden">
+			<article class="bg-white border border-gray-200">
 				{image && (
 					<div class="w-full h-64 md:h-80 overflow-hidden">
 						<Image
@@ -33,7 +33,7 @@ const { title, description, pubDate, updatedDate, image, tags, author } = Astro.
 				)}
 				<div class="p-6 md:p-8">
 					<header class="mb-8">
-						<div class="flex flex-wrap items-center gap-2 text-gray text-sm mb-4">
+						<div class="flex flex-wrap items-center gap-2 text-gray-600 text-sm mb-4">
 							<time datetime={pubDate.toISOString()}>
 								<FormattedDate date={pubDate} />
 							</time>
@@ -56,19 +56,19 @@ const { title, description, pubDate, updatedDate, image, tags, author } = Astro.
 						{tags && tags.length > 0 && (
 							<div class="flex flex-wrap gap-2 mb-6">
 								{tags.map(tag => (
-									<span class="px-3 py-1 bg-gray-light text-gray-dark rounded-full text-sm">
+									<span class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
 										#{tag}
 									</span>
 								))}
 							</div>
 						)}
-						<p class="text-lg text-gray-dark mb-6">{description}</p>
-						<hr class="border-gray-light" />
+						<p class="text-lg text-gray-800 mb-6">{description}</p>
+						<hr class="border-gray-200" />
 					</header>
 					<div class="prose prose-lg max-w-none">
 						<slot />
 					</div>
-					<footer class="mt-12 pt-6 border-t border-gray-light text-gray text-sm">
+					<footer class="mt-12 pt-6 border-t border-gray-200 text-gray-600 text-sm">
 						<p>Publié le <FormattedDate date={pubDate} />{author && ` par ${author}`}</p>
 						{tags && tags.length > 0 && (
 							<p class="mt-2">Étiquettes : {tags.map(tag => `#${tag}`).join(', ')}</p>

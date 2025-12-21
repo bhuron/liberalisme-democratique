@@ -18,7 +18,7 @@ const posts = allPosts
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-gradient-gray">
+	<body class="min-h-screen bg-gray-50">
 		<Header />
 		<main class="max-w-6xl mx-auto px-4 py-8">
 			<h1 class="text-4xl font-bold mb-8 text-black">Articles</h1>
@@ -28,7 +28,7 @@ const posts = allPosts
 						const imageSrc = post.data.image?.src;
 						const imageAlt = post.data.image?.alt || '';
 						return (
-							<article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+							<article class="bg-white border border-gray-200 overflow-hidden hover:border-gray-300 transition-colors">
 								<a href={`/blog/${post.id}/`} class="block no-underline">
 									{imageSrc && (
 										<div class="w-full h-48 overflow-hidden">
@@ -45,7 +45,7 @@ const posts = allPosts
 										<h2 class="text-xl font-bold mb-2 text-black hover:text-accent transition-colors">
 											{post.data.title}
 										</h2>
-										<p class="text-gray mb-3 text-sm">
+										<p class="text-gray-600 mb-3 text-sm">
 											<FormattedDate date={post.data.pubDate} />
 											{post.data.author && ` • ${post.data.author}`}
 											{post.data.tags && post.data.tags.length > 0 && (
@@ -54,7 +54,7 @@ const posts = allPosts
 												</span>
 											)}
 										</p>
-										<p class="text-gray-dark mb-0">{post.data.description}</p>
+										<p class="text-gray-800 mb-0">{post.data.description}</p>
 									</div>
 								</a>
 							</article>
@@ -63,7 +63,7 @@ const posts = allPosts
 				}
 			</div>
 			{posts.length === 0 && (
-				<p class="text-center text-gray py-12">Aucun article publié pour le moment.</p>
+				<p class="text-center text-gray-600 py-12">Aucun article publié pour le moment.</p>
 			)}
 		</main>
 		<Footer />

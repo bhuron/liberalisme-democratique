@@ -12,10 +12,10 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 	<head>
 		<BaseHead title={`À propos - ${SITE_TITLE}`} description="Présentation du blog et de son auteur" />
 	</head>
-	<body class="min-h-screen bg-gradient-gray">
+	<body class="min-h-screen bg-gray-50">
 		<Header />
 		<main class="max-w-4xl mx-auto px-4 py-12">
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden">
+			<article class="bg-white border border-gray-200">
 				<div class="w-full h-64 md:h-80 overflow-hidden">
 					<Image
 						width={1020}
@@ -28,7 +28,7 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 				<div class="p-6 md:p-8">
 					<header class="mb-8">
 						<h1 class="text-3xl md:text-4xl font-bold mb-4 text-black">À propos</h1>
-						<hr class="border-gray-light mb-6" />
+						<hr class="border-gray-200 mb-6" />
 					</header>
 					<div class="prose prose-lg max-w-none">
 						<p>
