@@ -64,8 +64,12 @@
 
   .prose {
     max-width: 70ch;
-    font-size: 1.125rem;
-    line-height: 1.8;
+  }
+
+  .prose p {
+    font-size: 1.25rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 1.5em;
   }
 
   .prose h1,
