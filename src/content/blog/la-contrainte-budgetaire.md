@@ -8,9 +8,7 @@ draft: false
 tags:
   - Économie
   - Théorie
-  - budget
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
+  - Budget
 image:
   src: ../../assets/ghost-images/photo-1633158829585-23ba8f7c8caf.jpg
   alt: "La contrainte budgétaire : illusion et réalité"

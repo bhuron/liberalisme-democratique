@@ -7,8 +7,6 @@ author: Benoît Huron
 draft: false
 tags:
   - Politique
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/photo-1531752148124-118ba196fc7b.jpg
   alt: La Souveraineté nationale, pilier d'une nouvelle gauche

@@ -8,8 +8,6 @@ draft: false
 tags:
   - Économie
   - Revenu Universel
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/photo-1514108225820-2b602873ac36.jpg
   alt: Les limites du revenu universel

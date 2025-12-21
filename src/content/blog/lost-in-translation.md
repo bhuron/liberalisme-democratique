@@ -7,8 +7,6 @@ author: Benoît Huron
 draft: false
 tags:
   - Culture
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/600px-jabberwocky.jpg
   alt: Lost in Translation

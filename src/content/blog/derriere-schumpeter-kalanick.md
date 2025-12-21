@@ -7,8 +7,6 @@ author: Benoît Huron
 draft: false
 tags:
   - Économie
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/photo-1619793527010-1fdbd2764e6c.jpg
   alt: Derrière Schumpeter, Kalanick

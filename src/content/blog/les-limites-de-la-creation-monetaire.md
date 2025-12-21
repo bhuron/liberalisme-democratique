@@ -7,8 +7,6 @@ author: Benoît Huron
 draft: false
 tags:
   - Finance
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/photo-1593672755342-741a7f868732.jpg
   alt: Les limites de la création monétaire

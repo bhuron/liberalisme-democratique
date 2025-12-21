@@ -8,8 +8,6 @@ draft: false
 tags:
   - Économie
   - Zone Euro
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/photo-1583639687726-84d20638bf63.jpg
   alt: Les contorsions de la Banque Centrale Européenne
