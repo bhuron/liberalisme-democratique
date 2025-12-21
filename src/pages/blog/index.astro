@@ -1,16 +1,16 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const allPosts = await getCollection('blog');
+const allPosts = await getCollection("blog");
 const posts = allPosts
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
@@ -18,18 +18,23 @@ const posts = allPosts
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-gray-50">
+	<body class="min-h-screen">
 		<Header />
-		<main class="max-w-6xl mx-auto px-4 py-8">
-			<h1 class="text-4xl font-bold mb-8 text-black">Articles</h1>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+		<main class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+			<h1 class="text-5xl font-extrabold mb-12 text-black">Articles</h1>
+			<div
+				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
+			>
 				{
 					posts.map((post) => {
 						const imageSrc = post.data.image?.src;
-						const imageAlt = post.data.image?.alt || '';
+						const imageAlt = post.data.image?.alt || "";
 						return (
-							<article class="bg-white border border-gray-200 overflow-hidden hover:border-gray-300 transition-colors">
-								<a href={`/blog/${post.id}/`} class="block no-underline">
+							<article class="group relative flex flex-col">
+								<a
+									href={`/blog/${post.id}/`}
+									class="block no-underline"
+								>
 									{imageSrc && (
 										<div class="w-full h-48 overflow-hidden">
 											<Image
@@ -46,25 +51,40 @@ const posts = allPosts
 											{post.data.title}
 										</h2>
 										<p class="text-gray-600 mb-3 text-sm">
-											<FormattedDate date={post.data.pubDate} />
-											{post.data.author && ` • ${post.data.author}`}
-											{post.data.tags && post.data.tags.length > 0 && (
-												<span class="ml-2">
-													{post.data.tags.map(tag => `#${tag}`).join(', ')}
-												</span>
-											)}
+											<FormattedDate
+												date={post.data.pubDate}
+											/>
+											{post.data.author &&
+												` • ${post.data.author}`}
+											{post.data.tags &&
+												post.data.tags.length > 0 && (
+													<span class="ml-2">
+														{post.data.tags
+															.map(
+																(tag) =>
+																	`#${tag}`,
+															)
+															.join(", ")}
+													</span>
+												)}
 										</p>
-										<p class="text-gray-800 mb-0">{post.data.description}</p>
+										<p class="text-gray-800 mb-0">
+											{post.data.description}
+										</p>
 									</div>
 								</a>
 							</article>
-						)
+						);
 					})
 				}
 			</div>
-			{posts.length === 0 && (
-				<p class="text-center text-gray-600 py-12">Aucun article publié pour le moment.</p>
-			)}
+			{
+				posts.length === 0 && (
+					<p class="text-center text-gray-600 py-12">
+						Aucun article publié pour le moment.
+					</p>
+				)
+			}
 		</main>
 		<Footer />
 	</body>

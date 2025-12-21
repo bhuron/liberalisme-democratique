@@ -8,19 +8,22 @@
 @theme {
   --font-sans: "Inter", sans-serif;
   --font-display: "Outfit", sans-serif;
-  --color-accent: #2563eb;
-  --color-accent-dark: #1d4ed8;
-  --color-black: #1f2937;
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
+  --color-accent: #312e81;
+  /* Deep Indigo */
+  --color-accent-dark: #1e1b4b;
+  --color-black: #0f172a;
+  /* Slate-900 */
+  --color-gray-50: #f8fafc;
+  /* Slate-50 */
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
 
   /* Typography variables */
   --typography-prose-body: var(--color-gray-700);
@@ -44,6 +47,8 @@
 @layer base {
   html {
     font-family: var(--font-sans);
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
   }
 
   h1,
@@ -53,13 +58,14 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 
   .prose {
-    max-width: 65ch;
+    max-width: 70ch;
     font-size: 1.125rem;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
   .prose h1,
@@ -67,6 +73,9 @@
   .prose h3,
   .prose h4 {
     font-family: var(--font-display);
+    font-weight: 800;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
   }
 }
 
