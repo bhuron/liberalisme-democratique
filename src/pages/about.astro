@@ -1,63 +1,70 @@
 ---
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
-
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
-
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
-
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={`À propos - ${SITE_TITLE}`} description="Présentation du blog et de son auteur" />
+	</head>
+	<body class="min-h-screen bg-gradient-gray">
+		<Header />
+		<main class="max-w-4xl mx-auto px-4 py-12">
+			<article class="bg-white rounded-lg shadow-lg overflow-hidden">
+				<div class="w-full h-64 md:h-80 overflow-hidden">
+					<Image
+						width={1020}
+						height={510}
+						src={AboutHeroImage}
+						alt="Image de présentation du blog"
+						class="w-full h-full object-cover"
+					/>
+				</div>
+				<div class="p-6 md:p-8">
+					<header class="mb-8">
+						<h1 class="text-3xl md:text-4xl font-bold mb-4 text-black">À propos</h1>
+						<hr class="border-gray-light mb-6" />
+					</header>
+					<div class="prose prose-lg max-w-none">
+						<p>
+							Bienvenue sur <strong>{SITE_TITLE}</strong>, un espace dédié à l'exploration des idées du libéralisme politique
+							et de la démocratie. Ce blog a pour objectif de partager des analyses, des réflexions et des discussions
+							sur les institutions, les droits individuels, la gouvernance et les défis contemporains des sociétés libérales.
+						</p>
+						<p>
+							À travers des articles accessibles mais rigoureux, nous abordons des sujets tels que la séparation des pouvoirs,
+							la protection des libertés fondamentales, le rôle de l'État, les mécanismes de la démocratie représentative
+							et participative, ainsi que les critiques et les évolutions du modèle libéral-démocratique.
+						</p>
+						<p>
+							Ce blog est animé par <strong>{SITE_AUTHOR}</strong>, passionné par la philosophie politique et les débats
+							d'idées. L'approche se veut pédagogique, ouverte et constructive, dans le but d'éclairer les enjeux actuels
+							et de nourrir la réflexion citoyenne.
+						</p>
+						<p>
+							Vous y trouverez également des retours d'expérience sur des outils technologiques utilisés pour la diffusion
+							d'idées, comme ce site construit avec <a href="https://astro.build" class="text-accent hover:text-accent-dark">Astro</a>.
+						</p>
+						<h2>Contact</h2>
+						<p>
+							Pour toute question, suggestion ou collaboration, vous pouvez utiliser les liens de réseaux sociaux présents
+							dans le pied de page. Les commentaires constructifs sont les bienvenus.
+						</p>
+						<p>
+							Merci de votre visite et bonne lecture !
+						</p>
+					</div>
+				</div>
+			</article>
+			<nav class="mt-12">
+				<a href="/" class="text-accent hover:text-accent-dark font-medium">← Retour à l'accueil</a>
+			</nav>
+		</main>
+		<Footer />
+	</body>
+</html>
