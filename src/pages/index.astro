@@ -1,17 +1,17 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_AUTHOR } from '../consts';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_AUTHOR } from "../consts";
 
-const allPosts = await getCollection('blog');
+const allPosts = await getCollection("blog");
 const featuredPosts = allPosts
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
@@ -19,25 +19,31 @@ const featuredPosts = allPosts
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-gray-50">
+	<body class="min-h-screen">
 		<Header />
-		<main class="max-w-6xl mx-auto px-4 py-12">
+		<main class="max-w-6xl mx-auto px-4 py-12 md:py-16">
 			<!-- Hero section -->
-			<section class="text-center mb-16">
-				<h1 class="text-4xl md:text-5xl font-semibold mb-8 text-black">{SITE_TITLE}</h1>
-				<p class="text-lg text-gray-800 max-w-2xl mx-auto mb-10">
+			<section class="text-center mb-24">
+				<h1
+					class="text-5xl md:text-6xl font-extrabold mb-8 text-black tracking-tight"
+				>
+					{SITE_TITLE}
+				</h1>
+				<p
+					class="text-xl text-gray-700 max-w-2xl mx-auto mb-12 leading-relaxed"
+				>
 					{SITE_DESCRIPTION}
 				</p>
-				<div class="flex flex-wrap justify-center gap-4">
+				<div class="flex flex-wrap justify-center gap-6">
 					<a
 						href="/blog"
-						class="px-5 py-2 border border-accent text-accent font-medium rounded hover:bg-accent hover:text-white transition-colors"
+						class="px-8 py-3 bg-accent text-white font-bold rounded-lg hover:bg-accent-dark transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-accent/40"
 					>
 						Voir tous les articles
 					</a>
 					<a
 						href="/about"
-						class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded hover:bg-gray-100 transition-colors"
+						class="px-8 py-3 bg-gray-100 text-gray-900 font-bold rounded-lg hover:bg-gray-200 transition-all duration-300"
 					>
 						À propos
 					</a>
@@ -45,74 +51,116 @@ const featuredPosts = allPosts
 			</section>
 
 			<!-- Featured posts -->
-			<section class="mb-16">
-				<h2 class="text-3xl font-bold mb-8 text-black">Articles récents</h2>
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			<section class="mb-24">
+				<h2 class="text-3xl font-extrabold mb-10 text-black">
+					Articles récents
+				</h2>
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
+				>
 					{
 						featuredPosts.map((post) => {
 							const imageSrc = post.data.image?.src;
-							const imageAlt = post.data.image?.alt || '';
+							const imageAlt = post.data.image?.alt || "";
 							return (
-								<article class="bg-white border border-gray-200 overflow-hidden hover:border-gray-300 transition-colors">
-									<a href={`/blog/${post.id}/`} class="block no-underline">
+								<article class="group relative flex flex-col">
+									<a
+										href={`/blog/${post.id}/`}
+										class="block no-underline"
+									>
 										{imageSrc && (
-											<div class="w-full h-48 overflow-hidden">
+											<div class="w-full h-56 mb-6 overflow-hidden rounded-xl">
 												<Image
 													width={400}
-													height={200}
+													height={250}
 													src={imageSrc}
 													alt={imageAlt}
-													class="w-full h-full object-cover"
+													class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 												/>
 											</div>
 										)}
-										<div class="p-6">
-											<h3 class="text-lg font-bold mb-2 text-black hover:text-accent transition-colors">
+										<div class="">
+											<h3 class="text-xl font-extrabold mb-3 text-black group-hover:text-accent transition-colors">
 												{post.data.title}
 											</h3>
-											<p class="text-gray-600 mb-3 text-sm">
-												<FormattedDate date={post.data.pubDate} />
-												{post.data.author && ` • ${post.data.author}`}
+											<p class="text-gray-500 mb-4 text-sm font-medium italic">
+												<FormattedDate
+													date={post.data.pubDate}
+												/>
+												{post.data.author &&
+													` • ${post.data.author}`}
 											</p>
-											<p class="text-gray-800 mb-0">{post.data.description}</p>
+											<p class="text-gray-700 mb-0 leading-relaxed line-clamp-3">
+												{post.data.description}
+											</p>
 										</div>
 									</a>
 								</article>
-							)
+							);
 						})
 					}
 				</div>
-				{featuredPosts.length === 0 ? (
-					<p class="text-center text-gray-600 py-12">Aucun article publié pour le moment.</p>
-				) : (
-					<div class="text-center mt-10">
-						<a
-							href="/blog"
-							class="inline-flex items-center text-accent hover:text-accent-dark font-medium"
-						>
-							Voir tous les articles
-							<svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-							</svg>
-						</a>
-					</div>
-				)}
+				{
+					featuredPosts.length === 0 ? (
+						<p class="text-center text-gray-600 py-12">
+							Aucun article publié pour le moment.
+						</p>
+					) : (
+						<div class="text-center mt-10">
+							<a
+								href="/blog"
+								class="inline-flex items-center text-accent hover:text-accent-dark font-medium"
+							>
+								Voir tous les articles
+								<svg
+									class="ml-2 w-5 h-5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M14 5l7 7m0 0l-7 7m7-7H3"
+									/>
+								</svg>
+							</a>
+						</div>
+					)
+				}
 			</section>
 
 			<!-- About preview -->
-			<section class="bg-white border border-gray-200 p-8">
-				<h2 class="text-3xl font-bold mb-4 text-black">À propos</h2>
-				<p class="text-gray-800 mb-4">
-					Ce blog explore les idées du libéralisme politique et de la démocratie, avec des analyses,
-					des réflexions et des discussions sur les institutions, les droits individuels et la gouvernance.
-				</p>
-				<p class="text-gray-800 mb-6">
-					Écrit par {SITE_AUTHOR}, ce site vise à partager des perspectives éclairées et à encourager
-					le débat constructif.
-				</p>
-				<a href="/about" class="text-accent hover:text-accent-dark font-medium">
-					En savoir plus →
-				</a>
+			<section class="py-16 border-t border-gray-200">
+				<div class="max-w-3xl mx-auto">
+					<h2 class="text-4xl font-extrabold mb-8 text-black">
+						À propos
+					</h2>
+					<p class="text-xl text-gray-800 mb-6 leading-relaxed">
+						Ce blog explore les idées du libéralisme politique et de
+						la démocratie, avec des analyses, des réflexions et des
+						discussions sur les institutions, les droits individuels
+						et la gouvernance.
+					</p>
+					<p class="text-xl text-gray-800 mb-8 leading-relaxed">
+						Écrit par <span class="font-bold text-accent"
+							>{SITE_AUTHOR}</span
+						>, ce site vise à partager des perspectives éclairées et
+						à encourager le débat constructif.
+					</p>
+					<a
+						href="/about"
+						class="inline-flex items-center text-accent hover:text-accent-dark font-bold text-lg group"
+					>
+						En savoir plus
+						<span
+							class="ml-2 transition-transform group-hover:translate-x-1"
+							>→</span
+						>
+					</a>
+				</div>
 			</section>
 		</main>
 		<Footer />
