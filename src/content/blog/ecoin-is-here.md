@@ -9,8 +9,6 @@ tags:
   - Économie
   - Loisir
   - Finance
-  - "#Import 2024-02-19 12:05"
-  - "#benoit-2"
 image:
   src: ../../assets/ghost-images/ecorp.webp
   alt: Ecoin is Here
