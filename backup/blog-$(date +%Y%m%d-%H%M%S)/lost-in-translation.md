@@ -18,12 +18,7 @@ image:
 
 La traduction de textes littéraires est une activité difficile, peut-être même impossible comme le relève un [article](http://www.nybooks.com/daily/2013/02/04/listening-for-jabberwock-translation/) brillant qui montre bien où se situe le nœud du problème.
 
-Même pour la prose la plus ordinaire, il y a une tendance naturelle de la langue
-vers le rythme, les allitérations et les assonances. Essayer de modifier un
-texte pour l'adapter aux conventions linguistiques d'une autre langue fait
-violence ou ignore tout ça. Le traducteur préfère privilégier l'aspect
-sémantique du texte mais, au moins pour la production de textes littéraires, le
-sens n'est pas indépendant de l'inertie acoustique de la langue.
+Même pour la prose la plus ordinaire, il y a une tendance naturelle de la langue vers le rythme, les allitérations et les assonances. Essayer de modifier un texte pour l'adapter aux conventions linguistiques d'une autre langue fait violence ou ignore tout ça. Le traducteur préfère privilégier l'aspect sémantique du texte mais, au moins pour la production de textes littéraires, le sens n'est pas indépendant de l'inertie acoustique de la langue.
 
 On dit souvent qu'on ne peut pas traduire de la poésie. C'est sans doute vrai mais c'est aussi dans ce domaine qu'on trouve les meilleurs traducteurs. Ceux-ci sont au moins préparés à reconnaître et respecter autant que possible les outils poétiques, la texture sonore de l'œuvre de l'auteur[\[1\]](#fn1). Les traducteurs de prose ne font souvent même pas cet effort. Dans tous les cas, le résultat n'est pas brillant. Ce n'est pas vraiment leur faute. Les textes sont produits dans un langue particulière — l'esprit créatif, dans le processus de production, est immergé dans un ensemble de sons, de phonèmes et de rythmes spécifiques à cette langue qui guident l'écriture. Et comment traduire Jabberwocky de toute façon ?
 

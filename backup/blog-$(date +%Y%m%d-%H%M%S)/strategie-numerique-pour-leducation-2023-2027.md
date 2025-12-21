@@ -23,31 +23,17 @@ Notre ministre insiste notamment sur le deuxième point :
 
 > Pour toutes ces raisons, une action globale, tout au long de la scolarité, sera mise en œuvre pour renforcer les compétences numériques. Ce sera particulièrement le cas au collège, où le renforcement des compétences numériques sera une des priorités de la transformation des classes de 5e, 4e, 3e.
 
-Bien. Peut-être qu’on va vraiment prendre le développement des compétences
-numériques des enfants (ainsi que le cadre réglementaire et moral des pratiques
-et outils) au sérieux cette fois.
+Bien. Peut-être qu’on va vraiment prendre le développement des compétences numériques des enfants (ainsi que le cadre réglementaire et moral des pratiques et outils) au sérieux cette fois.
 
 Ou alors on leur mettra juste plus de Pix. 😉
 
-Blague à part, la stratégie du ministère est cohérente et raisonnable. Reste à
-voir si les moyens seront à la hauteur des ambitions.
+Blague à part, la stratégie du ministère est cohérente et raisonnable. Reste à voir si les moyens seront à la hauteur des ambitions.
 
 ## Les moyens du bord
 
-On peut être certain que non. On sait déjà que le financement ne suivra pas,
-qu’on n’aura pas les moyens d’embaucher du personnel qualifié, qu’on manquera de
-salles équipées et, surtout, qu’on n’aura pas assez de temps. Je veux dire, les
-programmes sont déjà assez chargés. On en supprimera quoi ? Quelle matière en
-fera les frais ?
+On peut être certain que non. On sait déjà que le financement ne suivra pas, qu’on n’aura pas les moyens d’embaucher du personnel qualifié, qu’on manquera de salles équipées et, surtout, qu’on n’aura pas assez de temps. Je veux dire, les programmes sont déjà assez chargés. On en supprimera quoi ? Quelle matière en fera les frais ?
 
-On gagnerait peut-être à envisager le problème sous un autre angle. Après tout,
-les équipes pédagogiques – les enseignants de mathématiques, physique,
-géographie, économie, etc. – sont *déjà* en mesure d’enseigner chacun au moins
-une partie des outils nécessaires à une culture numérique et ils peuvent
-l’enseigner en restant dans les contraintes de leur discipline. Le souci n’est
-pas leur manque de qualification – ce sont des gens intelligents –, le problème
-est que le « socle numérique » doit leur être présenté d’une manière qui fait
-sens pour leur matière.
+On gagnerait peut-être à envisager le problème sous un autre angle. Après tout, les équipes pédagogiques – les enseignants de mathématiques, physique, géographie, économie, etc. – sont *déjà* en mesure d’enseigner chacun au moins une partie des outils nécessaires à une culture numérique et ils peuvent l’enseigner en restant dans les contraintes de leur discipline. Le souci n’est pas leur manque de qualification – ce sont des gens intelligents –, le problème est que le « socle numérique » doit leur être présenté d’une manière qui fait sens pour leur matière.
 
 ![](https://www.liberalisme-democratique.fr/content/images/2024/02/DALL-E-2023-05-04-10.52.11---a-drawing-of.png)
 
@@ -59,9 +45,4 @@ L’objectif est bien sûr de faire des économies, de rendre une stratégie num
 
 > Enseigner la programmation en soi n’est ni souhaitable, ni très motivant pour un public aussi jeune. Autant considérer dès l’abord l’informatique pour ce qu’elle est – un outil applicable dans quantité de domaines.
 
-On ne veut pas former de futurs informaticiens. On veut former des enfants à
-l’utilisation d’outils puissants qu’ils pourront utiliser dans leur vie
-professionnelle et sociale, quoi qu’ils décident de faire. On veut qu’ils aient
-été au moins exposés à de nouvelles façons de penser et de résoudre des
-problèmes. Et, oui, on veut peut-être aussi réformer certaines pratiques
-pédagogiques.
+On ne veut pas former de futurs informaticiens. On veut former des enfants à l’utilisation d’outils puissants qu’ils pourront utiliser dans leur vie professionnelle et sociale, quoi qu’ils décident de faire. On veut qu’ils aient été au moins exposés à de nouvelles façons de penser et de résoudre des problèmes. Et, oui, on veut peut-être aussi réformer certaines pratiques pédagogiques.

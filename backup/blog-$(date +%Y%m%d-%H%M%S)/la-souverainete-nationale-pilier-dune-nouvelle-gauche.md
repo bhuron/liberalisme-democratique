@@ -20,12 +20,6 @@ La souveraineté nationale a une solide tradition historique et constitutionnell
 
 > s’enracine dans le constat que tout progrès social implique que la communauté nationale, ce que l’on nomme le peuple, soit souverain. Il comprend qu’il ne peut y avoir de progrès social sans une économie qui soit tournée vers le plus grand nombre et non vers l’accroissement de la richesse des plus riches, ce qui est le cas actuellement.
 
-L'affaiblissement des mécanismes de souveraineté nationale va ainsi de pair avec
-la perte des acquis sociaux et la montée des inégalités. Les efforts de la
-gauche devront donc se concentrer sur la restauration de ces mécanismes en vue
-d'assurer le contrôle démocratique d'une économie tournée vers la justice
-sociale, le plein emploi, etc.
+L'affaiblissement des mécanismes de souveraineté nationale va ainsi de pair avec la perte des acquis sociaux et la montée des inégalités. Les efforts de la gauche devront donc se concentrer sur la restauration de ces mécanismes en vue d'assurer le contrôle démocratique d'une économie tournée vers la justice sociale, le plein emploi, etc.
 
-La gauche n'est évidemment pas la seule force politique prônant un renouveau
-national mais c'est la seule qui a le potentiel d'en faire le cadre d'une vision
-progressiste, inclusive et libérale de la société.
+La gauche n'est évidemment pas la seule force politique prônant un renouveau national mais c'est la seule qui a le potentiel d'en faire le cadre d'une vision progressiste, inclusive et libérale de la société.

@@ -20,8 +20,7 @@ Il est facile de [dénigrer](https://theconversation.com/meet-rumble-canadas-new
 
 Non, le seul problème que je vois ici, c’est que le modèle reste celui d’une plate-forme contrôlée par une société cherchant à maximiser ses profits. Le discours de leurs propriétaires sur la liberté d’expression est peut-être sincère, mais c’est surtout un argument publicitaire et rien ne garantit que ces principes résistent à des pressions commerciales et politiques. Je comprends pourquoi les auteurs les plébiscitent (popularité, monétarisation simple du contenu) mais d’autres modèles de publication, reposant, par exemple, sur des logiciels comme [Peertube](https://joinpeertube.org/fr/) ou [Ghost](https://ghost.org), seraient peut-être plus sains sur le long terme.
 
-Mais, okay, pour le moment, Rumble, Substack et compagnie sont sans doute
-nécessaires à un discours public équilibré.
+Mais, okay, pour le moment, Rumble, Substack et compagnie sont sans doute nécessaires à un discours public équilibré.
 
 !function(r,u,m,b,l,e){r.\_Rumble=b,r\[b\]||(r\[b\]=function(){(r\[b\].\_=r\[b\].\_||\[\]).push(arguments);if(r\[b\].\_.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)\[0\],l.async=1,l.src="https://rumble.com/embedJS/upxj7a"+(arguments\[1\].video?'.'+arguments\[1\].video:'')+"/?url="+encodeURIComponent(location.href)+"&args="+encodeURIComponent(JSON.stringify(\[\].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, "script", "Rumble");
 
