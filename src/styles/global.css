@@ -16,6 +16,7 @@
 
 /* Tailwind CSS */
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Atkinson", sans-serif;
@@ -32,6 +33,32 @@
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
+
+  /* Typography variables */
+  --typography-prose-body: var(--color-gray-700);
+  --typography-prose-headings: var(--color-black);
+  --typography-prose-links: var(--color-accent);
+  --typography-prose-bold: var(--color-black);
+  --typography-prose-counters: var(--color-gray-600);
+  --typography-prose-bullets: var(--color-gray-600);
+  --typography-prose-hr: var(--color-gray-200);
+  --typography-prose-quotes: var(--color-gray-700);
+  --typography-prose-quote-borders: var(--color-accent);
+  --typography-prose-captions: var(--color-gray-600);
+  --typography-prose-code: var(--color-gray-700);
+  --typography-prose-pre-code: var(--color-gray-700);
+  --typography-prose-pre-bg: var(--color-gray-100);
+  --typography-prose-th-borders: var(--color-gray-200);
+  --typography-prose-td-borders: var(--color-gray-200);
+}
+
+/* Custom typography styles */
+@layer base {
+  .prose {
+    max-width: 65ch;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
 }
 
 /* Custom utility classes */
