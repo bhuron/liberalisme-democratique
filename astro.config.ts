@@ -9,7 +9,7 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://liberalisme-democratique.uk',
   integrations: [
     mdx({
       remarkPlugins: [remarkMath],
@@ -46,7 +46,7 @@ export default defineConfig({
       // Add your Ghost domain here if self-hosted:
       {
         protocol: 'https',
-        hostname: 'liberalisme-democratique.fr',
+        hostname: 'liberalisme-democratique.uk',
       },
     ],
     // Service configuration
