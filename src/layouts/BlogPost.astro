@@ -50,32 +50,6 @@ const {
 				}
 				<div class="p-6 md:p-8">
 					<header class="mb-8">
-						<div
-							class="flex flex-wrap items-center gap-2 text-gray-600 text-sm mb-4"
-						>
-							<time datetime={pubDate.toISOString()}>
-								<FormattedDate date={pubDate} />
-							</time>
-							{
-								author && (
-									<>
-										<span>•</span>
-										<span>{author}</span>
-									</>
-								)
-							}
-							{
-								updatedDate && (
-									<>
-										<span>•</span>
-										<span class="italic">
-											Mis à jour le{" "}
-											<FormattedDate date={updatedDate} />
-										</span>
-									</>
-								)
-							}
-						</div>
 						<h1
 							class="text-3xl md:text-4xl font-bold mb-4 text-black"
 						>
