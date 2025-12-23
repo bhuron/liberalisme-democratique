@@ -51,6 +51,10 @@
     color: var(--color-gray-900);
   }
 
+  .font-display {
+    font-family: var(--font-display);
+  }
+
   h1,
   h2,
   h3,
