@@ -5,6 +5,9 @@ pubDate: 2025-12-08T10:15:28.000Z
 updatedDate: 2025-12-08T10:15:28.000Z
 author: Benoît Huron
 draft: false
+tags:
+  - Technologie
+  - Loisir
 image:
   src: ../../assets/ghost-images/rss.png
   alt: Trente minutes
