@@ -1,0 +1,70 @@
+---
+title: "SillyTavern : mes incontournables"
+description: ""
+pubDate: 2025-12-27
+author: Benoît Huron
+draft: false
+image:
+  src: ../../assets/st-setup.png
+  alt: SillyTavern — mes incontournables
+---
+
+import { Image } from "astro:assets";
+import weiChen from "../../assets/wei-chen.png";
+
+J'avais prévu de détailler méticuleusement ma procédure d'installation de SillyTavern. Étape par étape, avec captures d'écran peut-être, des commandes à copier-coller. Un tutoriel complet, utile, rassurant. Mais j'ai réalisé l'absurdité de la démarche. N'importe quel chatbot moderne peut générer ces instructions en trente secondes. DeepSeek, Claude, ChatGPT — tous peuvent guider n'importe qui à travers l'installation avec une patience et une précision que je ne pourrai jamais égaler.
+
+On va faire plus simple — expliquer ce que j'installe systématiquement et pourquoi.
+
+## Le modèle : Deepseek
+
+C'est quasi-gratuit et c'est excellent. Voilà, c'est tout.
+
+Okay, il y a un effet secondaire non négligeable — ne jamais regarder le compteur change la façon dont on utilise l'application. On expérimente sans stress, on laisse tourner les conversations longues sans culpabilité. C'est particulièrement utile pour des explorations narratives qui s'étalent sur des dizaines de milliers de tokens.
+
+## L'esthétique : le thème Moonlit Echoes
+
+Le thème [Moonlit Echoes](https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme/tree/main) est un thème sombre et élégant qui ne fatigue pas les yeux. On passe beaucoup de temps dans l'interface de SillyTavern et l'esthétique compte.
+
+## Les extensions fonctionnelles
+
+**Chat Top Bar** donne un accès rapide aux fonctions essentielles. C'est le genre de détail ergonomique qu'on ne remarque que quand il manque.
+
+**Character Creator** permet de créer et modifier des personnages directement dans l'interface. Un personnage n'est jamais figé, il évolue avec l'usage. Pouvoir l'ajuster sans éditer manuellement des fichiers JSON est appréciable.
+
+**Guided Generations Extension** permet d'orienter la génération du modèle — forcer un certain ton, exclure des patterns, guider la structure. C'est indispensable pour maintenir une cohérence et un style spécifique.
+
+[**Memory Books**](https://github.com/aikohanasaki/SillyTavern-MemoryBooks/tree/main) permet de créer de façon automatique un historique persistant et structuré d'une conversation. 
+
+**Notebook** permet de prendre des notes pendant une conversation. C'est simple mais peut se révéler utile parfois.
+
+En gros, rien de révolutionnaire ici. Juste des outils qui réduisent la friction et augmentent le contrôle. 
+
+## Les presets : Marinara et NemoEngine
+
+J'utilise essentiellement deux presets. [Marinara's Universal Preset](https://spicymarinara.github.io/) a peu de paramètres et est facile à configurer.
+
+[NemoEngine](https://github.com/NemoVonNirgend/NemoEngine/tree/main) à l'inverse est un monstre présentant une quantité impressionnante d'options. Je m'en sers quand j'ai besoin d'un contrôle poussé sur le comportement du modèle, particulièrement pour des explorations narratives complexes.
+
+## Les character cards
+
+À chaque réinstallation, j'importe deux cartes de personnage très différentes pour vérifier que tout fonctionne correctement.
+
+**Wei Chen** est mon assistant par défaut. Un consultant de 28 ans, technique et drôle, passionné de K-dramas et de C-dramas — il sert à tester les capacités conversationnelles générales de SillyTavern. Je l'utilise généralement avec le preset Marinara.
+
+<Image 
+  src={weiChen}
+  alt="Wei Chen, un assistant virtuel" 
+  width={450} 
+  height={450} 
+  class="rounded-xl shadow-lg my-8 mx-auto" 
+/>
+
+Et puis il y a **Zhang Hao**, un jeune homme engagé dans une guerre silencieuse pour le contrôle de sa propre conscience. Zhang Hao n'est pas un assistant. C'est un exercice d'écriture, une exploration narrative, un espace pour développer un personnage complexe à travers des dialogues qui naviguent entre réalisme quotidien et dérive psychologique. NemoEngine prend ici tout son sens.
+
+Voilà, mon setup de base tient en quelques éléments — un modèle économique, un thème agréable, quelques extensions qui réduisent la friction et augmente le contrôle, deux presets et deux personnages pour tester l’installation et commencer à utiliser l'application rapidement.
+
+
+
+
+
