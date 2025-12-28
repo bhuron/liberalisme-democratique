@@ -6,20 +6,59 @@ export async function getStaticPaths() {
 	const posts = (await getCollection("blog")).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 	);
-	return posts.map((post, index) => ({
-		params: { slug: post.id },
-		props: {
-			post,
-			prevPost: index + 1 < posts.length ? posts[index + 1] : null,
-			nextPost: index - 1 >= 0 ? posts[index - 1] : null,
-		},
-	}));
+
+	// Helper function to find related posts based on shared tags
+	const getRelatedPosts = (
+		currentPost: CollectionEntry<"blog">,
+		allPosts: CollectionEntry<"blog">[],
+		limit = 3
+	) => {
+		const currentTags = new Set(currentPost.data.tags || []);
+
+		// Filter and score posts based on shared tags
+		const related = allPosts
+			.filter((post) => post.id !== currentPost.id && !post.data.draft)
+			.map((post) => {
+				const sharedTags = (post.data.tags || []).filter((tag) =>
+					currentTags.has(tag)
+				);
+				return {
+					post,
+					sharedCount: sharedTags.length,
+				};
+			})
+			.filter((item) => item.sharedCount > 0) // Only posts with at least 1 shared tag
+			.sort((a, b) => {
+				// Sort by number of shared tags (descending), then by recency
+				if (b.sharedCount !== a.sharedCount) {
+					return b.sharedCount - a.sharedCount;
+				}
+				return b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf();
+			})
+			.slice(0, limit)
+			.map((item) => item.post);
+
+		return related;
+	};
+
+	return posts.map((post, index) => {
+		const relatedPosts = getRelatedPosts(post, posts);
+		return {
+			params: { slug: post.id },
+			props: {
+				post,
+				prevPost: index + 1 < posts.length ? posts[index + 1] : null,
+				nextPost: index - 1 >= 0 ? posts[index - 1] : null,
+				relatedPosts,
+			},
+		};
+	});
 }
 
-const { post, prevPost, nextPost } = Astro.props;
+const { post, prevPost, nextPost, relatedPosts } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost}>
+<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} relatedPosts={relatedPosts}>
 	<Content />
 </BlogPost>
