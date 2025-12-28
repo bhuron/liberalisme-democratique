@@ -101,7 +101,8 @@ const {
 						<h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-8">
 							Articles similaires
 						</h2>
-						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<!-- Mobile carousel / Desktop grid -->
+						<div class="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-4 px-4 pb-2 scrollbar-hide md:grid md:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:mx-0 md:px-0 md:pb-0">
 							{
 								relatedPosts.map((post) => {
 									const sharedTags = post.data.tags?.filter((tag) =>
@@ -111,7 +112,7 @@ const {
 									return (
 										<a
 											href={`/blog/${post.id}`}
-											class="group flex flex-col bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
+											class="group flex flex-col bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 flex-shrink-0 w-80 snap-center md:w-auto md:flex-shrink-1"
 										>
 											{/* Thumbnail */}
 											{post.data.image?.src && (
