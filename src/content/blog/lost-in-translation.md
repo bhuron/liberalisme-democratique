@@ -1,6 +1,6 @@
 ---
 title: Lost in Translation
-description: ""
+description: "La traduction de textes littéraires est une activité difficile, voire impossible, car le sens n'est pas indépendant de l'inertie acoustique et de la texture sonore de la langue originale."
 pubDate: 2017-09-09T11:00:52.000Z
 updatedDate: 2024-02-26T10:19:49.000Z
 author: Benoît Huron

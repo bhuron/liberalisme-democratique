@@ -1,6 +1,6 @@
 ---
 title: "La contrainte budgétaire : illusion et réalité"
-description: ""
+description: "Un État souverain monétaire n'a pas de contraintes financières sur son budget. Le déficit public correspond à un surplus privé et ne devrait jamais être un objectif de politique publique."
 pubDate: 2017-10-09T08:24:59.000Z
 updatedDate: 2024-02-26T10:22:13.000Z
 author: Benoît Huron

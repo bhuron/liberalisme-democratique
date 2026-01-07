@@ -1,6 +1,6 @@
 ---
 title: La Souveraineté nationale, pilier d'une nouvelle gauche
-description: ""
+description: "Pour une gauche en recomposition, la Nation constitue le cadre naturel de délibération et de responsabilité, condition nécessaire à tout progrès social."
 pubDate: 2017-05-17T08:46:55.000Z
 updatedDate: 2024-02-28T10:54:16.000Z
 author: Benoît Huron

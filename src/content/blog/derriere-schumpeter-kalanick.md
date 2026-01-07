@@ -1,6 +1,6 @@
 ---
 title: Derrière Schumpeter, Kalanick
-description: ""
+description: "Les recherches de William Baumol montrent que la nature productive ou parasitaire des entrepreneurs dépend de la structure réglementaire et des incitations économiques en place."
 pubDate: 2017-06-22T10:54:20.000Z
 updatedDate: 2024-02-26T10:15:48.000Z
 author: Benoît Huron

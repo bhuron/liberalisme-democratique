@@ -1,6 +1,6 @@
 ---
 title: Trente minutes
-description: ""
+description: "Le développement d'un lecteur RSS personnel intégrant un LLM pour classer les articles et générer des synthèses, permettant de gagner du temps dans la consommation d'informations."
 pubDate: 2025-12-08T10:15:28.000Z
 updatedDate: 2025-12-08T10:15:28.000Z
 author: Benoît Huron

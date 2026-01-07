@@ -1,6 +1,6 @@
 ---
 title: Le Dominateur
-description: ""
+description: "L'argument de Diodore sur les notions de nécessité et contingence, une aporie philosophique qui a dominé la philosophie de l'action tout comme les paradoxes de Zénon ont dominé celle de la nature."
 pubDate: 2024-03-03T13:51:22.000Z
 updatedDate: 2025-12-09T09:42:19.000Z
 author: Benoît Huron
