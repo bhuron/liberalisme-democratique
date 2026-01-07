@@ -1,6 +1,6 @@
 ---
 title: Ecoin is Here
-description: ""
+description: "Analyse de la stratégie Ecorp dans Mr Robot, qui vise à créer une monnaie privée affranchie de toute contrainte publique pour contrôler l'allocation des ressources."
 pubDate: 2017-05-03T18:15:07.000Z
 updatedDate: 2024-02-26T10:11:11.000Z
 author: Benoît Huron

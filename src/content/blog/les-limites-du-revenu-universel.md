@@ -1,6 +1,6 @@
 ---
 title: Les limites du revenu universel
-description: ""
+description: "Un revenu universel conséquent risquerait de provoquer des tendances inflationnistes et d'engendrer un cycle vicieux de stimulus et d'austérité."
 pubDate: 2017-06-10T07:54:48.000Z
 updatedDate: 2024-02-26T10:13:41.000Z
 author: Benoît Huron

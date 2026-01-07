@@ -1,6 +1,6 @@
 ---
-title: L’informatique en cycle 4 ?
-description: ""
+title: L'informatique en cycle 4 ?
+description: "Réflexion sur l'enseignement de l'informatique au collège à travers la gestion de données, la programmation et l'esprit critique, plutôt que l'apprentissage de la programmation pour elle-même."
 pubDate: 2024-02-19T12:47:43.000Z
 updatedDate: 2025-12-21T09:34:59.000Z
 author: Benoît Huron

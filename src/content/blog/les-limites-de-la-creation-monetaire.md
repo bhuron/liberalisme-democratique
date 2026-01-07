@@ -1,6 +1,6 @@
 ---
 title: Les limites de la création monétaire
-description: ""
+description: "La création monétaire par les banques est limitée par les coûts de refinancement, la réglementation et surtout par la demande de crédit qui fluctue avec l'activité économique."
 pubDate: 2017-05-04T14:50:09.000Z
 updatedDate: 2024-02-26T10:07:50.000Z
 author: Benoît Huron

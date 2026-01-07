@@ -1,6 +1,6 @@
 ---
 title: Les contorsions de la Banque Centrale Européenne
-description: ""
+description: "Contrainte par les traités mais forcée de financer les déficits nationaux, la BCE multiplie les contorsions administratives pour soutenir un système boiteux."
 pubDate: 2017-09-07T14:30:08.000Z
 updatedDate: 2024-02-28T10:56:47.000Z
 author: Benoît Huron

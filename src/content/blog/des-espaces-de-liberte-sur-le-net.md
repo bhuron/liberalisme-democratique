@@ -1,6 +1,6 @@
 ---
 title: Des espaces de liberté sur le Net ?
-description: ""
+description: "Analyse des nouvelles plateformes en ligne comme Substack et Rumble qui cherchent à échapper à la censure des Big Tech et des médias traditionnels."
 pubDate: 2024-02-19T12:55:35.000Z
 updatedDate: 2025-08-04T15:53:29.000Z
 author: Benoît Huron
