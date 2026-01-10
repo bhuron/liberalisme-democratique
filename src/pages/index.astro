@@ -12,6 +12,22 @@ const featuredPosts = allPosts
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
+
+// Count tags across all posts
+const tagCounts = new Map<string, number>();
+for (const post of allPosts) {
+	if (post.data.tags) {
+		for (const tag of post.data.tags) {
+			tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+		}
+	}
+}
+
+// Get top 3 tags
+const topTags = Array.from(tagCounts.entries())
+	.sort((a, b) => b[1] - a[1])
+	.slice(0, 3)
+	.map(([tag, count]) => ({ tag, count }));
 ---
 
 <!doctype html>
@@ -62,11 +78,8 @@ const featuredPosts = allPosts
 													src={imageSrc}
 													alt={imageAlt}
 													class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-													loading={
-														index < 3
-															? "eager"
-															: "lazy"
-													}
+													loading="eager"
+													decoding="sync"
 												/>
 											</div>
 										)}
@@ -120,34 +133,29 @@ const featuredPosts = allPosts
 				}
 			</section>
 
-			<!-- About preview -->
+			<!-- Topics section -->
 			<section class="py-16 border-t border-gray-200">
-				<div class="max-w-3xl mx-auto">
-					<h2 class="text-4xl font-extrabold mb-8 text-black">
-						À propos
+				<div class="max-w-4xl mx-auto text-center">
+					<h2 class="text-3xl font-extrabold mb-12 text-black">
+						Explorez par sujet
 					</h2>
-					<p class="text-xl text-gray-800 mb-6 leading-relaxed">
-						Ce blog explore les idées du libéralisme politique et de
-						la démocratie, avec des analyses, des réflexions et des
-						discussions sur les institutions, les droits individuels
-						et la gouvernance.
-					</p>
-					<p class="text-xl text-gray-800 mb-8 leading-relaxed">
-						Écrit par <span class="font-bold text-accent"
-							>{SITE_AUTHOR}</span
-						>, ce site vise à partager des perspectives éclairées et
-						à encourager le débat constructif.
-					</p>
-					<a
-						href="/about"
-						class="inline-flex items-center text-accent hover:text-accent-dark font-bold text-lg group"
-					>
-						En savoir plus
-						<span
-							class="ml-2 transition-transform group-hover:translate-x-1"
-							>→</span
-						>
-					</a>
+					<div class="flex flex-wrap justify-center gap-4">
+						{
+							topTags.map(({ tag, count }) => (
+								<a
+									href={`/blog/tag/${encodeURIComponent(tag)}/`}
+									class="group inline-flex flex-col items-center px-8 py-6 bg-gray-50 hover:bg-accent/10 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-200 hover:border-accent/30"
+								>
+									<span class="text-2xl font-extrabold text-gray-900 group-hover:text-accent mb-2 transition-colors">
+										{tag}
+									</span>
+									<span class="text-sm font-medium text-gray-500">
+										{count} {count === 1 ? 'article' : 'articles'}
+									</span>
+								</a>
+							))
+						}
+					</div>
 				</div>
 			</section>
 		</main>
