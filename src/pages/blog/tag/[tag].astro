@@ -39,13 +39,13 @@ const posts = allPosts
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={`Tag : ${tag} - ${SITE_TITLE}`} description={`Articles avec le tag ${tag}`} />
+		<BaseHead title={`${tag} - ${SITE_TITLE}`} description={`Articles avec le tag ${tag}`} />
 	</head>
 	<body class="min-h-screen">
 		<Header />
 		<main class="max-w-6xl mx-auto px-4 py-12 md:py-16">
 			<h1 class="text-5xl font-extrabold mb-4 text-black">
-				Tag : {tag}
+				{tag}
 			</h1>
 			<p class="text-gray-600 mb-8">
 				<a href="/blog" class="text-accent hover:text-accent-dark">

@@ -61,9 +61,12 @@ const {
 							tags && tags.length > 0 && (
 								<div class="flex flex-wrap gap-2 mb-6">
 									{tags.map((tag) => (
-										<span class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
+										<a
+											href={`/blog/tag/${encodeURIComponent(tag)}/`}
+											class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-accent hover:text-white transition-all duration-200 no-underline"
+										>
 											#{tag}
-										</span>
+										</a>
 									))}
 								</div>
 							)
