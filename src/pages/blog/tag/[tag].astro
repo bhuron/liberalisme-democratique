@@ -86,7 +86,7 @@ const posts = allPosts
 											{post.data.author && ` • ${post.data.author}`}
 											{post.data.tags && post.data.tags.length > 0 && (
 												<span class="ml-2">
-													{post.data.tags.map((t) => `#${t}`).join(", ")}
+													{post.data.tags.join(", ")}
 												</span>
 											)}
 										</p>
