@@ -3,16 +3,16 @@
 /**
  * Ghost to Astro Blog Importer
  *
- * This script converts Ghost JSON export files to Astro-compatible markdown files.
+ * This script converts Ghost JSON export files to Astro-compatible MDX files.
  *
  * Usage:
- * 1. Export your Ghost content from Ghost Admin: Settings > Labs > Export
+ * 1. Export your Ghost content from Ghost Admin: Settings > Advanced > Import/Export
  * 2. Save the JSON file as `ghost-export.json` in the project root
- * 3. Run: node scripts/import-ghost.js
+ * 3. Run: npm run import:ghost
  *
  * The script will:
  * - Parse the Ghost export JSON
- * - Convert posts to markdown files with frontmatter matching the blog schema
+ * - Convert posts to MDX files with frontmatter matching the blog schema
  * - Save files to `src/content/blog/`
  * - Handle images (requires manual copy of images to `src/assets/ghost-images/`)
  */
@@ -373,18 +373,18 @@ async function main() {
   for (const post of publishedPosts) {
     try {
       const { slug, markdown } = convertPostToMarkdown(post, tags, postsTags, users);
-      const outputPath = path.join(OUTPUT_DIR, `${slug}.md`);
+      const outputPath = path.join(OUTPUT_DIR, `${slug}.mdx`);
 
       // Check if file already exists
       if (fs.existsSync(outputPath)) {
-        console.log(`⚠️  Skipping "${post.title}" - file already exists: ${slug}.md`);
+        console.log(`⚠️  Skipping "${post.title}" - file already exists: ${slug}.mdx`);
         skippedCount++;
         continue;
       }
 
       // Write markdown file
       fs.writeFileSync(outputPath, markdown);
-      console.log(`✅ Imported "${post.title}" -> ${slug}.md`);
+      console.log(`✅ Imported "${post.title}" -> ${slug}.mdx`);
       importedCount++;
 
     } catch (error) {

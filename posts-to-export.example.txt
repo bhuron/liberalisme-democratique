@@ -1,0 +1,8 @@
+# Specify which posts to export to Ghost (one slug per line)
+# If this file doesn't exist or is empty, ALL posts will be exported
+# Lines starting with # are ignored
+
+# Example:
+# lire-plus-et-lire-mieux
+# lintelligence-artificielle-dans-leducation
+# leconomie-de-lia-est-une-chaine-financiere-fragile
