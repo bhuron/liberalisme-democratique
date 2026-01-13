@@ -35,6 +35,30 @@ const SLUGS_FILE = path.join(projectRoot, 'posts-to-export.txt');
 // Ghost configuration
 const GHOST_VERSION = '6.0.0';
 const DEFAULT_AUTHOR_EMAIL = 'author@example.com'; // Change to your Ghost author email
+const SITE_URL = 'https://liberalisme-democratique.uk'; // Your site URL for converting asset paths
+
+/**
+ * Convert local asset path to full URL for Ghost
+ * Converts ../../assets/filename.ext to https://liberalisme-democratique.uk/assets/filename.ext
+ */
+function convertAssetPathToUrl(assetPath) {
+  if (!assetPath) return assetPath;
+
+  // If it's already a full URL, return as-is
+  if (assetPath.startsWith('http://') || assetPath.startsWith('https://')) {
+    return assetPath;
+  }
+
+  // Convert relative path like ../../assets/filename.ext
+  if (assetPath.startsWith('../../assets/')) {
+    const filename = path.basename(assetPath);
+    return `${SITE_URL}/assets/${filename}`;
+  }
+
+  // For any other relative path, just return the filename as URL
+  const filename = path.basename(assetPath);
+  return `${SITE_URL}/assets/${filename}`;
+}
 
 /**
  * Generate a unique ID for Ghost resources
@@ -62,9 +86,9 @@ function convertPostToGhost(filePath, postId) {
 
   if (data.image) {
     if (typeof data.image === 'string') {
-      featureImage = data.image;
+      featureImage = convertAssetPathToUrl(data.image);
     } else if (typeof data.image === 'object') {
-      featureImage = data.image.src;
+      featureImage = convertAssetPathToUrl(data.image.src);
       featureImageAlt = data.image.alt || data.title;
     }
   }
@@ -99,17 +123,140 @@ function convertPostToGhost(filePath, postId) {
   };
 
   // Optional posts_meta
-  const ghostPostMeta = {};
+  let ghostPostMeta = null;
   if (featureImageAlt) {
-    ghostPostMeta.id = generateId();
-    ghostPostMeta.post_id = postId;
-    ghostPostMeta.feature_image_alt = featureImageAlt;
+    ghostPostMeta = {
+      id: generateId(),
+      post_id: postId,
+      feature_image_alt: featureImageAlt
+    };
   }
 
   return {
-    post: ghostPostMeta.id ? { post: ghostPost, meta: ghostPostMeta } : { post: ghostPost },
+    post: ghostPost,
+    meta: ghostPostMeta,
     tags: data.tags || []
   };
+}
+
+/**
+ * Extract import mappings from MDX content
+ * Returns object mapping imported variable names to their paths
+ */
+function extractImportMappings(content) {
+  const mappings = {};
+
+  // Match: import something from "path";
+  const importRegex = /^import\s+(\w+|\{[^}]+\})\s+from\s+['"]([^'"]+)['"];?\s*$/gm;
+  let match;
+
+  while ((match = importRegex.exec(content)) !== null) {
+    const [, importSpec, path] = match;
+
+    if (importSpec.startsWith('{')) {
+      // Destructured import: import { Image } from "astro:assets";
+      // We don't need to track these
+      continue;
+    } else {
+      // Default import: import lire from "../../assets/lire.png";
+      const varName = importSpec.trim();
+      mappings[varName] = path;
+    }
+  }
+
+  return mappings;
+}
+
+/**
+ * Remove all import statements from content
+ */
+function removeImports(content) {
+  return content.replace(/^import\s+.*$/gm, '').replace(/^\n$/, '');
+}
+
+/**
+ * Convert Astro <Image /> components to <img> tags
+ */
+function convertImageComponents(content, importMappings) {
+  // Match <Image src={variable} alt="..." ... />
+  // This handles multi-line Image components
+  const imageRegex = /<Image\s+([^>]+?)\/>/gs;
+
+  return content.replace(imageRegex, (match, props) => {
+    let src = '';
+    let alt = '';
+    let width = '';
+    let height = '';
+    let className = '';
+
+    // Parse props - handle both quoted and unquoted/braced values
+    const propRegex = /(\w+)=("[^"]*"|'[^']*'|\{[^}]*\})/g;
+    let propMatch;
+
+    while ((propMatch = propRegex.exec(props)) !== null) {
+      const [, name, value] = propMatch;
+
+      // Remove surrounding quotes or braces
+      const cleanValue = value.replace(/^["']|["']$/g, '').replace(/^{|}$/g, '').trim();
+
+      if (name === 'src') {
+        // Check if src is a variable reference
+        if (importMappings[cleanValue]) {
+          src = convertAssetPathToUrl(importMappings[cleanValue]);
+        } else {
+          src = convertAssetPathToUrl(cleanValue);
+        }
+      } else if (name === 'alt') {
+        alt = cleanValue;
+      } else if (name === 'width') {
+        width = ` width="${cleanValue}"`;
+      } else if (name === 'height') {
+        height = ` height="${cleanValue}"`;
+      } else if (name === 'class') {
+        className = ` class="${cleanValue}"`;
+      }
+    }
+
+    return `<img src="${src}" alt="${alt}"${width}${height}${className} />`;
+  });
+}
+
+/**
+ * Convert YoutubeEmbed component to iframe
+ */
+function convertYoutubeEmbed(content) {
+  // Match <YoutubeEmbed url="..." title="..." />
+  const youtubeRegex = /<YoutubeEmbed\s+([^>]+?)\/>/gs;
+
+  return content.replace(youtubeRegex, (match, props) => {
+    let url = '';
+    let title = 'YouTube video';
+
+    // Parse props
+    const propRegex = /(\w+)=("[^"]*"|'[^']*')/g;
+    let propMatch;
+
+    while ((propMatch = propRegex.exec(props)) !== null) {
+      const [, name, value] = propMatch;
+      const cleanValue = value.replace(/^["']|["']$/g, '');
+
+      if (name === 'url') {
+        url = cleanValue;
+      } else if (name === 'title') {
+        title = cleanValue;
+      }
+    }
+
+    // Extract video ID from URL
+    const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([^&?/]+)/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : '';
+
+    if (!videoId) {
+      return `<!-- Could not parse YouTube URL: ${url} -->`;
+    }
+
+    return `<figure class="kg-card kg-embed-card"><iframe width="480" height="270" src="https://www.youtube.com/embed/${videoId}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>`;
+  });
 }
 
 /**
@@ -120,6 +267,16 @@ function markdownToHtml(markdown) {
   if (!markdown) return '';
 
   let html = markdown;
+
+  // 1. Extract import mappings before removing them
+  const importMappings = extractImportMappings(html);
+
+  // 2. Remove import statements
+  html = removeImports(html);
+
+  // 3. Convert Astro components (before markdown processing)
+  html = convertImageComponents(html, importMappings);
+  html = convertYoutubeEmbed(html);
 
   // Code blocks (must be done before other processing)
   html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
@@ -145,8 +302,10 @@ function markdownToHtml(markdown) {
   // Links
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
-  // Images
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+  // Images - convert markdown to img tags and update paths to URLs
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+    return `<img src="${convertAssetPathToUrl(src)}" alt="${alt}" />`;
+  });
 
   // Blockquotes
   html = html.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
@@ -160,7 +319,7 @@ function markdownToHtml(markdown) {
   html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
 
   // Paragraphs (must be done last)
-  html = html.replace(/^(?!<(?:h[1-6]|p|ul|ol|li|blockquote|pre|code))(.+)$/gm, '<p>$1</p>');
+  html = html.replace(/^(?!<(?:h[1-6]|p|ul|ol|li|blockquote|pre|code|figure))(.+)$/gm, '<p>$1</p>');
 
   // Clean up empty paragraphs
   html = html.replace(/<p><\/p>/g, '');
@@ -256,10 +415,10 @@ async function main() {
     try {
       const { post, meta, tags: postTags } = convertPostToGhost(filePath, postId);
 
-      // Add post
+      // Add post directly to posts array (Ghost format: posts contains post objects)
       posts.push(post);
 
-      // Add meta if exists
+      // Add meta to separate posts_meta array (Ghost format: posts_meta is separate)
       if (meta) {
         postsMeta.push(meta);
       }
@@ -316,7 +475,7 @@ async function main() {
     },
     data: {
       posts: posts,
-      ...(postsMeta.length > 0 && { posts_meta: postsMeta }),
+      posts_meta: postsMeta, // Always include, even if empty
       tags: tags,
       posts_tags: postsTags,
       users: users,
