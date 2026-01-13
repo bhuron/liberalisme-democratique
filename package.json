@@ -13,7 +13,8 @@
     "images:dry-run": "node scripts/download-ghost-images.js --dry-run",
     "format:articles": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings",
     "format:articles:dry-run": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings --dry-run",
-    "new": "node scripts/new-post.js"
+    "new": "node scripts/new-post.js",
+    "favicon": "node scripts/generate-favicon.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
