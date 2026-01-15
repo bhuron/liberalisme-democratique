@@ -10,6 +10,7 @@ type Props = {
 	prevPost?: CollectionEntry<"blog"> | null;
 	nextPost?: CollectionEntry<"blog"> | null;
 	relatedPosts?: CollectionEntry<"blog">[];
+	hasMath?: boolean;
 } & CollectionEntry<"blog">["data"];
 
 const {
@@ -23,12 +24,15 @@ const {
 	prevPost,
 	nextPost,
 	relatedPosts,
+	hasMath = false,
 } = Astro.props;
 ---
-
 <html lang="fr">
 	<head>
 		<BaseHead title={title} description={description} image={image?.src} />
+		{hasMath && (
+			<link rel="stylesheet" href="/lib/katex.min.css" />
+		)}
 	</head>
 
 	<body class="min-h-screen">
