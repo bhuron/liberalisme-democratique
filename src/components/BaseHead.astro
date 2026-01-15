@@ -42,9 +42,19 @@ const ogImageUrl = new URL(optimizedImage.src, Astro.site);
 	href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Google Fonts optimization -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap"
+	rel="stylesheet"
+>
+
+<!-- KaTeX CSS (local, faster loading) -->
 <link
 	rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+	href="/lib/katex.min.css"
 />
 
 <!-- Font preloads -->
