@@ -84,12 +84,15 @@
   }
 
   .prose blockquote {
-    font-style: normal !important;
-    font-weight: 400 !important;
-    border-left-width: 4px;
-    border-left-color: var(--typography-prose-quote-borders);
+    font-style: normal;
+    font-weight: 400;
+    border-left-width: 3px;
+    border-left-color: var(--color-accent);
     padding-left: 1.5rem;
-    color: var(--typography-prose-quotes);
+    margin: 2em 0;
+    color: var(--color-gray-600);
+    font-size: 1.1em;
+    line-height: 1.8;
   }
 
   .prose blockquote p {
