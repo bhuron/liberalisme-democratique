@@ -1,0 +1,8 @@
+# Specify which posts to export to Ghost (one slug per line)
+# If this file doesn't exist or is empty, ALL posts will be exported
+# Lines starting with # are ignored
+
+# Three most recent articles:
+la-bulle-ia-nest-pas-un-remake-de-2000-elle-est-pire
+lart-de-la-souverainete
+lia-et-les-licenciements-entre-mythe-et-realite-economique
