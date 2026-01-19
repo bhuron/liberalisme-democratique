@@ -1,0 +1,89 @@
+---
+title: "La bulle IA n'est pas un remake de 2000 — elle est pire"
+description: "Comparaison entre la bulle Internet des années 90 et la bulle de l'IA actuelle. Cette dernière présente des risques systémiques plus importants en raison de sa concentration, de ses coûts opérationnels élevés et de l'absence de modèles économiques viables."
+pubDate: 2026-01-19
+author: Benoît Huron
+draft: false
+image:
+  src: ../../assets/cracked-bubble.png
+  alt: "Pure gaspillage"
+tags:
+  - Économie
+  - Finance
+  - IA
+---
+
+import { Image } from "astro:assets";
+import sweetBubble from "../../assets/sweet-bubble.png";
+
+Face aux excès des valorisations des sociétés de l'IA, aux doutes quant à leur modèle économique et à l'utilité réelle de leurs produits, certains commentateurs se réfugient dans une comparaison historique rassurante. La bulle Internet de la fin des années 90 a aussi été une période d'excès suivie d'une sévère correction mais dont l'exubérance a en fin de compte servi de fondation à l'Internet que nous connaissons aujourd'hui — rapide, fiable et versatile.
+
+Cette analogie masque des [différences](https://www.wheresyoured.at/dot-com-bubble/#the-dot-com-bubble-was-complex-the-ai-bubble-is-much-much-simpler) structurelles majeures — des différences qui rendent la bulle IA potentiellement bien plus destructrice que celle qui a fait s'effondrer le NASDAQ de [78% en 2000-2002](https://www.nasdaq.com/articles/nasdaq-just-reached-terrifying-valuation-level-and-history-very-clear-about-what-happens?ref=wheresyoured.at).
+
+## D'une bulle à l'autre
+
+Pour être honnête, il y a bel et bien des similarités entre les deux périodes.
+
+Le moteur principal est le même — des volumes massifs de capitaux investis sur des promesses futures plutôt que sur des fondamentaux économiques solides. Le total des investissements en capital-risque durant les années phare de la bulle Internet (1997-2000, ajusté à l'inflation) s'élevait à 344,49 milliards de dollars. En 2025 seulement, le capital-risque a levé 338,3 milliards de dollars dont 40 à 50 % (environ 168 milliards de dollars) sont allés à l'IA. Les montants sont comparables même si la bulle de l'IA se gonfle à une échelle financière plus large et plus rapide.
+
+C'est l'économie du *greater fool* — l'objectif n'est pas la rentabilité mais la valorisation, convaincre les investisseurs, organiser une entrée en bourse ou se faire racheter.
+
+### Attiser le délire
+
+Les mythes fondateurs justifiant l'emballement sont eux aussi remarquablement similaires. Dans les années 90, c'était « Le trafic Internet double tous les 90 jours », une affirmation grossièrement exagérée. Aujourd'hui, c'est « La demande en puissance de calcul est insatiable », aussi sans fondement mais justifiant la construction de centres de données et la destruction de notre environnement. 
+
+Médias, analystes, vendeurs, investisseurs forment une boucle de renforcement mutuel qui fonctionne comme une chambre d'écho, un environnement complaisant où la critique est perçue comme ridicule, de mauvaise foi et hostile.
+
+Mais c'est à peu près ici que s'arrêtent les ressemblances.
+
+## Après le carnage, la question des infrastructures
+
+L'argument est rassurant — même si la bulle éclate, les infrastructures construites aujourd'hui se révéleraient utiles pour la suite. Après tout, la surcapacité en fibre optique héritée de la bulle Internet a fini par être utilisée. Pourquoi est-ce qu'il en irait autrement avec les centres de données et les GPU ?
+
+Entre 1997 et 2001, plus de [62 millions de kilomètres](https://www.zdnet.com/home-and-office/networking/the-path-to-the-u-s-fiber-cable-glut/) de fibre optique ont été posés à travers le monde, pour un coût d'environ 163 milliards en dollars. Une surproduction massive. Mais cette infrastructure avait des caractéristiques particulières — elle était durable, amortissable sur 15 à 25 ans, complètement versatile, passive sur le plan énergétique et largement décentralisée.
+
+En d'autres termes, même sous-utilisée, la fibre ne coûtait presque rien à maintenir et gardait sa valeur, prête à accommoder une demande réelle qui a fini par se manifester.
+
+Les GPU et les centres de données n’ont rien de comparable. Leur coût initial est extrêmement élevé et leurs coûts opérationnels le sont tout autant — en énergie, refroidissement, maintenance, personnel. Leur durée de vie économique est courte, souvent de trois à cinq ans, en raison d’une obsolescence rapide (NVIDIA lance une nouvelle génération de processeurs environ tous les ans). Et leur utilité est très spécialisée — ces infrastructures sont optimisées presque exclusivement pour l’entraînement et l’inférence de grands modèles de langage.
+
+L'infrastructure de 2000 était prématurée mais utile. Celle construite aujourd'hui risque d'être simplement inutile — des entrepôts remplis de matériel coûteux à maintenir, impossible à recycler pour d'autres usages et technologiquement dépassé avant même d'avoir généré un retour sur investissement.
+
+<Image
+  src={sweetBubble}
+  alt="Une bulle dangereuse"
+  class="rounded-xl shadow-lg my-8 mx-auto"
+>
+
+## Des fondamentaux économiques très différents
+
+Le manque de rentabilité des entreprises de la bulle Internet est qualitativement différent des pertes que connaît actuellement tout le secteur IA en aval de NVIDIA.
+
+Pour la bulle des années 90, les pertes provenaient principalement d’une mauvaise exécution de modèles économiques viables en théorie. Pets.com ou WebVan vendaient des produits réels à des clients réels. Leur problème était une croissance trop rapide, des dépenses marketing délirantes et une logistique immature. Le fait que des entreprises comme Chewy ou Instacart aient réussi plus tard montre que le modèle n’était pas absurde, juste prématuré.
+
+Le problème de l'IA générative est d'une toute autre nature — les coûts augmentent linéairement avec l'usage. Plus il y a d'utilisateurs, plus les coûts augmentent. Les pertes s'accumulent au rythme de la croissance.
+
+On invoque souvent la baisse du coût par token. Mais c’est une confusion délibérement entretenue. D'une part, on confond le prix payé par les consommateurs avec le coût de génération de tokens. D'autre part, et surtout, ce qui compte n’est pas le coût unitaire, mais le coût total. Or les modèles deviennent plus complexes, consomment plus de tokens et sont utilisés pour des tâches de plus en plus lourdes. Le coût par token baisse, mais le nombre de tokens explose.
+
+Les entreprises de l'ère dotcom pouvaient, au moins en théorie, réduire leurs dépenses et atteindre la rentabilité. Pour une grande partie de l’écosystème IA, la rentabilité est aujourd'hui hors d’atteinte sans rupture technologique majeure.
+
+## La distribution du risque
+
+L'écosystème de la bulle Internet était vaste et relativement diversifié — des dizaines d’équipementiers télécoms, des centaines d’opérateurs, une multitude de startups web. Le poids de chaque acteur dans la capitalisation boursière totale était très limité. La contagion, lors de l’éclatement, a été large mais diluée.
+
+La situation est bien, bien plus simple pour la bulle IA. NVIDIA représente à elle seule environ 7% du S&P 500. Près de 88% de ses revenus proviennent de la vente de GPU pour équiper des centres de données consacrés pour l'essentiel à l'intelligence artificielle. Ses principaux clients, les seuls capables d'assumer les coûts requis, sont les autres membres des *Magnificent 7* (Microsoft, Google, Amazon, Meta) ou d'autres grosses sociétés en capacité de lever de la dette en quantité considérable. 
+
+C'est un système hyper-concentré et fragile. NVIDIA dépend des hyperscalers et des néo-clouds, qui dépendent d'un ou deux fournisseurs de modèle, qui dépendent eux-mêmes de start-up spécialisées servant une demande finale largement théorique.
+
+C'est une [chaîne de dépendance](https://liberalisme-democratique.uk/blog/leconomie-de-lia-est-une-chaine-financiere-fragile/) maintenue par la dette et le capital risque où chaque maillon est un point de rupture potentiel. La chute d'un acteur comme CoreWeave suffirait à inonder le marché de GPU et provoquer une dévaluation massive. Un choc chez OpenAI affecterait immédiatement toute la chaîne (notamment via le marché de la dette) et une correction sévère chez NVIDIA aurait un impact systémique sur les indices boursiers et, au-delà, sur l'économie dans son ensemble.
+
+## En attendant les clients
+
+À la fin des années 90, la demande de services Internet était limitée par de véritables freins structurels. À peine la moitié des Américains étaient connectés. Les connexions étaient lentes, instables et coûteuses. 
+
+Ce n'est pas le cas aujourd'hui. L’accès aux modèles de langage est quasi universel. ChatGPT, Gemini ou Claude sont disponibles gratuitement. La bande passante n’est plus un problème. 
+
+Et pourtant, la majorité des utilisateurs ne paient pas ou très peu. Le frein n’est pas la distribution mais la proposition de valeur. Les outils sont parfois utiles mais rarement indispensables à un point justifiant des dépenses massives et récurrentes.
+
+La bulle Internet anticipait correctement un besoin qui ne pouvait pas se concrétiser par manque d'infrastructure. La bulle IA construit une infrastructure massive pour un besoin qui reste à prouver — alors même que rien n'empêche cette demande de s'exprimer dès maintenant.
+
+Comparer la bulle IA avec la bulle Internet est rassurant et dangereux. On en sous-estime le risque systémique plus important, plus concentré et plus difficile à absorber. On légitime la complaisance et l'irresponsabilité.
