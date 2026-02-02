@@ -13,6 +13,7 @@ tags:
 ---
 
 import { Image } from "astro:assets";
+import Figure from "../../components/Figure.astro";
 import pibNiveaux from "../../assets/pib-niveaux.png";
 import pibCroissance from "../../assets/pib-croissance.png";
 import productionBranches from "../../assets/production-branches.png";
@@ -32,16 +33,11 @@ On observe une trajectoire de croissance modérée mais continue du PIB françai
 
 Au quatrième trimestre 2025, le PIB atteint 662,177 milliards d'euros en volume aux prix de l'année précédente chaînés, soit une progression de 0,2% par rapport au trimestre précédent. Cette croissance, bien que positive, reste inférieure à celle observée au troisième trimestre (+0,5%).
 
-<figure class="my-8">
-  <Image 
-    src={pibNiveaux} 
-    alt="Évolution du produit intérieur brut français de 2023 à 2025"
-    class="rounded-xl shadow-lg mx-auto" 
-  />
-  <figcaption class="text-center text-gray-600 mt-3 italic">
-    <span class="text-sm">Produit intérieur brut - Volume aux prix de l'année précédente chaînés (en milliards d'euros). Source : Insee.</span>
-  </figcaption>
-</figure>
+<Figure 
+  src={pibNiveaux} 
+  alt="Évolution du produit intérieur brut français de 2023 à 2025"
+  caption="Produit intérieur brut - Volume aux prix de l'année précédente chaînés (en milliards d'euros). Source : Insee."
+/>
 
 ## La production totale marque le pas au quatrième trimestre 2025
 
@@ -53,16 +49,11 @@ La production dans la construction, quant à elle, est quasi stable (+0,1 % apr�
 
 Mais c'est surtout dans l'industrie manufacturière que le repli est le plus marqué : la production se replie légèrement ce trimestre, après avoir été dynamique au trimestre précédent (-0,2 % après +1,3 %). Elle est tirée à la baisse par un recul général dans les autres produits manufacturés (-0,4 % après +0,8 %), dans les biens d'équipement (-0,4 % après +0,3 %), ainsi que dans les matériels de transport (-0,2 % après +2,8 %). Elle recule en particulier dans l'automobile (-2,2 % après -0,2 %), avec plusieurs usines à l'arrêt à l'automne.
 
-<figure class="my-8">
-  <Image 
-    src={pibCroissance} 
-    alt="Taux de croissance trimestrielle du PIB français"
-    class="rounded-xl shadow-lg mx-auto" 
-  />
-  <figcaption class="text-center text-gray-600 mt-3 italic">
-    <span class="text-sm">Taux de croissance du PIB en volume (en %, variation par rapport au trimestre précédent). Source : Insee.</span>
-  </figcaption>
-</figure>
+<Figure 
+  src={pibCroissance} 
+  alt="Taux de croissance trimestrielle du PIB français"
+  caption="Taux de croissance du PIB en volume (en %, variation par rapport au trimestre précédent). Source : Insee."
+/>
 
 ## Décélération sectorielle contrastée
 
@@ -74,16 +65,11 @@ La construction, après avoir progressé de +0,6 % au troisième trimestre, ne p
 
 Les services marchands, moteur traditionnel de la croissance française, voient également leur dynamisme s'atténuer (+0,2 % après +0,6 %). Les services non marchands maintiennent une croissance régulière mais modérée (+0,3 % après +0,7 %).
 
-<figure class="my-8">
-  <Image 
-    src={productionBranches} 
-    alt="Production par branche d'activité au troisième et quatrième trimestre 2025"
-    class="rounded-xl shadow-lg mx-auto" 
-  />
-  <figcaption class="text-center text-gray-600 mt-3 italic">
-    <span class="text-sm">Variation de la production par branche d'activité (en %). Comparaison entre le troisième et le quatrième trimestre 2025. Source : Insee.</span>
-  </figcaption>
-</figure>
+<Figure 
+  src={productionBranches} 
+  alt="Production par branche d'activité au troisième et quatrième trimestre 2025"
+  caption="Variation de la production par branche d'activité (en %). Comparaison entre le troisième et le quatrième trimestre 2025. Source : Insee."
+/>
 
 ## La consommation des ménages accélère modérément
 
@@ -115,16 +101,11 @@ Les importations se replient fortement (-1,7 % après +1,5 %), reflétant le ral
 
 En miroir, la contribution des variations de stocks à l'évolution du PIB est fortement négative ce trimestre : -1,0 point après -0,4 point au troisième trimestre 2025. Les produits aéronautiques sont de nouveau fortement déstockés, après un important stockage en début d'année. Les produits navals contribuent également à ce déstockage ce trimestre, avec la livraison d'un paquebot en octobre.
 
-<figure class="my-8">
-  <Image 
-    src={contributionsPib} 
-    alt="Contributions des composantes à la croissance du PIB"
-    class="rounded-xl shadow-lg mx-auto" 
-  />
-  <figcaption class="text-center text-gray-600 mt-3 italic">
-    <span class="text-sm">Contributions à la croissance du PIB (en points de pourcentage). Comparaison entre le troisième et le quatrième trimestre 2025. Source : Insee.</span>
-  </figcaption>
-</figure>
+<Figure 
+  src={contributionsPib} 
+  alt="Contributions des composantes à la croissance du PIB"
+  caption="Contributions à la croissance du PIB (en points de pourcentage). Comparaison entre le troisième et le quatrième trimestre 2025. Source : Insee."
+/>
 
 ## Bilan annuel 2025 : une croissance en demi-teinte
 
