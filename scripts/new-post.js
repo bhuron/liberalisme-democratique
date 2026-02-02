@@ -67,7 +67,8 @@ draft: true
 #   - Tag2
 ---
 
-import YoutubeEmbed from '../../components/YoutubeEmbed.astro';
+// import YoutubeEmbed from '../../components/YoutubeEmbed.astro';
+// import Figure from '../../components/Figure.astro';
 import { Image } from "astro:assets";
 // import imageNom from "../../assets/mon-image.webp";
 
@@ -94,6 +95,13 @@ Détails supplémentaires...
 <!-- <YoutubeEmbed
   url="https://youtu.be/..."
   title="Titre de la vidéo"
+/> -->
+
+<!-- Pour insérer une image avec légende: -->
+<!-- <Figure
+  src={imageNom}
+  alt="Description de l'image"
+  caption="Légende de l'image. Source : Insee."
 /> -->
 
 ## Conclusion
