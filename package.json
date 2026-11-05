@@ -43,6 +43,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^5.9.3",
+    "vite": "^6.4.5",
     "yaml": "^2.7.0"
   }
 }
