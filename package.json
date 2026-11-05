@@ -13,6 +13,7 @@
     "check": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "check:secrets": "node scripts/check-secrets.js",
     "import:ghost": "node scripts/import-ghost.js",
     "export:ghost": "node scripts/export-to-ghost.js",
     "images:download": "node scripts/download-ghost-images.js",
@@ -20,7 +21,12 @@
     "format:articles": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings",
     "format:articles:dry-run": "node scripts/reformat-markdown.js --all --wrap=80 --promote-headings --dry-run",
     "new": "node scripts/new-post.js",
-    "favicon": "node scripts/generate-favicon.js"
+    "favicon": "node scripts/generate-favicon.js",
+    "desk": "node tools/desk/cli.mjs",
+    "desk:inbox": "node tools/desk/cli.mjs inbox",
+    "desk:lint": "node tools/desk/cli.mjs lint",
+    "desk:test": "node --test tools/desk/test/",
+    "desk:ui": "node tools/desk/server.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.5",

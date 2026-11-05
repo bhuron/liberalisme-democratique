@@ -12,3 +12,6 @@ backup/
 posts-to-export.txt
 scripts/article-template.md
 *.md
+editorial/sources/
+editorial/pieces/
+editorial/archive/

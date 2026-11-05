@@ -21,6 +21,9 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      - name: Check for committed secrets
+        run: npm run check:secrets
+
       - name: Install dependencies
         run: npm ci
 

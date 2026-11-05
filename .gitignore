@@ -13,9 +13,11 @@ yarn-error.log*
 pnpm-debug.log*
 
 
-# environment variables
+# Secrets — never commit. The headless profile reads <cwd>/.env, so keys must
+# never live in this repository, ignored or not.
 .env
-.env.production
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
@@ -30,3 +32,11 @@ pnpm-debug.log*
 ghost-export.json
 ghost-import.json
 backup/
+
+# Desk éditorial — textes intégraux capturés (droits d'auteur), restent en local
+editorial/sources/*/text.txt
+
+.desk/
+
+# Temporary desk extracts
+.tmp-piece/

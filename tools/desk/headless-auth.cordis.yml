@@ -1,0 +1,9 @@
+# Restaure la connexion enregistrée pour le profil headless.
+# Le profil headless désactive par défaut le magasin de credentials ; ce patch
+# le réactive pour que l'agent du desk utilise la session DSH déjà connectée.
+- id: credentials
+  disabled: false
+- id: authorization
+  disabled: false
+- id: deepseek-account
+  disabled: false

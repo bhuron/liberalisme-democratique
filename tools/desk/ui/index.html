@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Le bureau — Libéralisme Démocratique</title>
+    <link
+      rel="preload"
+      href="/fonts/InterVariable.woff2?v=4.66"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Aller au contenu</a>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">LD</span>
+          <span class="brand-text">
+            <strong>Le bureau</strong>
+            <small>Libéralisme Démocratique</small>
+          </span>
+        </div>
+
+        <button class="primary block" type="button" data-action="new">
+          + Nouvel article
+        </button>
+
+        <nav id="pieces-list" class="pieces" aria-label="Articles"></nav>
+
+        <div
+          id="agent-status"
+          class="agent-status"
+          role="status"
+          aria-live="polite"
+        ></div>
+      </aside>
+
+      <main id="main" tabindex="-1"></main>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

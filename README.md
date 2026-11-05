@@ -15,10 +15,10 @@ Blog politique et social francophone, publié sur
 
 ## Démarrage
 
-Node.js 22.23.4 ou plus récent est requis (voir `.nvmrc`) :
+Le développement et la CI utilisent Node.js 26.13.0 (voir `.nvmrc`). Le minimum déclaré reste 22.23.4 (`engines`) :
 
 ```bash
-nvm use
+fnm use        # ou nvm use
 npm ci
 npm run dev
 ```
