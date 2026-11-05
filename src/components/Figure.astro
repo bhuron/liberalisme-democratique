@@ -12,11 +12,7 @@ const { src, alt, caption } = Astro.props;
 ---
 
 <figure class="my-8">
-	<Image 
-		src={src} 
-		alt={alt}
-		class="rounded-xl shadow-lg mx-auto" 
-	/>
+	<Image src={src} alt={alt} class="rounded-xl shadow-lg mx-auto" />
 	<figcaption class="text-center text-gray-600 mt-3 italic">
 		<span class="text-sm">{caption}</span>
 	</figcaption>

@@ -26,64 +26,48 @@ const posts = allPosts
 		<main id="main" class="max-w-6xl mx-auto px-4 py-12 md:py-16">
 			<h1 class="text-5xl font-extrabold mb-12 text-black">Articles</h1>
 
-			<div
-				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
-			>
-				{
-					posts.map((post, index) => {
-						const imageSrc = post.data.image?.src;
-						const imageAlt = post.data.image?.alt || "";
-						return (
-							<article class="group relative flex flex-col">
-								<a
-									href={`/blog/${post.id}/`}
-									class="block no-underline"
-								>
-									{imageSrc && (
-										<div class="w-full h-48 overflow-hidden">
-											<Image
-												width={400}
-												height={200}
-												src={imageSrc}
-												alt={imageAlt}
-												class="w-full h-full object-cover"
-												loading={index < 6 ? "eager" : "lazy"}
-												decoding={index < 6 ? "sync" : "async"}
-											/>
-										</div>
-									)}
-									<div class="p-6">
-										<h2 class="text-xl font-bold mb-2 text-black hover:text-accent transition-colors">
-											{post.data.title}
-										</h2>
-										<p class="text-gray-600 mb-3 text-sm">
-											<FormattedDate
-												date={post.data.pubDate}
-											/>
-											{post.data.author &&
-												` • ${post.data.author}`}
-											{post.data.tags &&
-												post.data.tags.length > 0 && (
-													<span class="ml-2">
-														{post.data.tags
-															.join(", ")}
-													</span>
-												)}
-										</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+				{posts.map((post, index) => {
+					const imageSrc = post.data.image?.src;
+					const imageAlt = post.data.image?.alt || "";
+					return (
+						<article class="group relative flex flex-col">
+							<a href={`/blog/${post.id}/`} class="block no-underline">
+								{imageSrc && (
+									<div class="w-full h-48 overflow-hidden">
+										<Image
+											width={400}
+											height={200}
+											src={imageSrc}
+											alt={imageAlt}
+											class="w-full h-full object-cover"
+											loading={index < 6 ? "eager" : "lazy"}
+											decoding={index < 6 ? "sync" : "async"}
+										/>
 									</div>
-								</a>
-							</article>
-						);
-					})
-				}
+								)}
+								<div class="p-6">
+									<h2 class="text-xl font-bold mb-2 text-black hover:text-accent transition-colors">
+										{post.data.title}
+									</h2>
+									<p class="text-gray-600 mb-3 text-sm">
+										<FormattedDate date={post.data.pubDate} />
+										{post.data.author && ` • ${post.data.author}`}
+										{post.data.tags && post.data.tags.length > 0 && (
+											<span class="ml-2">{post.data.tags.join(", ")}</span>
+										)}
+									</p>
+								</div>
+							</a>
+						</article>
+					);
+				})}
 			</div>
-			{
-				posts.length === 0 && (
-					<p class="text-center text-gray-600 py-12">
-						Aucun article publié pour le moment.
-					</p>
-				)
-			}
+			{posts.length === 0 && (
+				<p class="text-center text-gray-600 py-12">
+					Aucun article publié pour le moment.
+				</p>
+			)}
 		</main>
 		<Footer />
 	</body>

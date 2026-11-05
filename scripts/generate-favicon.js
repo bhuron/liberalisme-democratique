@@ -1,5 +1,4 @@
 import sharp from 'sharp';
-import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -19,10 +18,7 @@ async function generateFavicons() {
   try {
     for (const { name, size } of sizes) {
       const outputPath = path.join(outputDir, name);
-      await sharp(inputSvg)
-        .resize(size, size)
-        .png()
-        .toFile(outputPath);
+      await sharp(inputSvg).resize(size, size).png().toFile(outputPath);
       console.log(`✓ Generated ${name}`);
     }
 
@@ -32,6 +28,7 @@ async function generateFavicons() {
     console.log(`  Upload: ${inputSvg}`);
   } catch (error) {
     console.error('Error generating favicons:', error);
+    process.exit(1);
   }
 }
 

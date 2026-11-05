@@ -2,11 +2,17 @@
   "name": "liberalisme-democratique",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "import:ghost": "node scripts/import-ghost.js",
     "export:ghost": "node scripts/export-to-ghost.js",
     "images:download": "node scripts/download-ghost-images.js",
@@ -32,7 +38,11 @@
     "turndown": "^7.2.2"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "glob": "^11.0.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^5.9.3",
     "yaml": "^2.7.0"
   }
 }

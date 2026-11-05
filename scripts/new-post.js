@@ -29,13 +29,13 @@ function slugify(text) {
     .toString()
     .toLowerCase()
     .trim()
-    .normalize('NFD')                  // Sépare les accents des caractères
-    .replace(/[\u0300-\u036f]/g, '')   // Supprime les accents
-    .replace(/[\s_]+/g, '-')           // Remplace espaces et underscores par des tirets
-    .replace(/[^\w\-]+/g, '')          // Supprime les caractères non-alphanumériques
-    .replace(/\-\-+/g, '-')            // Remplace les tirets multiples par un seul
-    .replace(/^-+/, '')                // Supprime les tirets au début
-    .replace(/-+$/, '');               // Supprime les tirets à la fin
+    .normalize('NFD') // Sépare les accents des caractères
+    .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
+    .replace(/[\s_]+/g, '-') // Remplace espaces et underscores par des tirets
+    .replace(/[^\w\-]+/g, '') // Supprime les caractères non-alphanumériques
+    .replace(/\-\-+/g, '-') // Remplace les tirets multiples par un seul
+    .replace(/^-+/, '') // Supprime les tirets au début
+    .replace(/-+$/, ''); // Supprime les tirets à la fin
 }
 
 /**
@@ -46,7 +46,7 @@ function getCurrentDate() {
     timeZone: 'Europe/Paris',
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit'
+    day: '2-digit',
   }).formatToParts(new Date());
 
   const value = (type) => parts.find((part) => part.type === type)?.value;
@@ -120,7 +120,7 @@ function main() {
   const title = process.argv.slice(2)[0];
 
   if (!title) {
-    console.error('❌ Erreur: Veuillez fournir un titre pour l\'article');
+    console.error("❌ Erreur: Veuillez fournir un titre pour l'article");
     console.log('Usage: npm run new "Titre de l\'article"');
     process.exit(1);
   }

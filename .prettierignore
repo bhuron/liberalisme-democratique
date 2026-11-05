@@ -1,0 +1,14 @@
+dist/
+node_modules/
+.astro/
+public/
+src/assets/
+src/content/
+package-lock.json
+ghost-export.json
+ghost-import.json
+backup/
+.nvimrc
+posts-to-export.txt
+scripts/article-template.md
+*.md

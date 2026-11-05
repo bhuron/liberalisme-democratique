@@ -32,7 +32,7 @@ const turndownService = new TurndownService({
   codeBlockStyle: 'fenced',
   emDelimiter: '*',
   strongDelimiter: '**',
-  linkStyle: 'inlined'
+  linkStyle: 'inlined',
 });
 
 // Configuration
@@ -87,20 +87,24 @@ function parseGhostExport() {
     // Ghost export structure: { db: [{ data: { posts: [], tags: [], posts_tags: [] } }] }
     const db = exportData.db?.[0]?.data;
     if (!db) {
-      throw new Error('Invalid Ghost export format. Expected { db: [{ data: { ... } }] }');
+      throw new Error(
+        'Invalid Ghost export format. Expected { db: [{ data: { ... } }] }',
+      );
     }
 
     return {
       posts: db.posts || [],
       tags: db.tags || [],
       postsTags: db.posts_tags || [],
-      users: db.users || []
+      users: db.users || [],
     };
   } catch (error) {
     console.error('Error reading Ghost export:', error.message);
     if (error.code === 'ENOENT') {
       console.error(`\nFile not found: ${GHOST_EXPORT_PATH}`);
-      console.error('Please export your Ghost content and save it as ghost-export.json in the project root.');
+      console.error(
+        'Please export your Ghost content and save it as ghost-export.json in the project root.',
+      );
     }
     process.exit(1);
   }
@@ -110,19 +114,19 @@ function parseGhostExport() {
  * Get tags for a post
  */
 function getPostTags(postId, tags, postsTags) {
-  const postTagRelations = postsTags.filter(pt => pt.post_id === postId);
+  const postTagRelations = postsTags.filter((pt) => pt.post_id === postId);
   return postTagRelations
-    .map(pt => tags.find(tag => tag.id === pt.tag_id))
-    .filter(tag => tag)
-    .map(tag => tag.name)
-    .filter(name => name && name !== '#'); // Filter out empty or "#" tags
+    .map((pt) => tags.find((tag) => tag.id === pt.tag_id))
+    .filter((tag) => tag)
+    .map((tag) => tag.name)
+    .filter((name) => name && name !== '#'); // Filter out empty or "#" tags
 }
 
 /**
  * Get author name for a post
  */
 function getPostAuthor(post, users) {
-  const author = users.find(user => user.id === post.author_id);
+  const author = users.find((user) => user.id === post.author_id);
   return author ? author.name : 'Benoît Huron'; // Default to site author
 }
 
@@ -137,7 +141,9 @@ function convertContentToMarkdown(post) {
       const mobiledoc = JSON.parse(post.mobiledoc);
       return replaceGhostUrl(convertMobileDocToMarkdown(mobiledoc));
     } catch (error) {
-      console.warn(`Failed to parse mobiledoc for post "${post.title}", falling back to HTML`);
+      console.warn(
+        `Failed to parse mobiledoc for post "${post.title}", falling back to HTML`,
+      );
     }
   }
 
@@ -162,13 +168,15 @@ function convertMobileDocToMarkdown(mobiledoc) {
     if (Array.isArray(section)) {
       const [type, tagIndex, markers] = section;
 
-      if (type === 1) { // Markup section
+      if (type === 1) {
+        // Markup section
         const tag = mobiledoc.markups[tagIndex]?.[0] || 'p';
         let content = '';
 
         for (const marker of markers) {
           const [textIndex, , markups] = marker;
-          let text = mobiledoc.atoms?.[textIndex] || mobiledoc.cards?.[textIndex] || '';
+          let text =
+            mobiledoc.atoms?.[textIndex] || mobiledoc.cards?.[textIndex] || '';
 
           // Apply markups (bold, italic, etc.)
           if (markups && markups.length > 0) {
@@ -203,7 +211,10 @@ function convertHtmlToMarkdown(html) {
   try {
     return turndownService.turndown(html);
   } catch (error) {
-    console.warn('Turndown conversion failed, falling back to basic conversion:', error.message);
+    console.warn(
+      'Turndown conversion failed, falling back to basic conversion:',
+      error.message,
+    );
     // Fallback to basic conversion
     return html
       .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n')
@@ -216,10 +227,19 @@ function convertHtmlToMarkdown(html) {
       .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
       .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
       .replace(/<pre[^>]*>(.*?)<\/pre>/gi, '```\n$1\n```')
-      .replace(/<ul[^>]*>(.*?)<\/ul>/gi, (_match, content) =>
-        content.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n') + '\n')
-      .replace(/<ol[^>]*>(.*?)<\/ol>/gi, (_match, content) =>
-        content.replace(/<li[^>]*>(.*?)<\/li>/gi, (_match, item, index) => `${index + 1}. ${item}\n`) + '\n')
+      .replace(
+        /<ul[^>]*>(.*?)<\/ul>/gi,
+        (_match, content) =>
+          content.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n') + '\n',
+      )
+      .replace(
+        /<ol[^>]*>(.*?)<\/ol>/gi,
+        (_match, content) =>
+          content.replace(
+            /<li[^>]*>(.*?)<\/li>/gi,
+            (_match, item, index) => `${index + 1}. ${item}\n`,
+          ) + '\n',
+      )
       .replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n')
       .replace(/<br[^>]*>/gi, '\n')
       .replace(/<[^>]*>/g, '')
@@ -265,7 +285,7 @@ function getFeaturedImage(post) {
       // Keep original Ghost image URL (with __GHOST_URL__ replaced)
       return {
         src: imageUrl,
-        alt: alt
+        alt: alt,
       };
 
     case 'local':
@@ -273,22 +293,26 @@ function getFeaturedImage(post) {
       const filename = path.basename(post.feature_image);
       return {
         src: `${IMAGE_BASE_URL}${filename}`,
-        alt: alt
+        alt: alt,
       };
 
     case 'hybrid':
       // Try to download image (placeholder - would need implementation)
-      console.warn(`⚠️  Hybrid mode not fully implemented for "${post.title}". Using remote URL.`);
+      console.warn(
+        `⚠️  Hybrid mode not fully implemented for "${post.title}". Using remote URL.`,
+      );
       return {
         src: imageUrl,
-        alt: alt
+        alt: alt,
       };
 
     default:
-      console.warn(`⚠️  Unknown IMAGE_HANDLING: ${IMAGE_HANDLING}. Using remote URL.`);
+      console.warn(
+        `⚠️  Unknown IMAGE_HANDLING: ${IMAGE_HANDLING}. Using remote URL.`,
+      );
       return {
         src: imageUrl,
-        alt: alt
+        alt: alt,
       };
   }
 }
@@ -306,13 +330,14 @@ function convertPostToMarkdown(post, tags, postsTags, users) {
   // Frontmatter according to src/content.config.ts schema
   const frontmatter = {
     title: post.title || 'Untitled',
-    description: post.custom_excerpt || post.meta_description || post.excerpt || '',
+    description:
+      post.custom_excerpt || post.meta_description || post.excerpt || '',
     pubDate: post.published_at || post.created_at,
     updatedDate: post.updated_at || undefined,
     author: author,
     draft: post.status !== 'published',
     ...(postTags.length > 0 && { tags: postTags }),
-    ...(featuredImage && { image: featuredImage })
+    ...(featuredImage && { image: featuredImage }),
   };
 
   // Build markdown file
@@ -326,7 +351,7 @@ function convertPostToMarkdown(post, tags, postsTags, users) {
       } else if (value instanceof Date) {
         markdown += `${key}: '${value.toISOString().split('T')[0]}'\n`;
       } else if (Array.isArray(value)) {
-        markdown += `${key}: [${value.map(v => `'${v.replace(/'/g, "''")}'`).join(', ')}]\n`;
+        markdown += `${key}: [${value.map((v) => `'${v.replace(/'/g, "''")}'`).join(', ')}]\n`;
       } else if (typeof value === 'object') {
         markdown += `${key}:\n`;
         for (const [subKey, subValue] of Object.entries(value)) {
@@ -352,19 +377,27 @@ async function main() {
 
   // Warn about empty GHOST_URL
   if (!GHOST_URL) {
-    console.warn('⚠️  GHOST_URL is empty. __GHOST_URL__ placeholders will NOT be replaced.');
-    console.warn('   This will cause build errors. Set GHOST_URL in the script to your Ghost site URL.');
-    console.warn('   Example: const GHOST_URL = \'https://yourblog.ghost.io\';\n');
+    console.warn(
+      '⚠️  GHOST_URL is empty. __GHOST_URL__ placeholders will NOT be replaced.',
+    );
+    console.warn(
+      '   This will cause build errors. Set GHOST_URL in the script to your Ghost site URL.',
+    );
+    console.warn(
+      "   Example: const GHOST_URL = 'https://yourblog.ghost.io';\n",
+    );
   }
 
   // Parse Ghost export
   console.log('📋 Parsing Ghost export...');
   const { posts, tags, postsTags, users } = parseGhostExport();
 
-  console.log(`📊 Found: ${posts.length} posts, ${tags.length} tags, ${users.length} users`);
+  console.log(
+    `📊 Found: ${posts.length} posts, ${tags.length} tags, ${users.length} users`,
+  );
 
   // Filter to published posts if desired
-  const publishedPosts = posts.filter(post => post.status === 'published');
+  const publishedPosts = posts.filter((post) => post.status === 'published');
   console.log(`📄 Processing ${publishedPosts.length} published posts...\n`);
 
   let importedCount = 0;
@@ -372,12 +405,19 @@ async function main() {
 
   for (const post of publishedPosts) {
     try {
-      const { slug, markdown } = convertPostToMarkdown(post, tags, postsTags, users);
+      const { slug, markdown } = convertPostToMarkdown(
+        post,
+        tags,
+        postsTags,
+        users,
+      );
       const outputPath = path.join(OUTPUT_DIR, `${slug}.mdx`);
 
       // Check if file already exists
       if (fs.existsSync(outputPath)) {
-        console.log(`⚠️  Skipping "${post.title}" - file already exists: ${slug}.mdx`);
+        console.log(
+          `⚠️  Skipping "${post.title}" - file already exists: ${slug}.mdx`,
+        );
         skippedCount++;
         continue;
       }
@@ -386,7 +426,6 @@ async function main() {
       fs.writeFileSync(outputPath, markdown);
       console.log(`✅ Imported "${post.title}" -> ${slug}.mdx`);
       importedCount++;
-
     } catch (error) {
       console.error(`❌ Failed to import "${post.title}":`, error.message);
       skippedCount++;
@@ -405,11 +444,15 @@ async function main() {
 
   if (IMAGE_HANDLING === 'remote') {
     console.log('   1. Images are using original Ghost URLs');
-    console.log('   2. Configure Astro for remote image optimization (see docs)');
+    console.log(
+      '   2. Configure Astro for remote image optimization (see docs)',
+    );
     console.log('   3. Or run image download script later if needed');
   } else if (IMAGE_HANDLING === 'local') {
     console.log('   1. Copy your Ghost images to src/assets/ghost-images/');
-    console.log('   2. Image paths in frontmatter reference ../../assets/ghost-images/filename.jpg');
+    console.log(
+      '   2. Image paths in frontmatter reference ../../assets/ghost-images/filename.jpg',
+    );
     console.log('   3. Astro Image component will optimize local images');
   } else {
     console.log('   1. Hybrid mode - using remote URLs as fallback');
@@ -420,11 +463,13 @@ async function main() {
   console.log('\n🔍 Next Steps:');
   console.log('   1. Review imported markdown files for formatting issues');
   console.log('   2. Run `npm run build` to test the imported content');
-  console.log('   3. Adjust the conversion functions if needed for your content');
+  console.log(
+    '   3. Adjust the conversion functions if needed for your content',
+  );
 }
 
 // Run the script
-main().catch(error => {
+main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

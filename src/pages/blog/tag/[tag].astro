@@ -39,14 +39,15 @@ const posts = allPosts
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={`${tag} - ${SITE_TITLE}`} description={`Articles avec le tag ${tag}`} />
+		<BaseHead
+			title={`${tag} - ${SITE_TITLE}`}
+			description={`Articles avec le tag ${tag}`}
+		/>
 	</head>
 	<body class="min-h-screen">
 		<Header />
 		<main id="main" class="max-w-6xl mx-auto px-4 py-12 md:py-16">
-			<h1 class="text-5xl font-extrabold mb-4 text-black">
-				{tag}
-			</h1>
+			<h1 class="text-5xl font-extrabold mb-4 text-black">{tag}</h1>
 			<p class="text-gray-600 mb-8">
 				<a href="/blog" class="text-accent hover:text-accent-dark">
 					← Retour à tous les articles
@@ -54,57 +55,48 @@ const posts = allPosts
 			</p>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-				{
-					posts.map((post, index) => {
-						const imageSrc = post.data.image?.src;
-						const imageAlt = post.data.image?.alt || "";
-						return (
-							<article class="group relative flex flex-col">
-								<a
-									href={`/blog/${post.id}/`}
-									class="block no-underline"
-								>
-									{imageSrc && (
-										<div class="w-full h-48 overflow-hidden">
-											<Image
-												width={400}
-												height={200}
-												src={imageSrc}
-												alt={imageAlt}
-												class="w-full h-full object-cover"
-												loading={index < 6 ? "eager" : "lazy"}
-												decoding={index < 6 ? "sync" : "async"}
-											/>
-										</div>
-									)}
-									<div class="p-6">
-										<h2 class="text-xl font-bold mb-2 text-black hover:text-accent transition-colors">
-											{post.data.title}
-										</h2>
-										<p class="text-gray-600 mb-3 text-sm">
-											<FormattedDate date={post.data.pubDate} />
-											{post.data.author && ` • ${post.data.author}`}
-											{post.data.tags && post.data.tags.length > 0 && (
-												<span class="ml-2">
-													{post.data.tags.join(", ")}
-												</span>
-											)}
-										</p>
+				{posts.map((post, index) => {
+					const imageSrc = post.data.image?.src;
+					const imageAlt = post.data.image?.alt || "";
+					return (
+						<article class="group relative flex flex-col">
+							<a href={`/blog/${post.id}/`} class="block no-underline">
+								{imageSrc && (
+									<div class="w-full h-48 overflow-hidden">
+										<Image
+											width={400}
+											height={200}
+											src={imageSrc}
+											alt={imageAlt}
+											class="w-full h-full object-cover"
+											loading={index < 6 ? "eager" : "lazy"}
+											decoding={index < 6 ? "sync" : "async"}
+										/>
 									</div>
-								</a>
-							</article>
-						);
-					})
-				}
+								)}
+								<div class="p-6">
+									<h2 class="text-xl font-bold mb-2 text-black hover:text-accent transition-colors">
+										{post.data.title}
+									</h2>
+									<p class="text-gray-600 mb-3 text-sm">
+										<FormattedDate date={post.data.pubDate} />
+										{post.data.author && ` • ${post.data.author}`}
+										{post.data.tags && post.data.tags.length > 0 && (
+											<span class="ml-2">{post.data.tags.join(", ")}</span>
+										)}
+									</p>
+								</div>
+							</a>
+						</article>
+					);
+				})}
 			</div>
 
-			{
-				posts.length === 0 && (
-					<p class="text-center text-gray-600 py-12">
-						Aucun article avec le tag "{tag}".
-					</p>
-				)
-			}
+			{posts.length === 0 && (
+				<p class="text-center text-gray-600 py-12">
+					Aucun article avec le tag "{tag}".
+				</p>
+			)}
 		</main>
 		<Footer />
 	</body>

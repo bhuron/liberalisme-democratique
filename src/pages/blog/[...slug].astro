@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 	const getRelatedPosts = (
 		currentPost: CollectionEntry<"blog">,
 		allPosts: CollectionEntry<"blog">[],
-		limit = 3
+		limit = 3,
 	) => {
 		const currentTags = new Set(currentPost.data.tags || []);
 
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 			.filter((post) => post.id !== currentPost.id && !post.data.draft)
 			.map((post) => {
 				const sharedTags = (post.data.tags || []).filter((tag) =>
-					currentTags.has(tag)
+					currentTags.has(tag),
 				);
 				return {
 					post,
@@ -59,6 +59,11 @@ const { post, prevPost, nextPost, relatedPosts } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} relatedPosts={relatedPosts}>
+<BlogPost
+	{...post.data}
+	prevPost={prevPost}
+	nextPost={nextPost}
+	relatedPosts={relatedPosts}
+>
 	<Content />
 </BlogPost>

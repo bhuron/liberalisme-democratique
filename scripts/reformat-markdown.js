@@ -31,7 +31,7 @@ const projectRoot = path.join(__dirname, '..');
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const allFiles = args.includes('--all');
-const wrapArg = args.find(arg => arg.startsWith('--wrap='));
+const wrapArg = args.find((arg) => arg.startsWith('--wrap='));
 const wrapColumn = wrapArg ? parseInt(wrapArg.split('=')[1]) : 0;
 const promoteHeadings = args.includes('--promote-headings');
 
@@ -40,14 +40,17 @@ const BLOG_DIR = path.join(projectRoot, 'src/content/blog');
 // Get list of files to process
 let files = [];
 if (allFiles) {
-  files = fs.readdirSync(BLOG_DIR)
-    .filter(f => f.endsWith('.md'))
-    .map(f => path.join(BLOG_DIR, f));
+  files = fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => path.join(BLOG_DIR, f));
 } else {
   // Use specified files or default to all
-  const specifiedFiles = args.filter(arg => !arg.startsWith('--') && arg.endsWith('.md'));
+  const specifiedFiles = args.filter(
+    (arg) => !arg.startsWith('--') && arg.endsWith('.md'),
+  );
   if (specifiedFiles.length > 0) {
-    files = specifiedFiles.map(f => path.resolve(f));
+    files = specifiedFiles.map((f) => path.resolve(f));
   } else {
     console.log('No files specified. Use --all or specify files.');
     process.exit(1);
@@ -67,11 +70,17 @@ function wrapText(text, width) {
 
   for (const paragraph of paragraphs) {
     // Skip wrapping for special content
-    if (paragraph.startsWith('#') || paragraph.startsWith('>') ||
-        paragraph.startsWith('- ') || paragraph.startsWith('* ') ||
-        paragraph.match(/^\d+\. /) ||
-        paragraph.includes('![') || paragraph.includes('](') ||
-        paragraph.includes('http://') || paragraph.includes('https://')) {
+    if (
+      paragraph.startsWith('#') ||
+      paragraph.startsWith('>') ||
+      paragraph.startsWith('- ') ||
+      paragraph.startsWith('* ') ||
+      paragraph.match(/^\d+\. /) ||
+      paragraph.includes('![') ||
+      paragraph.includes('](') ||
+      paragraph.includes('http://') ||
+      paragraph.includes('https://')
+    ) {
       // Don't wrap headings, blockquotes, lists, images, links
       lines.push(paragraph);
       lines.push('');
@@ -187,7 +196,7 @@ for (const filepath of files) {
     const original = fs.readFileSync(filepath, 'utf8');
     const formatted = formatMarkdown(original, {
       wrap: wrapColumn,
-      promote: promoteHeadings
+      promote: promoteHeadings,
     });
 
     if (original === formatted) {
@@ -215,7 +224,9 @@ for (const filepath of files) {
         }
       }
       if (diffCount >= maxDiffs) {
-        console.log(`   ... and ${Math.max(0, diffCount - maxDiffs)} more differences`);
+        console.log(
+          `   ... and ${Math.max(0, diffCount - maxDiffs)} more differences`,
+        );
       }
     } else {
       fs.writeFileSync(filepath, formatted, 'utf8');

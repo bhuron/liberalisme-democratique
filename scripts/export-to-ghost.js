@@ -104,7 +104,9 @@ function convertPostToGhost(filePath, postId) {
     return d.toISOString().replace('T', ' ').substring(0, 19);
   };
 
-  const publishedAt = data.draft ? null : (formatDate(data.pubDate) || formatDate(new Date()));
+  const publishedAt = data.draft
+    ? null
+    : formatDate(data.pubDate) || formatDate(new Date());
 
   // Create Ghost post object
   const ghostPost = {
@@ -119,7 +121,7 @@ function convertPostToGhost(filePath, postId) {
     updated_at: formatDate(data.updatedDate) || formatDate(new Date()),
     published_at: publishedAt,
     custom_excerpt: data.description || '',
-    feature_image: featureImage
+    feature_image: featureImage,
   };
 
   // Optional posts_meta
@@ -128,14 +130,14 @@ function convertPostToGhost(filePath, postId) {
     ghostPostMeta = {
       id: generateId(),
       post_id: postId,
-      feature_image_alt: featureImageAlt
+      feature_image_alt: featureImageAlt,
     };
   }
 
   return {
     post: ghostPost,
     meta: ghostPostMeta,
-    tags: data.tags || []
+    tags: data.tags || [],
   };
 }
 
@@ -147,7 +149,8 @@ function extractImportMappings(content) {
   const mappings = {};
 
   // Match: import something from "path";
-  const importRegex = /^import\s+(\w+|\{[^}]+\})\s+from\s+['"]([^'"]+)['"];?\s*$/gm;
+  const importRegex =
+    /^import\s+(\w+|\{[^}]+\})\s+from\s+['"]([^'"]+)['"];?\s*$/gm;
   let match;
 
   while ((match = importRegex.exec(content)) !== null) {
@@ -197,7 +200,10 @@ function convertImageComponents(content, importMappings) {
       const [, name, value] = propMatch;
 
       // Remove surrounding quotes or braces
-      const cleanValue = value.replace(/^["']|["']$/g, '').replace(/^{|}$/g, '').trim();
+      const cleanValue = value
+        .replace(/^["']|["']$/g, '')
+        .replace(/^{|}$/g, '')
+        .trim();
 
       if (name === 'src') {
         // Check if src is a variable reference
@@ -248,7 +254,9 @@ function convertYoutubeEmbed(content) {
     }
 
     // Extract video ID from URL
-    const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([^&?/]+)/);
+    const videoIdMatch = url.match(
+      /(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([^&?/]+)/,
+    );
     const videoId = videoIdMatch ? videoIdMatch[1] : '';
 
     if (!videoId) {
@@ -319,7 +327,10 @@ function markdownToHtml(markdown) {
   html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
 
   // Paragraphs (must be done last)
-  html = html.replace(/^(?!<(?:h[1-6]|p|ul|ol|li|blockquote|pre|code|figure))(.+)$/gm, '<p>$1</p>');
+  html = html.replace(
+    /^(?!<(?:h[1-6]|p|ul|ol|li|blockquote|pre|code|figure))(.+)$/gm,
+    '<p>$1</p>',
+  );
 
   // Clean up empty paragraphs
   html = html.replace(/<p><\/p>/g, '');
@@ -336,9 +347,9 @@ function escapeHtml(text) {
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    "'": '&#039;'
+    "'": '&#039;',
   };
-  return text.replace(/[&<>"']/g, m => map[m]);
+  return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 
 /**
@@ -347,10 +358,11 @@ function escapeHtml(text) {
 function getPostsToExport() {
   // Check if specific posts are requested
   if (fs.existsSync(SLUGS_FILE)) {
-    const slugs = fs.readFileSync(SLUGS_FILE, 'utf8')
+    const slugs = fs
+      .readFileSync(SLUGS_FILE, 'utf8')
       .split('\n')
-      .map(line => line.trim())
-      .filter(line => line && !line.startsWith('#'));
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#'));
 
     if (slugs.length > 0) {
       console.log(`📋 Found ${slugs.length} specific posts to export`);
@@ -377,7 +389,9 @@ async function main() {
   // Filter to specific posts if needed
   const specificSlugs = getPostsToExport();
   const filesToExport = specificSlugs
-    ? allFiles.filter(f => specificSlugs.includes(path.basename(f, path.extname(f))))
+    ? allFiles.filter((f) =>
+        specificSlugs.includes(path.basename(f, path.extname(f))),
+      )
     : allFiles;
 
   if (filesToExport.length === 0) {
@@ -401,7 +415,7 @@ async function main() {
     name: 'Benoît Huron',
     slug: 'benoit-huron',
     email: DEFAULT_AUTHOR_EMAIL,
-    roles: ['Administrator']
+    roles: ['Administrator'],
   });
 
   // Track unique tags
@@ -413,7 +427,11 @@ async function main() {
     const postId = generateId();
 
     try {
-      const { post, meta, tags: postTags } = convertPostToGhost(filePath, postId);
+      const {
+        post,
+        meta,
+        tags: postTags,
+      } = convertPostToGhost(filePath, postId);
 
       // Add post directly to posts array (Ghost format: posts contains post objects)
       posts.push(post);
@@ -426,7 +444,7 @@ async function main() {
       // Add author relationship
       postsAuthors.push({
         post_id: postId,
-        author_id: authorId
+        author_id: authorId,
       });
 
       // Process tags
@@ -449,19 +467,18 @@ async function main() {
           tags.push({
             id: tagId,
             name: tagName,
-            slug: tagSlug
+            slug: tagSlug,
           });
         }
 
         // Create post-tag relationship
         postsTags.push({
           post_id: postId,
-          tag_id: tagId
+          tag_id: tagId,
         });
       }
 
       console.log(`✅ Processed "${post.title}"`);
-
     } catch (error) {
       console.error(`❌ Failed to process ${file}:`, error.message);
     }
@@ -471,7 +488,7 @@ async function main() {
   const ghostImport = {
     meta: {
       exported_on: Date.now(),
-      version: GHOST_VERSION
+      version: GHOST_VERSION,
     },
     data: {
       posts: posts,
@@ -479,13 +496,13 @@ async function main() {
       tags: tags,
       posts_tags: postsTags,
       users: users,
-      posts_authors: postsAuthors
-    }
+      posts_authors: postsAuthors,
+    },
   };
 
   // Wrap in db array (optional but recommended)
   const finalOutput = {
-    db: [ghostImport]
+    db: [ghostImport],
   };
 
   // Write to file
@@ -501,17 +518,21 @@ async function main() {
   console.log('\n📝 Next Steps:');
   console.log('   1. Review the generated ghost-import.json file');
   console.log('   2. Upload images to Ghost separately if needed');
-  console.log('   3. Import in Ghost Admin: Settings → Advanced → Import/Export');
+  console.log(
+    '   3. Import in Ghost Admin: Settings → Advanced → Import/Export',
+  );
   console.log('   4. Check imported content and fix formatting if needed');
 
-  console.log('\n💡 Tip: To export specific posts, create posts-to-export.txt with one slug per line');
+  console.log(
+    '\n💡 Tip: To export specific posts, create posts-to-export.txt with one slug per line',
+  );
   console.log('   Example:');
   console.log('   lire-plus-et-lire-mieux');
   console.log('   lintelligence-artificielle-dans-leducation');
 }
 
 // Run the script
-main().catch(error => {
+main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

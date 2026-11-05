@@ -34,10 +34,10 @@ const CONCURRENT_DOWNLOADS = 3;
 // Parse command line arguments
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
-const outputDirArg = args.find(arg => arg.startsWith('--output-dir='));
-const outputDir = outputDirArg ?
-  path.resolve(projectRoot, outputDirArg.split('=')[1]) :
-  DEFAULT_OUTPUT_DIR;
+const outputDirArg = args.find((arg) => arg.startsWith('--output-dir='));
+const outputDir = outputDirArg
+  ? path.resolve(projectRoot, outputDirArg.split('=')[1])
+  : DEFAULT_OUTPUT_DIR;
 
 // Ensure output directory exists
 if (!dryRun && !fs.existsSync(outputDir)) {
@@ -51,25 +51,29 @@ async function downloadFile(url, filepath) {
   return new Promise((resolve, reject) => {
     const protocol = url.startsWith('https') ? https : http;
 
-    protocol.get(url, (response) => {
-      if (response.statusCode !== 200) {
-        reject(new Error(`Failed to download ${url}: ${response.statusCode}`));
-        return;
-      }
+    protocol
+      .get(url, (response) => {
+        if (response.statusCode !== 200) {
+          reject(
+            new Error(`Failed to download ${url}: ${response.statusCode}`),
+          );
+          return;
+        }
 
-      const fileStream = fs.createWriteStream(filepath);
-      response.pipe(fileStream);
+        const fileStream = fs.createWriteStream(filepath);
+        response.pipe(fileStream);
 
-      fileStream.on('finish', () => {
-        fileStream.close();
-        resolve(filepath);
-      });
+        fileStream.on('finish', () => {
+          fileStream.close();
+          resolve(filepath);
+        });
 
-      fileStream.on('error', (err) => {
-        fs.unlink(filepath, () => {}); // Delete partially downloaded file
-        reject(err);
-      });
-    }).on('error', reject);
+        fileStream.on('error', (err) => {
+          fs.unlink(filepath, () => {}); // Delete partially downloaded file
+          reject(err);
+        });
+      })
+      .on('error', reject);
   });
 }
 
@@ -108,7 +112,7 @@ function updateFrontmatter(filepath, newFrontmatter) {
   const newYaml = stringify(newFrontmatter).trim();
   const newContent = content.replace(
     /^---\n[\s\S]*?\n---/,
-    `---\n${newYaml}\n---`
+    `---\n${newYaml}\n---`,
   );
 
   fs.writeFileSync(filepath, newContent);
@@ -173,8 +177,8 @@ async function processMarkdownFile(filepath, stats) {
       ...frontmatter,
       image: {
         ...frontmatter.image,
-        src: publicPath
-      }
+        src: publicPath,
+      },
     };
 
     updateFrontmatter(filepath, updatedFrontmatter);
@@ -212,16 +216,14 @@ async function main() {
     downloaded: 0,
     skipped: 0,
     failed: 0,
-    dryRun: 0
+    dryRun: 0,
   };
 
   // Process files with limited concurrency
   const batchSize = CONCURRENT_DOWNLOADS;
   for (let i = 0; i < files.length; i += batchSize) {
     const batch = files.slice(i, i + batchSize);
-    await Promise.all(
-      batch.map(file => processMarkdownFile(file, stats))
-    );
+    await Promise.all(batch.map((file) => processMarkdownFile(file, stats)));
   }
 
   // Summary
@@ -248,7 +250,7 @@ async function main() {
 }
 
 // Run script
-main().catch(error => {
+main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

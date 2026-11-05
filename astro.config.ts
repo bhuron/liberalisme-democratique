@@ -1,4 +1,3 @@
-
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
@@ -29,7 +28,15 @@ export default defineConfig({
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',
-      langs: ['javascript', 'typescript', 'python', 'html', 'css', 'bash', 'json'] as any[],
+      langs: [
+        'javascript',
+        'typescript',
+        'python',
+        'html',
+        'css',
+        'bash',
+        'json',
+      ] as any[],
     },
     remarkPlugins: [remarkMath],
     rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
