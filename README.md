@@ -1,62 +1,114 @@
-# Astro Starter Kit: Blog
+# Libéralisme Démocratique
 
-```sh
-npm create astro@latest -- --template blog
+Blog politique et social francophone, publié sur
+[liberalisme-democratique.uk](https://liberalisme-democratique.uk).
+
+## Stack
+
+- [Astro](https://astro.build/) 5 — génération statique
+- TypeScript
+- Tailwind CSS 4 + `@tailwindcss/typography`
+- MDX pour les articles
+- `remark-math` + `rehype-katex` pour les formules LaTeX
+- `sharp` pour l'optimisation des images
+- `@astrojs/rss` et `@astrojs/sitemap`
+
+## Démarrage
+
+Node.js 22 ou plus récent est requis (voir `.nvmrc`) :
+
+```bash
+nvm use
+npm ci
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Le site local est disponible sur `http://localhost:4321`.
 
-Features:
+## Commandes
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+| Commande                  | Action                                                 |
+| :------------------------ | :----------------------------------------------------- |
+| `npm run dev`             | Serveur de développement                               |
+| `npm run build`           | Build de production dans `dist/`                       |
+| `npm run preview`         | Prévisualise le build local                            |
+| `npm run check`           | Vérifie les types avec `astro check`                   |
+| `npm run format`          | Formate le code avec Prettier                          |
+| `npm run format:check`    | Vérifie le formatage sans modifier les fichiers        |
+| `npm run new "Titre"`     | Crée un nouvel article MDX brouillon                   |
+| `npm run astro ...`       | Commandes Astro (ex. `npm run astro add`)              |
 
-## 🚀 Project Structure
+## Écrire un article
 
-Inside of your Astro project, you'll see the following folders and files:
+```bash
+npm run new "Titre de l'article"
+```
+
+Le script crée `src/content/blog/<slug>.mdx` avec `draft: true`. Un article en
+brouillon n'est **ni construit, ni inclus dans le RSS ou le sitemap** : il faut
+passer `draft: false` pour le publier.
+
+Le frontmatter est validé par `src/content.config.ts` :
+
+```yaml
+---
+title: "Titre"
+description: "Résumé de l'article"
+pubDate: 2026-01-31
+updatedDate: 2026-02-01 # optionnel
+author: Benoît Huron # optionnel, valeur par défaut
+image:
+  src: ../../assets/mon-image.webp
+  alt: "Description de l'image"
+tags:
+  - Économie
+draft: false
+---
+```
+
+Les images sont stockées dans `src/assets/` et référencées depuis un article
+avec un chemin relatif (`../../assets/...`). Les composants MDX disponibles
+incluent `Image` (`astro:assets`), `Figure` et `YoutubeEmbed` :
+
+```mdx
+import Figure from '../../components/Figure.astro';
+import image from '../../assets/mon-image.webp';
+
+<Figure src={image} alt="Description" caption="Légende. Source : Insee." />
+```
+
+## Structure
 
 ```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+src/
+  assets/          Images locales optimisées par Astro
+  components/      Composants Astro réutilisables
+  content/blog/    Articles (.md, .mdx)
+  layouts/         Layouts de page
+  pages/           Routes (accueil, blog, tags, RSS, 404)
+  styles/          CSS global et thème Tailwind
+scripts/           Scripts de contenu et de migration
+public/            Fichiers statiques (favicons, robots.txt)
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Qualité
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+La CI GitHub Actions exécute `npm ci`, `npm run format:check`,
+`npm run check` et `npm run build` à chaque push sur `master` et sur les
+pull requests.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Prettier est configuré pour le code (`.astro`, JS/TS, CSS, JSON, YAML). Les
+articles (`src/content/`) et les fichiers Markdown de documentation sont
+volontairement exclus pour préserver la mise en forme éditoriale.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Déploiement
 
-## 🧞 Commands
+Le site est déployé sur **Cloudflare Pages**. Un push sur `master` déclenche un
+build avec `npm run build` ; le dossier publié est `dist/`.
 
-All commands are run from the root of the project, from a terminal:
+## Migration Ghost (héritage)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Les scripts `import:ghost`, `export:ghost` et `images:download` servent à la
+migration initiale depuis Ghost. Ils ne sont pas utilisés par le build.
+`ghost-export.json` et `ghost-import.json` contiennent des données sensibles et
+sont ignorés par Git ; ne les commitez jamais.

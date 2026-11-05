@@ -13,7 +13,12 @@ npm run build            # Build static site to ./dist/
 npm run preview          # Preview production build locally
 
 # Astro CLI
-npm run astro ...        # Run Astro CLI commands (e.g., astro check)
+npm run astro ...        # Run Astro CLI commands
+
+# Quality
+npm run check            # Type-check with astro check
+npm run format           # Format source with Prettier
+npm run format:check     # Check formatting without writing
 ```
 
 ## Content Management Commands
@@ -114,6 +119,6 @@ scripts/          # Build/utility scripts
 - Block math: `$$...$$`
 
 ## Notes
-- No ESLint, Prettier, or testing framework configured
+- Prettier is configured (`npm run format`); no ESLint or testing framework
 - Build must pass before committing
 - Site deployed to `https://liberalisme-democratique.uk`

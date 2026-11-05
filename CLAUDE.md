@@ -22,6 +22,9 @@ npm run dev          # Start local dev server at localhost:4321
 npm run build        # Build production site to ./dist/
 npm run preview      # Preview production build locally
 npm run astro ...    # Run Astro CLI commands
+npm run check        # Type-check with astro check
+npm run format       # Format source with Prettier
+npm run format:check # Check formatting without writing
 ```
 
 ### Content Management Scripts

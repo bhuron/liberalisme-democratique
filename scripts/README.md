@@ -1,5 +1,10 @@
 # Ghost to Astro Import Script
 
+> **Legacy migration tooling.** These scripts are not used by the build. The
+> importer and image downloader only scan `.md` files, so they do not cover the
+> current `.mdx` posts. Use `npm run new` for new articles and
+> `npm run format` for formatting.
+
 This script converts Ghost blog exports to Astro-compatible markdown files for the `liberalisme-democratique` blog.
 
 ## Overview
