@@ -57,11 +57,8 @@ export async function getStaticPaths() {
 
 const { post, prevPost, nextPost, relatedPosts } = Astro.props;
 const { Content } = await render(post);
-
-// Check if post contains math to conditionally load KaTeX CSS
-const hasMath = post.body ? /\$\$[\s\S]*?\$\$|$.+?\$/.test(post.body) : false;
 ---
 
-<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} relatedPosts={relatedPosts} hasMath={hasMath}>
+<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} relatedPosts={relatedPosts}>
 	<Content />
 </BlogPost>

@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [
     mdx({
       remarkPlugins: [remarkMath],
-      rehypePlugins: [[rehypeKatex, { output: 'html' }]],
+      rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
     }),
     sitemap(),
   ],
@@ -32,7 +32,7 @@ export default defineConfig({
       langs: ['javascript', 'typescript', 'python', 'html', 'css', 'bash', 'json'] as any[],
     },
     remarkPlugins: [remarkMath],
-    rehypePlugins: [[rehypeKatex, { output: 'html' }]],
+    rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
   },
 
   // Image optimization configuration
