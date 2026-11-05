@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a French-language political and social blog built with Astro, focusing on liberal democratic perspectives. The site is deployed at `https://liberalisme-democratique.uk` and uses a content-focused architecture with MDX support.
 
 **Tech Stack:**
-- Astro 5.x (static site generation)
+- Astro 7.x (static site generation)
 - MDX for blog content via `@astrojs/mdx`
 - Tailwind CSS 4.x with Vite integration
 - Math support via `remark-math` and `rehype-katex`
@@ -148,7 +148,7 @@ The project includes custom scripts for migrating from Ghost CMS:
 **Configuration:**
 - Astro's built-in `<Image />` component
 - Sharp service for optimization
-- Remote image patterns for Ghost-hosted images (`*.ghost.io`, `liberalisme-democratique.uk`)
+- Local images only; no remote image patterns configured
 - Local images stored in `src/assets/`
 - Lazy loading by default (except for featured images which use `loading="eager"`)
 

@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
@@ -9,13 +10,9 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://liberalisme-democratique.uk',
-  integrations: [
-    mdx({
-      remarkPlugins: [remarkMath],
-      rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
-    }),
-    sitemap(),
-  ],
+  // Preserve the pre-Astro 7 whitespace behavior for French typography.
+  compressHTML: true,
+  integrations: [mdx(), sitemap()],
   server: {
     host: true,
   },
@@ -25,40 +22,15 @@ export default defineConfig({
   },
 
   markdown: {
+    // Astro 7 defaults to Sätteri; keep the unified pipeline for
+    // remark-math and rehype-katex.
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
+    }),
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',
-      langs: [
-        'javascript',
-        'typescript',
-        'python',
-        'html',
-        'css',
-        'bash',
-        'json',
-      ] as any[],
-    },
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [[rehypeKatex, { output: 'htmlAndMathml' }]],
-  },
-
-  // Image optimization configuration
-  image: {
-    // Allow remote images from common Ghost hosting platforms
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.ghost.io', // Ghost(Pro) hosted blogs
-      },
-      // Add your Ghost domain here if self-hosted:
-      {
-        protocol: 'https',
-        hostname: 'liberalisme-democratique.uk',
-      },
-    ],
-    // Service configuration
-    service: {
-      entrypoint: 'astro/assets/services/sharp',
     },
   },
 });

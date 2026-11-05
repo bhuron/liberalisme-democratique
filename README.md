@@ -5,17 +5,17 @@ Blog politique et social francophone, publié sur
 
 ## Stack
 
-- [Astro](https://astro.build/) 5 — génération statique
+- [Astro](https://astro.build/) 7 — génération statique
 - TypeScript
 - Tailwind CSS 4 + `@tailwindcss/typography`
-- MDX pour les articles
+- MDX pour les articles, avec le processeur `unified` pour les plugins remark/rehype
 - `remark-math` + `rehype-katex` pour les formules LaTeX
 - `sharp` pour l'optimisation des images
 - `@astrojs/rss` et `@astrojs/sitemap`
 
 ## Démarrage
 
-Node.js 22 ou plus récent est requis (voir `.nvmrc`) :
+Node.js 22.23.4 ou plus récent est requis (voir `.nvmrc`) :
 
 ```bash
 nvm use

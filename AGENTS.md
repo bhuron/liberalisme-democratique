@@ -1,6 +1,6 @@
 # Agent Guidelines for Libéralisme Démocratique
 
-This is a French-language political blog built with Astro 5.x, TypeScript, and Tailwind CSS 4.x.
+This is a French-language political blog built with Astro 7.x, TypeScript, and Tailwind CSS 4.x.
 
 ## Build Commands
 
@@ -111,7 +111,7 @@ scripts/          # Build/utility scripts
 - Local images in `src/assets/`
 - Reference from markdown: `../../assets/image.jpg`
 - Use Astro `<Image />` component for optimization
-- Remote images allowed from `*.ghost.io` and `liberalisme-democratique.uk`
+- Remote images are not used; content images are local in `src/assets/`
 
 ## Math Support
 - LaTeX via `remark-math` and `rehype-katex`
