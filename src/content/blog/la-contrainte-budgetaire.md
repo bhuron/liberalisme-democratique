@@ -33,8 +33,8 @@ dépense, il injecte de la monnaie dans l'économie. Quand il collecte l'impôt,
 retire de la monnaie de l'économie. Quand l'État dépense plus qu'il ne collecte,
 on appelle ça un « déficit public » mais on pourrait tout aussi bien voir la
 situation de l'autre côté du bilan comptable et appeler ça un « surplus privé ».
-Si l'État dépense 100$ et récupère 90$ en impôts, la différence reste aux mains
-du secteur privé. L'État décide en outre si ces 10$ supplementaires rapporte des
+Si l'État dépense 100 \$ et récupère 90 \$ en impôts, la différence reste aux mains
+du secteur privé. L'État décide en outre si ces 10 \$ supplémentaires rapportent des
 intérêts au secteur privé ou pas (par exemple en les transformant en bons du
 Trésor ou en payant des intérêts sur les réserves). Le déficit public/surplus
 privé s'accumule en dette publique/patrimoine privé. Contrairement aux autres
