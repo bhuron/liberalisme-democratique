@@ -39,22 +39,28 @@ function slugify(text) {
 }
 
 /**
- * Formate la date actuelle au format ISO (YYYY-MM-DD)
+ * Formate la date actuelle au format ISO (YYYY-MM-DD), dans le fuseau de Paris
  */
 function getCurrentDate() {
-  const now = new Date();
-  return now.toISOString().split('T')[0];
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+
+  const value = (type) => parts.find((part) => part.type === type)?.value;
+  return `${value('year')}-${value('month')}-${value('day')}`;
 }
 
 /**
  * Génère le template MDX
  */
 function generateTemplate(title) {
-  const slug = slugify(title);
   const date = getCurrentDate();
 
   return `---
-title: "${title}"
+title: ${JSON.stringify(title)}
 description: ""
 pubDate: ${date}
 author: Benoît Huron
@@ -67,10 +73,7 @@ draft: true
 #   - Tag2
 ---
 
-// import YoutubeEmbed from '../../components/YoutubeEmbed.astro';
-// import Figure from '../../components/Figure.astro';
 import { Image } from "astro:assets";
-// import imageNom from "../../assets/mon-image.webp";
 
 Écrire l'introduction de l'article ici...
 
@@ -84,25 +87,23 @@ Détails supplémentaires...
 
 ## Section 2
 
-<!-- Pour insérer une image locale: -->
-<!-- <Image
-  src={imageNom}
-  alt="Description de l'image"
-  class="rounded-xl shadow-lg my-8 mx-auto"
-/> -->
+{/* Pour insérer une image locale (Image est déjà importé ci-dessus) :
+import imageNom from "../../assets/mon-image.webp";
 
-<!-- Pour insérer une vidéo YouTube: -->
-<!-- <YoutubeEmbed
-  url="https://youtu.be/..."
-  title="Titre de la vidéo"
-/> -->
+<Image src={imageNom} alt="Description de l'image" class="rounded-xl shadow-lg my-8 mx-auto" />
+*/}
 
-<!-- Pour insérer une image avec légende: -->
-<!-- <Figure
-  src={imageNom}
-  alt="Description de l'image"
-  caption="Légende de l'image. Source : Insee."
-/> -->
+{/* Pour insérer une vidéo YouTube, importer le composant :
+import YoutubeEmbed from "../../components/YoutubeEmbed.astro";
+
+<YoutubeEmbed url="https://youtu.be/..." title="Titre de la vidéo" />
+*/}
+
+{/* Pour insérer une image avec légende, importer le composant :
+import Figure from "../../components/Figure.astro";
+
+<Figure src={imageNom} alt="Description de l'image" caption="Légende de l'image. Source : Insee." />
+*/}
 
 ## Conclusion
 
