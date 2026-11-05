@@ -14,6 +14,10 @@ image:
 ---
 
 import { Image } from "astro:assets";
+import screenshot1 from "../../assets/ghost-images/sillytavern-screenshot-1.jpg";
+import screenshot2 from "../../assets/ghost-images/sillytavern-screenshot-2.jpg";
+import screenshot3 from "../../assets/ghost-images/sillytavern-screenshot-3.jpg";
+import screenshot4 from "../../assets/ghost-images/sillytavern-screenshot-4.jpg";
 
 
 ChatGPT, Claude, Gemini : ces interfaces web ont démocratisé l'accès aux modèles de langage (ou LLM pour *Large Language Models*). Des millions de personnes découvrent chaque jour le potentiel de ces intelligences artificielles capables de converser, d'écrire, d'analyser et de créer. Cette accessibilité a un prix — impossibilité de changer facilement de modèle, personnalisation minimale, conversations perdues dans un historique peu sophistiqué et dépendance totale à l'interface imposée par la plateforme.
@@ -57,10 +61,10 @@ Donc, okay, on peut créer la petite amie parfaite et passer ses journée à dis
 SillyTavern n'est pas aussi immédiatement accessible que ChatGPT ou Claude.ai. L'interface est dense et très riche. L'installation, la configuration des clés API, la création du premier personnage, la compréhension des concepts de base — tout cela demande un investissement initial en temps et en curiosité.
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
-  <Image src="https://www.liberalisme-democratique.fr/content/images/2025/12/screenshot3.jpg" alt="SillyTavern Screenshot 3" width={600} height={400} class="rounded-lg shadow-md" />
-  <Image src="https://www.liberalisme-democratique.fr/content/images/2025/12/screenshot2.jpg" alt="SillyTavern Screenshot 2" width={600} height={400} class="rounded-lg shadow-md" />
-  <Image src="https://www.liberalisme-democratique.fr/content/images/2025/12/screenshot1.jpg" alt="SillyTavern Screenshot 1" width={600} height={400} class="rounded-lg shadow-md" />
-  <Image src="https://www.liberalisme-democratique.fr/content/images/2025/12/screenshot4.jpg" alt="SillyTavern Screenshot 4" width={600} height={400} class="rounded-lg shadow-md" />
+  <Image src={screenshot3} alt="Capture d’écran 3 de SillyTavern" width={600} class="rounded-lg shadow-md" />
+  <Image src={screenshot2} alt="Capture d’écran 2 de SillyTavern" width={600} class="rounded-lg shadow-md" />
+  <Image src={screenshot1} alt="Capture d’écran 1 de SillyTavern" width={600} class="rounded-lg shadow-md" />
+  <Image src={screenshot4} alt="Capture d’écran 4 de SillyTavern" width={600} class="rounded-lg shadow-md" />
 </div>
 
 Mais c'est précisément là que réside la philosophie de SillyTavern — la puissance a un prix et ce prix est l'apprentissage. Les créateurs de ST n'ont pas cherché à simplifier à outrance au détriment des fonctionnalités. Ils ont choisi de faire confiance aux utilisateurs, de leur donner tous les outils et de les laisser explorer.

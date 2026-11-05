@@ -14,9 +14,11 @@ image:
 ---
 
 import { Image } from "astro:assets";
+import contrarian from "../../assets/ghost-images/contrarian.png";
+import presetEnfant from "../../assets/ghost-images/preset-enfant.png";
 
 
-SillyTavern est une [interface avancée](https://www.liberalisme-democratique.fr/sillytavern-linterface-ultime-des-modeles-de-langage/) pour modèles de langage. L'application fonctionne comme une plateforme de configuration granulaire permettant de sculpter le comportement des agents conversationnels par l'empilement stratégique de directives. Son potentiel dépasse ainsi largement le cadre du divertissement et peut s'étendre à la formation, à la création assistée ou même à la spécialisation professionnelle. Cet article analyse trois cas d'utilisation concrets démontrant comment, à travers la maîtrise des **cartes de personnage**, des **presets système** et des **extensions**, SillyTavern se transforme en un atelier de conception d'intelligences artificielles aux rôles et capacités délimités avec précision.
+SillyTavern est une [interface avancée](/blog/sillytavern-linterface-ultime-des-modeles-de-langage/) pour modèles de langage. L'application fonctionne comme une plateforme de configuration granulaire permettant de sculpter le comportement des agents conversationnels par l'empilement stratégique de directives. Son potentiel dépasse ainsi largement le cadre du divertissement et peut s'étendre à la formation, à la création assistée ou même à la spécialisation professionnelle. Cet article analyse trois cas d'utilisation concrets démontrant comment, à travers la maîtrise des **cartes de personnage**, des **presets système** et des **extensions**, SillyTavern se transforme en un atelier de conception d'intelligences artificielles aux rôles et capacités délimités avec précision.
 
 ## Définir l'interlocuteur : la Carte de Personnage comme protocole d'interaction
 
@@ -35,10 +37,9 @@ fiche technique constitue le cahier des charges de son comportement, une person
 opérationnelle avec un mandat clair.
 
 <Image 
-  src="https://www.liberalisme-democratique.fr/content/images/2025/12/contrarian.png" 
+  src={contrarian}
   alt="Lin Hao, débatteur contradictoire" 
   width={800} 
-  height={450} 
   class="rounded-xl shadow-lg my-8 mx-auto" 
 />
 
@@ -66,10 +67,9 @@ combinant la charte fixe et les options narratives sélectionnées par l'adulte
 superviseur.
 
 <Image 
-  src="https://www.liberalisme-democratique.fr/content/images/2025/12/preset-enfant.png" 
+  src={presetEnfant}
   alt="Preset enfant SillyTavern" 
   width={800} 
-  height={450} 
   class="rounded-xl shadow-lg my-8 mx-auto" 
 />
 

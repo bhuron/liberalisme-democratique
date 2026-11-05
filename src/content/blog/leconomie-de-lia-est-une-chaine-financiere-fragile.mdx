@@ -15,6 +15,7 @@ image:
 ---
 
 import { Image } from "astro:assets";
+import chainOfPainInfos from "../../assets/ghost-images/chain-of-pain-infos.png";
 
 
 Comme l'explique [Ed Zitron](https://www.wheresyoured.at/premium-the-ways-the-ai-bubble-might-burst/), la bulle que connaît actuellement le secteur de l'intelligence artificielle a la forme d'une chaîne, une chaîne profondément vulnérable maintenue ensemble par la dette et le capital-risque. Pour comprendre la fragilité de cet écosystème, il faut en examiner chaque maillon.
@@ -40,10 +41,9 @@ doivent ainsi elles aussi lever du capital-risque pour continuer à payer l'acc�
 à ces modèles.
 
 <Image 
-  src="https://www.liberalisme-democratique.fr/content/images/2025/12/chain-of-pain-infos.png" 
+  src={chainOfPainInfos}
   alt="La chaîne de l'IA" 
   width={800} 
-  height={450} 
   class="rounded-xl shadow-lg my-8 mx-auto" 
 />
 

@@ -13,7 +13,7 @@ image:
   alt: Les limites du revenu universel
 ---
 
-On peut imaginer que le contexte idéologique et institutionnel change assez pour libérer le revenu universel de la contrainte de [neutralité budgétaire](http://www.liberalisme-democratique.fr/revenu-universel-et-pauvrete/) (je veux dire, on peut toujours rêver, hein ?) Les pays pourraient alors fixer le revenu universel à un niveau suffisant pour avoir un impact réel sur la pauvreté sans se préoccuper du déficit public. La question est de savoir si c'est une bonne idée.
+On peut imaginer que le contexte idéologique et institutionnel change assez pour libérer le revenu universel de la contrainte de [neutralité budgétaire](/blog/la-contrainte-budgetaire/) (je veux dire, on peut toujours rêver, hein ?) Les pays pourraient alors fixer le revenu universel à un niveau suffisant pour avoir un impact réel sur la pauvreté sans se préoccuper du déficit public. La question est de savoir si c'est une bonne idée.
 
 Au minimum, une bonne politique économique doit être capable d'assurer
 durablement le plein-emploi et limiter les tendances inflationnistes. Il n'est

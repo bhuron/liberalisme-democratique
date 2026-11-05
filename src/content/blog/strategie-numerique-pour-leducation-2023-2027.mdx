@@ -13,6 +13,7 @@ image:
 ---
 
 import { Image } from "astro:assets";
+import strategieNumerique from "../../assets/ghost-images/strategie-numerique.png";
 
 
 Le ministère de l’Éducation nationale a publié sa « [Stratégie numérique pour l’éducation 2023-2027](https://www.education.gouv.fr/strategie-du-numerique-pour-l-education-2023-2027-344263) ». Elle repose sur plusieurs axes :
@@ -53,10 +54,9 @@ est que le « socle numérique » doit leur être présenté d’une manière qu
 sens pour leur matière.
 
 <Image 
-  src="https://www.liberalisme-democratique.fr/content/images/2024/02/DALL-E-2023-05-04-10.52.11---a-drawing-of.png" 
+  src={strategieNumerique}
   alt="Illustration éducation numérique" 
   width={800} 
-  height={450} 
   class="rounded-xl shadow-lg my-8 mx-auto" 
 />
 
@@ -64,7 +64,7 @@ Un enseignant de mathématiques veut enseigner les mathématiques. Pareil pour l
 
 ## La vision radicale d’une stratégie conservatrice
 
-L’objectif est bien sûr de faire des économies, de rendre une stratégie numérique pour l’éducation au moins envisageable dans un contexte de pénurie. Mais c’est aussi au fond la seule stratégie qui fait sens pour un enseignement au numérique dans le secondaire. Comme je l’ai déjà [écrit](https://liberalisme-democratique.fr/informatique-en-cycle-4/) :
+L’objectif est bien sûr de faire des économies, de rendre une stratégie numérique pour l’éducation au moins envisageable dans un contexte de pénurie. Mais c’est aussi au fond la seule stratégie qui fait sens pour un enseignement au numérique dans le secondaire. Comme je l’ai déjà [écrit](/blog/linformatique-en-cycle-4/) :
 
 > Enseigner la programmation en soi n’est ni souhaitable, ni très motivant pour un public aussi jeune. Autant considérer dès l’abord l’informatique pour ce qu’elle est – un outil applicable dans quantité de domaines.
 

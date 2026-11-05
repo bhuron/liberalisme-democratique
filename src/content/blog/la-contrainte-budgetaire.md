@@ -14,7 +14,7 @@ image:
   alt: "La contrainte budgétaire : illusion et réalité"
 ---
 
-La [souveraineté monétaire](https://www.liberalisme-democratique.fr/quest-ce-que-la-souverainete-monetaire/) d'un État dégage des marges de manœuvre importantes pour la mise en place de politiques publiques conséquentes mais cela suppose un mimimum de clarté sur les [réalités opérationnelles](https://www.nytimes.com/2017/10/05/opinion/deficit-tax-cuts-trump.html) des finances publiques.
+La [souveraineté monétaire](/blog/quest-ce-que-la-souverainete-monetaire/) d'un État dégage des marges de manœuvre importantes pour la mise en place de politiques publiques conséquentes mais cela suppose un mimimum de clarté sur les [réalités opérationnelles](https://www.nytimes.com/2017/10/05/opinion/deficit-tax-cuts-trump.html) des finances publiques.
 
 L'hystérie du discours politique et médiatique sur le déficit public est
 particulièrement néfaste. Au lieu de réfléchir au meillleur moyen d'améliorer la
