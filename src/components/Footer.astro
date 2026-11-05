@@ -1,7 +1,19 @@
 ---
+import { SITE_TITLE } from "../consts";
+
 const today = new Date();
 ---
 
 <footer class="py-8 px-4 text-center bg-gray-100 text-gray-600">
-	<p class="mb-4">&copy; {today.getFullYear()} Libéralisme Démocratique. Tous droits réservés.</p>
+	<p class="mb-4">
+		&copy; {today.getFullYear()}
+		{SITE_TITLE}. Tous droits réservés.
+	</p>
+	<p class="text-sm">
+		<a
+			href="/rss.xml"
+			class="text-gray-600 hover:text-accent transition-colors duration-200"
+			>Flux RSS</a
+		>
+	</p>
 </footer>

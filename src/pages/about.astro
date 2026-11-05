@@ -17,7 +17,7 @@ import { SITE_TITLE, SITE_AUTHOR } from "../consts";
 	</head>
 	<body class="min-h-screen bg-gray-50">
 		<Header />
-		<main class="max-w-4xl mx-auto px-4 py-12">
+		<main id="main" class="max-w-4xl mx-auto px-4 py-12">
 			<article class="bg-white border border-gray-200">
 				<div class="w-full h-64 md:h-80 overflow-hidden">
 					<Image
@@ -26,6 +26,8 @@ import { SITE_TITLE, SITE_AUTHOR } from "../consts";
 						src={AboutHeroImage}
 						alt="Image de présentation du blog"
 						class="w-full h-full object-cover"
+						loading="eager"
+						fetchpriority="high"
 					/>
 				</div>
 				<div class="p-6 md:p-8">
