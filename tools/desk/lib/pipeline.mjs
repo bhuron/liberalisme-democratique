@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -122,11 +123,16 @@ export function stageStatus(slug) {
  * le pattern Agent as Tool. Le desk ne récupère que le fichier produit et un
  * résumé de trois phrases, jamais le raisonnement du spécialiste.
  */
+function hashFile(file) {
+  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
 export async function runStage({
   slug,
   stageId,
   onEvent,
   runAgent = runOneShot,
+  expectedDraftHash = null,
 }) {
   const piece = readPiece(slug);
   if (!piece) throw new Error(`La pièce « ${slug} » n'existe pas`);
@@ -151,6 +157,17 @@ export async function runStage({
   const available = availableArtefacts(piece);
   const decision = readText(path.join(pieceDir(slug), 'angle.md'), '');
   const started = nowIso();
+  const draftRelative = draftFile(slug);
+  const draftPath = path.join(SITE_ROOT, draftRelative);
+  const draftHash = stageId === 'critique' ? hashFile(draftPath) : null;
+
+  if (stageId === 'revise' && expectedDraftHash) {
+    if (hashFile(draftPath) !== expectedDraftHash) {
+      throw new Error(
+        'Le brouillon a été modifié depuis la critique. Relance la critique sur la version actuelle.',
+      );
+    }
+  }
 
   const runRole = async (roleId) => {
     const output = roleOutput(roleId, slug);
@@ -197,8 +214,7 @@ export async function runStage({
   }
 
   if (stageId === 'draft' || stageId === 'revise') {
-    const draft = draftFile(slug);
-    const raw = fs.readFileSync(path.join(SITE_ROOT, draft), 'utf8');
+    const raw = fs.readFileSync(draftPath, 'utf8');
     if (!/^---[\s\S]*?draft:\s*true/m.test(raw)) {
       throw new Error('Le brouillon a été écrit sans « draft: true ».');
     }
@@ -221,6 +237,7 @@ export async function runStage({
     ended: nowIso(),
     results,
     scorecards,
+    ...(draftHash ? { draftHash } : {}),
   };
   writeJson(
     path.join(PIECES_DIR, slug, 'runs', `${stageId}-${Date.now()}.json`),
@@ -233,6 +250,7 @@ export async function runStage({
     results,
     outputs: stageOutputs(stageId, slug),
     scorecards,
+    draftHash,
   };
 }
 
@@ -258,6 +276,14 @@ export async function runReviewLoop({
       onEvent,
       runAgent,
     });
+
+    const currentDraftHash = hashFile(path.join(SITE_ROOT, draftFile(slug)));
+    if (critique.draftHash && currentDraftHash !== critique.draftHash) {
+      throw new Error(
+        'Le brouillon a été modifié pendant la critique. Relance la critique sur la version actuelle.',
+      );
+    }
+
     const mustFix = critique.scorecards.reduce(
       (total, card) => total + card.must_fix.length,
       0,
@@ -279,6 +305,7 @@ export async function runReviewLoop({
       stageId: 'revise',
       onEvent,
       runAgent,
+      expectedDraftHash: critique.draftHash,
     });
   }
 

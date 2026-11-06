@@ -29,6 +29,8 @@ const state = {
     draft: false,
   },
   artifactText: {},
+  artifactEtag: {},
+  revalidateArtifact: null,
   tab: 'chat',
   busy: false,
   error: null,
@@ -297,6 +299,7 @@ async function loadPiece(slug) {
     state.messages = data.messages;
     state.artifacts = data.artifacts;
     state.artifactText = {};
+    state.artifactEtag = {};
     state.tab = 'chat';
     state.error = null;
 
@@ -608,6 +611,7 @@ function renderArtifact(name) {
 		<span class="doc-label">${meta.label}</span>
 		<div class="doc-actions">
 			<span class="path">${escapeHtml(meta.path(slug))}</span>
+			<button type="button" class="small" data-refresh="${name}">Recharger</button>
 			<button type="button" class="small" data-copy="${name}">Copier</button>
 		</div>
 	</div>
@@ -616,29 +620,55 @@ function renderArtifact(name) {
 
 function afterPieceRender() {
   if (state.tab === 'research' && state.artifacts.research) {
-    ensureArtifact('research');
+    ensureArtifact('research', {
+      revalidate: state.revalidateArtifact === 'research',
+    });
   }
   if (state.tab === 'draft' && state.artifacts.draft) {
-    ensureArtifact('draft');
+    ensureArtifact('draft', {
+      revalidate: state.revalidateArtifact === 'draft',
+    });
   }
+  state.revalidateArtifact = null;
   const main = $('#main');
   if (state.tab === 'chat') main.scrollTop = main.scrollHeight;
 }
 
-async function ensureArtifact(name) {
-  if (state.artifactText[name] !== undefined) return;
-  state.artifactText[name] = null;
-  renderMain();
+async function ensureArtifact(name, { revalidate = false } = {}) {
+  if (state.artifactText[name] !== undefined && !revalidate) return;
+
+  if (state.artifactText[name] === undefined) {
+    state.artifactText[name] = null;
+    renderMain();
+  }
 
   try {
+    const headers = {};
+    if (state.artifactEtag[name]) {
+      headers['if-none-match'] = state.artifactEtag[name];
+    }
+
     const response = await fetch(
       `/api/pieces/${encodeURIComponent(state.piece.slug)}/artifact/${name}`,
+      { headers, cache: 'no-cache' },
     );
+
+    if (response.status === 304) {
+      if (state.artifactText[name] === undefined) {
+        state.artifactText[name] = '';
+        renderMain();
+      }
+      return;
+    }
+
     state.artifactText[name] = response.ok ? await response.text() : '';
+    state.artifactEtag[name] = response.headers.get('etag');
+    renderMain();
   } catch {
     state.artifactText[name] = '';
+    state.artifactEtag[name] = null;
+    renderMain();
   }
-  renderMain();
 }
 
 /* ---------------------------------------------------------------- actions */
@@ -663,8 +693,7 @@ async function sendMessage(text, { bootstrap = false } = {}) {
     state.sources = data.sources;
     state.messages = data.messages;
     state.artifacts = data.artifacts;
-    delete state.artifactText.brief;
-    delete state.artifactText.draft;
+    state.revalidateArtifact = null;
     await loadPieces();
   } catch (error) {
     state.error = error.message;
@@ -708,6 +737,8 @@ async function deletePiece() {
       draft: false,
     };
     state.artifactText = {};
+    state.artifactEtag = {};
+    state.revalidateArtifact = null;
     state.error = null;
     state.pendingBootstrap = null;
     state.inbox = null;
@@ -782,13 +813,15 @@ document.addEventListener('keydown', (event) => {
 
   event.preventDefault();
   state.tab = next.dataset.tab;
+  state.revalidateArtifact =
+    state.tab === 'research' || state.tab === 'draft' ? state.tab : null;
   renderMain();
   document.querySelector(`.tabs [data-tab="${next.dataset.tab}"]`)?.focus();
 });
 
 document.addEventListener('click', (event) => {
   const target = event.target.closest(
-    '[data-action], [data-tab], [data-fill], [data-copy]',
+    '[data-action], [data-tab], [data-fill], [data-copy], [data-refresh]',
   );
   if (!target) return;
 
@@ -814,7 +847,14 @@ document.addEventListener('click', (event) => {
 
   if (target.dataset.tab) {
     state.tab = target.dataset.tab;
+    state.revalidateArtifact =
+      state.tab === 'research' || state.tab === 'draft' ? state.tab : null;
     renderMain();
+    return;
+  }
+
+  if (target.dataset.refresh) {
+    ensureArtifact(target.dataset.refresh, { revalidate: true });
     return;
   }
 

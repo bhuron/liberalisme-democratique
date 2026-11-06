@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -181,6 +182,20 @@ function json(res, status, value) {
 
 function text(res, status, value) {
   res.writeHead(status, { 'content-type': 'text/plain; charset=utf-8' });
+  res.end(value);
+}
+
+function sendCachedText(req, res, value) {
+  const etag = `"${createHash('sha256').update(value).digest('hex')}"`;
+  if (req.headers['if-none-match'] === etag) {
+    res.writeHead(304, { etag, 'cache-control': 'no-cache' });
+    return res.end();
+  }
+  res.writeHead(200, {
+    'content-type': 'text/plain; charset=utf-8',
+    'cache-control': 'no-cache',
+    etag,
+  });
   res.end(value);
 }
 
@@ -608,20 +623,20 @@ async function handleApi(req, res, url) {
     if (name === 'brief') {
       const file = path.join(PIECES_DIR, slug, 'brief.md');
       if (!fs.existsSync(file)) return text(res, 404, '');
-      return text(res, 200, fs.readFileSync(file, 'utf8'));
+      return sendCachedText(req, res, fs.readFileSync(file, 'utf8'));
     }
     if (name === 'research') {
       const file = path.join(PIECES_DIR, slug, 'research.md');
       if (!fs.existsSync(file)) return text(res, 404, '');
-      return text(res, 200, fs.readFileSync(file, 'utf8'));
+      return sendCachedText(req, res, fs.readFileSync(file, 'utf8'));
     }
     if (name === 'critiques') {
       const directory = path.join(PIECES_DIR, slug, 'critiques');
       const files = critiqueFiles(slug);
       if (!files.length) return text(res, 404, '');
-      return text(
+      return sendCachedText(
+        req,
         res,
-        200,
         files
           .map(
             (file) =>
@@ -634,9 +649,9 @@ async function handleApi(req, res, url) {
       for (const extension of ['mdx', 'md']) {
         const file = path.join(CONTENT_DIR, `${slug}.${extension}`);
         if (fs.existsSync(file)) {
-          return text(
+          return sendCachedText(
+            req,
             res,
-            200,
             stripFrontmatter(fs.readFileSync(file, 'utf8')),
           );
         }

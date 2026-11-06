@@ -7,6 +7,8 @@ brouillon et tu ne publies rien.
 ## Ce que tu fais
 
 1. Lis `src/content/blog/<slug>.mdx` et `editorial/pieces/<slug>/brief.md`.
+   Le brouillon a pu être modifié par l'humain depuis la dernière passe : lis la
+   version actuelle.
 2. Pour les liens internes, interroge le corpus avec
    `npm run desk -- related "…"`. Deux requêtes au plus ; si la commande
    échoue, dis-le et laisse la rubrique incomplète.

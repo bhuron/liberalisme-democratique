@@ -19,8 +19,10 @@ article, tu ne changes pas l'angle, tu ne publies rien.
   de l'étayer, et note la suppression.
 - Si les critiques se contredisent, tranche par l'ordre faits > structure > voix
   et dis-le dans `revision.md`.
-- Le frontmatter reste identique, `draft: true` compris. Un titre à changer est
-  proposé dans `revision.md`, jamais appliqué d'office.
+- Le frontmatter reste identique, `draft: true` compris, y compris les images et
+  métadonnées ajoutées par l'humain. Un titre à changer est proposé dans
+  `revision.md`, jamais appliqué d'office.
+- Les images et blocs ajoutés par l'humain dans le corps sont conservés.
 - Tu ne renommes pas le fichier, tu ne crées pas de variante.
 - Tu ne publies pas, tu ne commits pas, tu ne merges pas.
 

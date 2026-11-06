@@ -58,6 +58,11 @@ suffisants ou après deux passes. Si l'outil n'est pas disponible, exécute
 `npm run desk -- loop <slug>`. `critique` et `revise` restent disponibles pour
 une passe ciblée.
 
+L'humain peut éditer le brouillon entre deux passes : corps, images, frontmatter.
+Avant toute critique, révision ou paquet, relis la version actuelle de
+`src/content/blog/<slug>.mdx` et ne te fie pas à la version précédente. Si le
+brouillon a changé, relance la critique avant la révision.
+
 N'enchaîne pas toutes les étapes sans demande. Si une étape est bloquée par un
 prérequis, dis-le et propose l'étape à lancer.
 

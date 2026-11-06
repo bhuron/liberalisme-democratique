@@ -124,6 +124,23 @@ Adaptez à votre gestionnaire de secrets (`pass`, `op run`, `secret-tool`). Ne
 créez jamais `.env` dans ce dépôt : le profil headless le lirait, et un fichier
 ignoré finit toujours par être copié, forcé ou poussé.
 
+## Boucle humaine
+
+Le brouillon est un fichier : `src/content/blog/<slug>.mdx`. L'humain peut le
+modifier entre deux passes (corps, images, frontmatter). Le bureau relit la
+version courante :
+
+- les onglets Recherche et Brouillon revalident le fichier (ETag) à chaque
+  ouverture, et proposent un bouton « Recharger » ; une réponse 304 signifie
+  « inchangé », le texte en cache reste affiché ;
+- le pipeline calcule l'empreinte du brouillon au début de la critique et refuse
+  de réviser s'il a changé entre-temps ;
+- le réviseur conserve le frontmatter, les images et les blocs ajoutés par
+  l'humain.
+
+Le cycle : éditer → demander une critique → réviser → éditer de nouveau. Garder
+`draft: true` jusqu'à la publication.
+
 ## Le workflow multi-agent
 
 Le desk n'est pas un agent unique. Six étapes, huit rôles, et chaque rôle tourne
