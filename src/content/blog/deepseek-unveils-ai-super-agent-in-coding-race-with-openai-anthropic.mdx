@@ -1,0 +1,93 @@
+---
+title: "DeepSeek dévoile l’architecture d’un « super-agent » d’IA"
+description: "Le 31 octobre 2026, l’équipe DeepSeek Harness a publié le texte d’architecture d’un agent capable de mener plusieurs tâches hors du cadre d’une session unique."
+pubDate: 2026-11-07
+author: Benoît Huron
+image:
+  src: ../../assets/super-agent.png
+  alt: "Un bureau éclairé par une lampe suspendue, entouré de postes de travail dont les écrans restent allumés dans la pénombre, sans personne."
+draft: false
+tags:
+  - IA
+  - Technologie
+---
+
+import { Image } from 'astro:assets';
+import architecture from '../../assets/super-agent-architecture.png';
+import thread from '../../assets/super-agent-thread.png';
+
+Le 31 octobre 2026, l’équipe DeepSeek Harness a mis en ligne, selon le [China Securities Journal, via Sina](https://finance.sina.com.cn/jjxw/2026-11-01/doc-inixetzy0998940.shtml), un texte d’architecture, « Super-agent 设计探索：迈向更自主的 Agent 系统 » ([billet](https://mp.weixin.qq.com/s/zoS7GlReWPhfCjENGxXCdg)) accompagné d’un dépôt public sous licence MIT ([dépôt](https://github.com/deepseek-ai/dsh-superagent-prototype)). Il décrit un système multi-agent, multi-interface, qui peut travailler sur plusieurs tâches en parallèle de manière autonome et efficace.
+
+## Découpler l’agent de la session
+
+La session reste aujourd’hui l’unité de base du fonctionnement d’un agent, et les sessions restent indépendantes les unes des autres. Quand l’utilisateur mène plusieurs travaux en parallèle, il doit changer de session et retenir le contexte de chacune. D’après les observations de l’équipe, une personne n’en suit guère que trois à cinq à la fois. Face à plusieurs tâches distinctes, les agents actuels sont ainsi limités dans leur autonomie et imposent une charge cognitive à leurs utilisateurs.
+
+Le super-agent proposé ici est une entité continue, qui garde le contexte d’une session à l’autre et fait progresser plusieurs tâches sans les mélanger. La session devient un détail d’implémentation, et cesse d’être une charge pour l’utilisateur.
+
+Quatre propriétés forment le cahier des charges. L’agent reste **continu** : l’utilisateur ne cherche pas quelle session détient quelle information. Il est **efficace**, et accepte une instruction pendant qu’une autre s’exécute. **Proactif**, il écoute les événements et se tait quand son intervention n’apporte rien. **Persistant**, il tourne en continu et se rétablit après une anomalie.
+
+Une seule boucle ReAct ne peut pas satisfaire ces spécifications. D’où un ensemble de modules qui s’appuient — l’équipe insiste sur ce point — sur des idées classiques de l’informatique, des contraintes semblables conduisant à des choix d’architecture semblables.
+
+## Deux niveaux : un routeur permanent, des exécutants isolés
+
+Le partage entre un routeur et des exécutants part d’un arbitrage. Tout traiter dans une même session assure une continuité maximale, mais un cycle unique sérialise les travaux. Ouvrir une session par événement maximise certes le débit, mais éclate les résultats et multiplie les réponses à l’utilisateur. D’où deux couches.
+
+Le `Router`, la couche qui oriente et coordonne, est permanent. Il est responsable des interactions humaines, les séquence et tient la mémoire globale. Il n’exécute pas les tâches lui-même et se contente de dispatcher le travail à des agents exécutant, garantissant ainsi un bon débit. Un modèle léger lui suffit souvent et il peut même se passer d’outils Bash.
+
+Les `Worker`, les agents qui exécutent, travaillent dans un contexte isolé, avec les outils complets et le modèle le plus capable. Ils n’interagissent jamais directement avec les opérateurs humains. Ils rapportent au `Router`, qui centralise et coordonne les réponses, ce qui évite qu’un même travail reçoive plusieurs réponses divergentes.
+
+<figure>
+	<Image
+		src={architecture}
+		alt="Schéma : les interfaces de messagerie, GitHub et courriel passent par une couche Router qui dispatche vers trois sessions Worker isolées."
+	/>
+	<figcaption>Un `Router` permanent reçoit les interactions et dispatche ; les `Worker` exécutent chacun dans un contexte isolé. Schéma d’après le billet de l’équipe DeepSeek Harness.</figcaption>
+</figure>
+
+Le critère de distinction est l’unité de découpage. Une Agent Team, une équipe d’agents, organise la collaboration à l’intérieur d’une même tâche, et le modèle responsable porte une lourde charge de raisonnement que ce soit dans la compréhension de la tâche, son découpage et le dispatch à des agents exécutant. Le `Router` ne traite que les relations *entre* les tâches. Le papier concède qu’une Agent Team dont la session principale se contente de répartir peut aussi être vue comme cette architecture à deux niveaux.
+
+## L’événement comme élément déclencheur
+
+L’entrée du système change : l’agent n’attend plus des consignes tapées une à une. Il écoute en continu des événements semi-structurés, que le papier nomme `Trigger` : messages de groupe, e-mails, échéances d’agenda, commentaires de revue, résultats d’intégration continue.
+
+Un filtrage de ce flux bruyant, hétérogène, et ne demandant que rarement une action est nécessaire. Il se fait selon deux modalités — une *voie rapide* traitée par un code déterministique et une *voie lente* où le modèle filtre lui-même les cas retenus par le code du premier niveau.
+
+Les événements d’un même sujet forment un fil, une Pull Request par exemple. Le `Worker` s’y abonne et reçoit les suivants sans repasser par le `Router`, qui garde l’état global, ce qui améliore encore le débit.
+
+<figure>
+	<Image
+		src={thread}
+		alt="Schéma : le premier événement d’un fil passe par le Router, qui ouvre un Worker et l’abonne ; les suivants vont directement au Worker."
+	/>
+	<figcaption>Le premier événement d’un fil passe par le `Router`, qui ouvre un `Worker` et l’abonne ; les suivants lui sont transmis directement. Schéma d’après le billet.</figcaption>
+</figure>
+
+La fenêtre de contexte est gérée comme un cache. Ce qui va probablement servir est incorporé directement ; le reste demeure dehors, avec un identifiant ou un résumé, et se rappelle à la demande. Le rappel s’enchaîne, chaque objet rappelé portant l’identifiant du suivant.
+
+## Ne pas bloquer, ne pas dépendre d’une machine
+
+Dans une boucle ReAct classique, un appel d’outil bloque la conversation jusqu’à son résultat. Le papier rend l’interaction asynchrone : l’appel rend la main, le résultat revient plus tard comme un événement, et une commande trop longue peut être arrêtée. Le mécanisme existe déjà dans DeepSeek Harness, désactivé par défaut.
+
+La sortie s’adapte au canal. En messagerie d’équipe par exemple, une règle testée en interne plafonne chaque réponse à 100 mots. Sur GitHub, par mail ou dans un document, la livraison est structurée : contexte du problème, description du changement, vérifications et traces utiles.
+
+La séparation du calcul, de l’état et de l’environnement libère le système de la dépendance à une seule machine. La boucle d’agent devient sans état dans des conteneurs cloud, et l’état de session est persisté en base : la continuité survit aux redémarrages. L’environnement de travail reste en place, derrière un démon léger installé sur l’appareil, qui exécute les commandes et renvoie les résultats. Le papier appelle cette approche BYOM, apportez votre propre machine.
+
+Un dernier module part d’un autre constat : toutes les pannes ne sont pas des plantages ; un agent peut boucler ou dériver sans mourir. Le `Watchdog`, une session de surveillance extérieure pilotée par messages planifiés, juge si chaque `Worker` progresse et corrige en ligne, ajustant les prompts ou les règles de déclenchement.
+
+## Le système en pratique
+
+L’expérience décrite dans le papier compare quatre variantes sur un même flux. Chaque exécution compte environ 300 messages, dont une vingtaine de demandes de travail, et chaque variante est répétée cinq fois. Le travail de codage y est remplacé par un outil qui consomme du temps : l’expérience mesure l’ordonnancement et la collaboration, pas l’exécution d’une tâche.
+
+Le super-agent termine les demandes de travail en 12,4 minutes en médiane et 15,7 minutes au 95e centile, dans un flux aux intervalles et aux durées de travail réduits au quart. La variante à session unique, avec un prompt neutre, atteint 29,5 minutes au 95e centile : sur cinq exécutions, le modèle n’a pas appelé une seule fois l’outil de délégation.
+
+Avec un prompt qui privilégie la délégation, le modèle l’appelle quatre fois sur cinq et reste plus lent que le super-agent. Le super-agent consomme plus de tokens de cache en lecture qu’une session unique, et le papier assume l’échange : plus de tokens contre un temps plus court et plus stable.
+
+Dans la même expérience, la variante sans passage direct donne un temps de complétion quasiment identique, mais environ 30 % de décisions du `Router` en plus et 23,23 à 31,77 millions de tokens de cache lus. L’équipe ajoute que la charge est synthétique et l’environnement simplifié.
+
+## Des pistes de travail
+
+La sécurité du système reste une question ouverte. L’agent est branché sur des événements externes et sur des machines qui portent du code privé et des identifiants. Une compromission du cloud exposerait tous les appareils connectés, et le papier recommande de concevoir un mécanisme qui permette de s’en servir sans les faire entrer dans le contexte.
+
+La mémoire longue est désignée comme le principal obstacle à l’extensibilité au-delà de quelques mois. La coopération entre agents reste à régler : quand partitionner un `Router`, à quelle granularité, et comment faire dialoguer des instances qui ne partagent ni contexte ni permissions.
+
+Le README du dépôt présente le projet comme un prototype de recherche, non comme un produit de DeepSeek, et signale que certains designs décrits ne sont pas implémentés. Le papier conclut de même : un prototype destiné à valider une voie technique.
