@@ -1,0 +1,206 @@
+---
+title: "Pas de chance !"
+description: "Dans une partie de tarot à cinq, le Roi appelé tombe au chien et le preneur joue seul contre quatre. Le calcul exact de la probabilité que les quatre défenseurs coupent les quatre couleurs en 2-1-1-0, la simulation qui le vérifie, et le code Julia."
+pubDate: 2026-11-09
+author: Benoît Huron
+draft: false
+tags:
+  - Loisir
+  - Théorie
+image:
+  src: ../../assets/empty-table.png
+  alt: "Une table de jeu vide au feutre vert, dans une pièce éclairée par une fenêtre ; une seule carte y est posée, face cachée."
+---
+
+import Figure from "../../components/Figure.astro";
+import tarotConvergence from "../../assets/tarot-convergence.png";
+
+Il faut toujours savoir quand le destin est contre nous, savoir si on a offensé une divinité quelconque au moins pour tenter d’y remédier. Donc, quelle est la chance de prendre au tarot dans une partie à cinq, d’appeler le Roi qui est au chien et que toutes les couleurs soient coupées par les autres joueurs ? Ça peut arriver après tout.
+
+## Le tarot à 5
+
+Un jeu de tarot compte [78 cartes](https://fr.wikipedia.org/wiki/Tarot_fran%C3%A7ais) : quatre couleurs de 14 (♠ piques, ♥ cœurs, ♦ carreaux, ♣ trèfles), 21 atouts et l’excuse. À cinq joueurs, chacun en reçoit [15 et le chien en prend 3](https://gameduell.helpshift.com/hc/fr/21-tarot-classique-multijoueur/faq/1414-call-to-king-select-your-hidden-partner-at-the-5-player-variant/). Pour les coupes, atouts et excuse jouent le même rôle : soit 22 cartes hors couleur et 56 cartes de couleur.
+
+Le preneur appelle un Roi qu’il n’a pas. Le joueur qui le détient devient son partenaire, et la partie se joue à deux contre trois. Sauf si le Roi appelé est au chien : le preneur [ramasse le chien](https://gameduell.helpshift.com/hc/fr/21-tarot-classique-multijoueur/faq/1414-call-to-king-select-your-hidden-partner-at-the-5-player-variant/), récupère le Roi, et n’a plus de partenaire. Il joue seul contre quatre, face à quatre mains de 15 cartes.
+
+Avant de ramasser le chien, le preneur a 15 cartes. Il reste 63 cartes hors de sa main, dont 3 au chien. Appelons $S$ l’événement « le Roi est au chien » : le Roi qu’il appelle est l’une de ces 63 cartes, et il est au chien avec probabilité $3/63=1/21$, soit environ 4,76 %.
+
+## L’événement étudié
+
+Être sec dans une couleur, c’est n’y avoir aucune carte. Couper, c’est jouer un atout sur un pli dont on n’a pas la couleur demandée. La coupe franche désigne la couleur vide, sans exiger que le joueur ait des atouts en main.
+
+L’événement $E$ est réalisé quand un défenseur est sec dans exactement deux couleurs, deux autres dans exactement une, le quatrième dans aucune, et que les quatre couleurs sont coupées.
+
+Comme $2+1+1+0=4$ et que les quatre couleurs doivent être coupées, les quatre coupes portent sur quatre couleurs distinctes : une paire pour le défenseur à deux coupes, deux singletons pour les deux autres.
+
+## Premiers calculs et pièges
+
+Commençons par un calcul élémentaire. Quelle est la probabilité qu’une main de 15 cartes soit sèche dans une couleur donnée ?
+
+Il y a 14 cartes dans cette couleur. Pour être sec, la main doit être choisie parmi les 64 autres : $\mathbb{P}(\text{sec dans une couleur})=\binom{64}{15}/\binom{78}{15}\approx3{,}652\times10^{-2}$, une sur 27.
+
+Pour être sec dans deux couleurs données, 28 cartes sont interdites, et la probabilité tombe à une sur 1 941. Pour trois couleurs, 42 cartes sont interdites, et l’on descend à une sur 784 481.
+
+On serait tenté de multiplier ces probabilités pour les quatre défenseurs. Ce serait une erreur, pour deux raisons.
+
+Les mains se partagent les mêmes cartes. Si un défenseur est sec dans une couleur, il laisse les cartes de cette couleur aux autres, ce qui modifie leurs probabilités.
+
+Les coupes ne sont pas indépendantes non plus. Si un défenseur est sec dans une couleur, il doit placer ses 15 cartes dans les autres catégories ; il a donc, en moyenne, davantage de cartes des autres couleurs, ce qui diminue la probabilité qu’il soit également sec dans une seconde couleur.
+
+Comparons la probabilité d’être sec dans deux couleurs données à ce que donnerait l’indépendance. La valeur réelle est $5{,}153\times10^{-4}$, alors que le produit des probabilités marginales vaudrait $(3{,}652\times10^{-2})^2\approx1{,}334\times10^{-3}$. Le rapport vaut $0{,}386$ : la probabilité conjointe est environ 2,6 fois plus petite que le produit.
+
+L’idée qu’un joueur riche en atouts est souvent sec dans plusieurs couleurs est exacte. Mais elle ne suffit pas à conclure : à nombre d’atouts fixé, être sec dans une couleur oblige à concentrer ses cartes de couleur dans les autres, ce qui rend une seconde coupe moins probable. C’est ce bilan, légèrement négatif, que traduit le calcul.
+
+## Dénombrement exact
+
+Il faut donc dénombrer les donnes qui réalisent $E$. On distribue les 60 cartes des quatre défenseurs, main par main : 15 pour le premier parmi les 78, 15 pour le second parmi les 63 restantes, et ainsi de suite. Le nombre de donnes ordonnées vaut
+
+$$T=\binom{78}{15}\binom{63}{15}\binom{48}{15}\binom{33}{15}\approx6{,}0488\times10^{50}.$$
+
+Pour une main dont les couleurs interdites sont $Z$, on choisit des entiers $n_c=0$ si $c\in Z$, $n_c\ge1$ sinon, et $n_{\text{atout}}\ge0$, avec $n_\spadesuit+n_\heartsuit+n_\diamondsuit+n_\clubsuit+n_{\text{atout}}=15$.
+
+L’état $\mathbf{r}=(r_\spadesuit,r_\heartsuit,r_\diamondsuit,r_\clubsuit,r_{\text{atout}})$ compte les cartes restantes par catégorie, et $D_k(\mathbf{r})$ le nombre de façons d’avoir déjà servi les $k$ premiers défenseurs en laissant $\mathbf{r}$. On part de $D_0(14,14,14,14,22)=1$, puis, pour chaque composition $\mathbf{n}$ compatible avec le masque du défenseur,
+
+$$D_{k+1}(\mathbf{r}-\mathbf{n})\mathrel{+}=D_k(\mathbf{r})\prod_{s}\binom{r_s}{n_s}\binom{r_{\text{atout}}}{n_{\text{atout}}}.$$
+
+Le nombre de donnes qui réalisent une configuration est $N_{\text{config}}=\sum_{\mathbf{r}}D_4(\mathbf{r})$, la somme portant sur tous les états finaux possibles, et sa probabilité vaut $N_{\text{config}}/T$. Pour une configuration précise — disons $D_1$ sec en ♠ et ♥, $D_2$ en ♦, $D_3$ en ♣, $D_4$ nulle part — on trouve $N_{\text{config}}\approx1{,}0708\times10^{45}$, soit $1{,}7702\times10^{-6}$.
+
+Les compositions d’une main sont énumérées par la fonction `hand_shapes`, qui suppose `MAXS = 14`, `MAXT = 22` et la table `CB` des coefficients binomiaux.
+
+```julia
+# Toutes les compositions (n_pique, n_coeur, n_carreau, n_trefle, n_atout)
+# d'une main de 15 cartes, avec n_c = 0 pour c dans `mask`, et n_c >= 1 sinon.
+function hand_shapes(mask::Int)
+    free = [s for s in 0:3 if (mask >> s) & 1 == 0]
+    res = NTuple{5,Int}[]
+    n = zeros(Int, 5)
+    function rec(i, rem)
+        if i > length(free)
+            n[5] = rem
+            (0 <= rem <= MAXT) && push!(res, Tuple(n))
+            return
+        end
+        s = free[i]
+        hi = min(MAXS, rem - (length(free) - i))
+        for k in 1:hi
+            n[s+1] = k
+            rec(i+1, rem - k)
+        end
+        n[s+1] = 0
+    end
+    rec(1, 15)
+    return res
+end
+```
+
+La programmation dynamique elle-même est mise en œuvre par `count_config`.
+
+```julia
+# Nombre de facons de distribuer les quatre mains avec les masques donnes.
+function count_config(deck::NTuple{5,Int}, masks::Vector{Int})
+    dp = zeros(Float64, MAXS+1, MAXS+1, MAXS+1, MAXS+1, MAXT+1)
+    dp[deck[1]+1, deck[2]+1, deck[3]+1, deck[4]+1, deck[5]+1] = 1.0
+    for mask in masks
+        sh = hand_shapes(mask)
+        ndp = zeros(Float64, MAXS+1, MAXS+1, MAXS+1, MAXS+1, MAXT+1)
+        for r0 in 0:MAXS, r1 in 0:MAXS, r2 in 0:MAXS, r3 in 0:MAXS, rt in 0:MAXT
+            v = dp[r0+1, r1+1, r2+1, r3+1, rt+1]
+            v == 0.0 && continue
+            for (n0,n1,n2,n3,nt) in sh
+                if n0 <= r0 && n1 <= r1 && n2 <= r2 && n3 <= r3 && nt <= rt
+                    w = CB[r0+1,n0+1] * CB[r1+1,n1+1] * CB[r2+1,n2+1] *
+                        CB[r3+1,n3+1] * CB[rt+1,nt+1]
+                    ndp[r0-n0+1, r1-n1+1, r2-n2+1, r3-n3+1, rt-nt+1] += v * w
+                end
+            end
+        end
+        dp = ndp
+    end
+    return sum(dp)
+end
+```
+
+Les compteurs sont des `Float64`, parce que $N_{\text{config}}\sim10^{45}$ et $T\sim10^{51}$ dépassent `Int64` ; le rapport garde une dizaine de chiffres utiles.
+
+Combien de configurations de ce type ? Quatre choix pour le défenseur à deux coupes, $\binom{4}{2}=6$ paires de couleurs, $\binom{3}{2}=3$ choix pour les deux défenseurs à une coupe, et $2!=2$ façons de répartir les deux couleurs restantes : $4\times6\times3\times2=144$.
+
+Ces 144 configurations ne diffèrent que par une permutation des couleurs et des joueurs. Elles sont équiprobables, et multiplier une seule d’entre elles par 144 est légitime. Le résultat suit :
+
+$$\mathbb{P}(E)=144\times1{,}7702\times10^{-6}\approx2{,}5491\times10^{-4},$$
+
+soit une chance sur 3 923.
+
+## Le conditionnement
+
+Reste à conditionner sur $S$. Sachant le Roi appelé au chien, ce Roi n’est dans aucune main de défenseur. Le chien contient le Roi et deux autres cartes ; avant de ramasser le chien, le preneur en a 15, et les défenseurs se partagent les 60 cartes restantes. Ces 60 cartes forment un échantillon uniforme de 60 parmi les 77 cartes autres que le Roi.
+
+La couleur du Roi ne compte plus que 13 cartes au lieu de 14, ce qui la rend très légèrement plus facile à couper. Le calcul se refait donc sur un jeu de 77 cartes, et donne $\mathbb{P}(E\mid S)=\mathbb{P}_{77}(E)\approx2{,}7166\times10^{-4}$, une chance sur 3 681.
+
+La probabilité conjointe s’en déduit : $\mathbb{P}(E\cap S)=\mathbb{P}(S)\,\mathbb{P}(E\mid S)=\frac{1}{21}\times2{,}7166\times10^{-4}\approx1{,}2936\times10^{-5}$, une chance sur 77 302. Le conditionnement relève donc $\mathbb{P}(E)$ d’environ 6,6 %.
+
+Le calcul suppose une main de preneur aléatoire. En réalité, un joueur qui prend a en général plus d’atouts que la moyenne ; les défenseurs en ont alors un peu moins, donc un peu plus de cartes de couleur, et coupent un peu moins. L’ordre de grandeur tient, mais le 1 sur 3 681 est un résultat de modèle, pas la chance d’une partie réelle.
+
+## Vérification par simulation
+
+On mélange les 78 cartes, on distribue 15 cartes à chacun des quatre défenseurs, et on regarde leurs coupes. On répète l’expérience $n$ fois et on compte la proportion de réussites. C’est la loi des grands nombres.
+
+L’erreur type vaut $\sigma_n=\sqrt{p(1-p)/n}$, et l’intervalle de confiance à 95 % s’écrit $\hat p\pm1{,}96\,\sigma_n$. Sur $10^7$ donnes, la simulation donne $2{,}535\times10^{-4}\pm9{,}9\times10^{-6}$ pour le jeu de 78 cartes, et $2{,}748\times10^{-4}\pm1{,}0\times10^{-5}$ pour celui de 77.
+
+<Figure
+  src={tarotConvergence}
+  alt="Convergence de l’estimation de P(E) pour les jeux de 78 et 77 cartes, avec les valeurs exactes en pointillés"
+  caption="Convergence de la simulation. Les points bleus correspondent au jeu de 78 cartes, les carrés rouges au jeu conditionnel de 77 cartes. Les droites en pointillés sont les valeurs exactes."
+/>
+
+```julia
+function simulate_2110(nsim::Int; conditional::Bool=false)
+    if conditional
+        deck = vcat(zeros(Int,13), ones(Int,14), fill(2,14), fill(3,14), fill(4,22))
+    else
+        deck = vcat(zeros(Int,14), ones(Int,14), fill(2,14), fill(3,14), fill(4,22))
+    end
+    hits = 0
+    cnt = zeros(Int,4)
+    c = zeros(Int,5)
+    @inbounds for _ in 1:nsim
+        shuffle!(deck)
+        fill!(c, 0)
+        umask = 0
+        for p in 0:3
+            fill!(cnt, 0)
+            base = p*15
+            for k in 1:15
+                card = deck[base+k]
+                if card < 4
+                    cnt[card+1] += 1
+                end
+            end
+            mask = 0
+            for s in 0:3
+                if cnt[s+1] == 0
+                    mask |= 1 << s
+                end
+            end
+            umask |= mask
+            c[count_ones(mask)+1] += 1
+        end
+        if umask == 15 && c[3] == 1 && c[2] == 2 && c[1] == 1
+            hits += 1
+        end
+    end
+    return hits / nsim
+end
+```
+
+| Événement | Probabilité | Ordre de grandeur |
+| --- | --- | --- |
+| $\mathbb{P}(S)$, le preneur joue seul | $1/21 \approx 4{,}76\,\%$ | 1 sur 21 |
+| $\mathbb{P}(E\mid S)$ | $2{,}7166\times10^{-4}$ | 1 sur 3 681 |
+| $\mathbb{P}(E\cap S)$ | $1{,}2936\times10^{-5}$ | 1 sur 77 302 |
+| $\mathbb{P}(E)$, sans condition, en 2-1-1-0 | $2{,}5491\times10^{-4}$ | 1 sur 3 923 |
+
+<p class="text-center text-sm italic text-gray-600 mt-2">Probabilités principales.</p>
+
+Le [script complet](/fichiers/tarot-coupes.jl) recalcule et imprime les trois probabilités exactes ; le [notebook Pluto d’origine](https://pluto.land/n/129u7qmk) permet de rejouer la simulation et la figure.
+
+Une chance sur 3 700 sachant qu’il joue seul, une sur 77 000 pour que le Roi au chien et les quatre couleurs coupées en 2-1-1-0 coïncident. Donc, yeah, il est temps d’aller prier quelque part.
