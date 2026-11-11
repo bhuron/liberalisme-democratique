@@ -12,13 +12,41 @@ import fs from 'node:fs';
  * corpus : 4,6 tirets pour 1 000 mots, par exemple.
  */
 
+const NEGATION_OPPOSITION = new RegExp(
+  [
+    // « ce n'est pas X, c'est Y », « non pas X mais Y », « il n'y a pas X, c'est Y »
+    String.raw`\b(?:ce n['’]est pas|ce n['’]était pas|non pas|il ne s['’]agit pas de|la question n['’]est pas|il n['’]y a pas)\b[^.!?]{0,140}?\b(?:c['’]est|mais|elle est|il est|elles sont|ils sont)\b`,
+    // Négation verbale reprise par un pronom : « ne rompt pas X, il déplace Y »,
+    // « ne cherche pas à former tout le monde : il cherche à trier »
+    String.raw`\b(?:ne|n['’])\s*[\p{L}'’\-]+(?:\s+[\p{L}'’\-]+){0,2}\s+pas\b[^.!?]{0,120}?[,;:]\s*(?:c['’]est|ce sont|il|elle|ils|elles|on|cela|ça|ce)\b\s+[\p{L}'’\-]+`,
+    // « X n'est pas Y mais Z »
+    String.raw`\b[\p{L}][\p{L}'’\-]*(?:\s+[\p{L}'’\-]+){0,4}\s+n['’]est pas\b[^.!?]{0,110}?\s+mais\s`,
+  ].join('|'),
+  'giu',
+);
+
 const PATTERNS = [
   {
     id: 'negation-opposition',
-    label: '« ce n’est pas X, c’est Y »',
-    pattern:
-      /\b(?:ce n['’]est pas|non pas|il ne s['’]agit pas de|la question n['’]est pas)\b[^.!?]{0,140}?\b(?:c['’]est|mais)\b/gi,
-    budget: { absolute: 1 },
+    label: '« ce n’est pas X, c’est Y » et variantes',
+    pattern: NEGATION_OPPOSITION,
+    budget: { absolute: 0 },
+    // Écarte les emplois qui ne sont pas la figure : conditionnelle
+    // (« si on ne se trompe pas, on repart »), relative (« …, ce qui suppose »),
+    // et « non pas seulement X mais également Y ».
+    skip: (text, index, match) => {
+      const before = text.slice(Math.max(0, index - 48), index);
+      if (
+        /\b(?:si|s['’]il|s['’]ils?|quand|lorsqu['’]|lorsque)\s+(?:\p{L}+['’]?\s+){0,3}$/iu.test(
+          before,
+        )
+      ) {
+        return true;
+      }
+      if (/\bce\s+(?:qui|que|qu['’]|dont|où)\s*$/u.test(match[0])) return true;
+      if (/\bnon pas seulement\b/u.test(match[0])) return true;
+      return false;
+    },
   },
   {
     id: 'tiret',
@@ -61,63 +89,65 @@ function strip(raw) {
 }
 
 function median(values) {
-	if (!values.length) return 0;
-	const sorted = [...values].sort((a, b) => a - b);
-	const middle = Math.floor(sorted.length / 2);
-	return sorted.length % 2 === 0
-		? (sorted[middle - 1] + sorted[middle]) / 2
-		: sorted[middle];
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[middle - 1] + sorted[middle]) / 2
+    : sorted[middle];
 }
 
 function percentile(values, ratio) {
-	if (!values.length) return 0;
-	const sorted = [...values].sort((a, b) => a - b);
-	return sorted[Math.min(sorted.length - 1, Math.round(ratio * (sorted.length - 1)))];
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[
+    Math.min(sorted.length - 1, Math.round(ratio * (sorted.length - 1)))
+  ];
 }
 
 /** Mesures de registre : phrase, paragraphe, attaque, intertitres, citations. */
 function structureOf(text, words) {
-	const paragraphs = text
-		.split(/\n{2,}/)
-		.map((paragraph) => paragraph.trim())
-		.filter(Boolean);
-	const sentences = (text.match(/[^.!?]+[.!?]+/g) ?? [text])
-		.map((sentence) => sentence.trim())
-		.filter(Boolean);
-	const sentenceLengths = sentences
-		.map((sentence) => sentence.split(/\s+/).filter(Boolean).length)
-		.filter((length) => length > 0);
-	const paragraphLengths = paragraphs
-		.map((paragraph) => paragraph.split(/\s+/).filter(Boolean).length)
-		.filter((length) => length > 0);
-	const quotes = Math.ceil((text.match(/[“”"«»]/g) ?? []).length / 2);
-	const attributions = (
-		text.match(
-			/\b(?:selon|affirme|explique|précise|indique|rapporte|déclare|estime|ajoute|dit|note|souligne|rappelle|prévient|reconnaît|confie|assure|observe|constate|poursuit)\b/gi,
-		) ?? []
-	).length;
-	const per1000 = (count) =>
-		words ? Number(((count / words) * 1000).toFixed(1)) : 0;
+  const paragraphs = text
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+  const sentences = (text.match(/[^.!?]+[.!?]+/g) ?? [text])
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+  const sentenceLengths = sentences
+    .map((sentence) => sentence.split(/\s+/).filter(Boolean).length)
+    .filter((length) => length > 0);
+  const paragraphLengths = paragraphs
+    .map((paragraph) => paragraph.split(/\s+/).filter(Boolean).length)
+    .filter((length) => length > 0);
+  const quotes = Math.ceil((text.match(/[“”"«»]/g) ?? []).length / 2);
+  const attributions = (
+    text.match(
+      /\b(?:selon|affirme|explique|précise|indique|rapporte|déclare|estime|ajoute|dit|note|souligne|rappelle|prévient|reconnaît|confie|assure|observe|constate|poursuit)\b/gi,
+    ) ?? []
+  ).length;
+  const per1000 = (count) =>
+    words ? Number(((count / words) * 1000).toFixed(1)) : 0;
 
-	return {
-		sentences: sentenceLengths.length,
-		sentenceMedian: Number(median(sentenceLengths).toFixed(1)),
-		sentenceMean: sentences.length
-			? Number(
-					(
-						sentenceLengths.reduce((total, value) => total + value, 0) /
-						sentenceLengths.length
-					).toFixed(1),
-				)
-			: 0,
-		sentenceP90: percentile(sentenceLengths, 0.9),
-		paragraphs: paragraphLengths.length,
-		paragraphMedian: Number(median(paragraphLengths).toFixed(1)),
-		leadWords: paragraphLengths[0] ?? 0,
-		headings: (text.match(/^##\s+/gm) ?? []).length,
-		quotesPer1000: per1000(quotes),
-		attributionsPer1000: per1000(attributions),
-	};
+  return {
+    sentences: sentenceLengths.length,
+    sentenceMedian: Number(median(sentenceLengths).toFixed(1)),
+    sentenceMean: sentences.length
+      ? Number(
+          (
+            sentenceLengths.reduce((total, value) => total + value, 0) /
+            sentenceLengths.length
+          ).toFixed(1),
+        )
+      : 0,
+    sentenceP90: percentile(sentenceLengths, 0.9),
+    paragraphs: paragraphLengths.length,
+    paragraphMedian: Number(median(paragraphLengths).toFixed(1)),
+    leadWords: paragraphLengths[0] ?? 0,
+    headings: (text.match(/^##\s+/gm) ?? []).length,
+    quotesPer1000: per1000(quotes),
+    attributionsPer1000: per1000(attributions),
+  };
 }
 
 export function budgetLabel(budget) {
@@ -137,7 +167,7 @@ export function checkStyle(raw) {
       ...text.matchAll(
         new RegExp(definition.pattern.source, definition.pattern.flags),
       ),
-    ];
+    ].filter((match) => !definition.skip?.(text, match.index ?? 0, match));
     const count = matches.length;
     const density = words ? (count / words) * 1000 : 0;
     const over =
