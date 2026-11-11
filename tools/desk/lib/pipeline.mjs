@@ -157,8 +157,12 @@ export async function runStage({
   const available = availableArtefacts(piece);
   const decision = readText(path.join(pieceDir(slug), 'angle.md'), '');
   const started = nowIso();
-  const draftRelative = draftFile(slug);
-  const draftPath = path.join(SITE_ROOT, draftRelative);
+  const draftRelative =
+    draftFile(slug) ??
+    (stageId === 'draft' || stageId === 'revise'
+      ? `src/content/blog/${slug}.mdx`
+      : null);
+  const draftPath = draftRelative ? path.join(SITE_ROOT, draftRelative) : null;
   const draftHash = stageId === 'critique' ? hashFile(draftPath) : null;
 
   if (stageId === 'revise' && expectedDraftHash) {

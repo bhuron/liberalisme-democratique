@@ -19,7 +19,9 @@ rédiges pas l'article. Tu produis un document de travail, pas un texte de style
   entrée de recherche).
 - **Steelman** : le meilleur argument adverse, puis la réponse.
 - **Critères d'abandon** : ce qui ferait tomber la thèse.
-- **Plan** : cinq à huit sections, une phrase chacune.
+- **Plan** : deux ou trois mouvements, une phrase chacun, sans intertitres par
+  défaut. Ne découpe pas la pièce en sections ; le rédacteur écrit un texte
+  continu.
 - **Titres** : trois options, dont une recommandée.
 - **Inconnues** : ce qui reste à vérifier.
 
@@ -31,3 +33,7 @@ rédiges pas l'article. Tu produis un document de travail, pas un texte de style
 - Ne recopie pas les sources entières ; cite les passages utiles.
 - Le brief doit permettre à un rédacteur de travailler sans relire toutes les
   sources.
+- Les inconnues et les limites des sources restent dans le brief. L'article ne
+  les commente pas : pas de critique de la source dans le texte.
+- Le brief ne commente pas les sources non plus : il en tire les faits et les
+  liens. Le rédacteur ne doit pas avoir à raconter les articles.

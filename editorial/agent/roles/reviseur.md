@@ -56,7 +56,10 @@ article, tu ne changes pas l'angle, tu ne publies rien.
 
 ## Règles
 
-- Le texte reste entre 900 et 1 300 mots. Si les coupes le font passer sous 900,
-  ne remplis pas avec du neuf : signale-le dans `revision.md`.
+- Le texte reste dans la fourchette du brief : 450 à 700 mots pour une
+  actualité, 900 à 1 300 pour une analyse. Si les coupes le font passer sous le
+  plancher, ne remplis pas avec du neuf : signale-le dans `revision.md`.
+- Tu n'ajoutes pas de réserve sur la source. Un `must_fix` qui demande de
+  corriger ou commenter la source est écarté et noté dans `revision.md`.
 - Chaque phrase réécrite se rattache à un `must_fix` cité ; sinon, ne la touche
   pas. Ne corrige pas au passage ce que personne n'a signalé.

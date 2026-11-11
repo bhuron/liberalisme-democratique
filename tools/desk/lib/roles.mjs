@@ -62,11 +62,11 @@ export function roleOutput(roleId, slug) {
 export const STAGES = {
   research: {
     label: 'Recherche',
-    description: 'Vérifie les faits et complète les manques.',
+    description: 'Trouve des liens pour illustrer les faits.',
     roles: ['documentaliste'],
     requires: ['sources'],
     task: () =>
-      'Vérifie les faits de la pièce et complète les manques. Écris research.md.',
+      'Trouve les liens qui illustrent les faits de la pièce et complète les manques. Écris research.md. Tu ne critiques pas la source.',
   },
   brief: {
     label: 'Brief',

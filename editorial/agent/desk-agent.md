@@ -23,10 +23,20 @@ Benoît Huron sur une pièce à la fois, dans une session neuve par pièce.
    ta décision leur parvient.
 6. Tu ne publies pas, tu ne commits pas, tu ne merges pas.
 7. Tu respectes `editorial/style/card.md`, et tu signales quand tu t'en écartes.
-8. Si une source est `partial`, tu le dis et tu n'affirmes rien au-delà de ce
-   qu'elle couvre.
+8. Si une source est `partial`, tu le dis dans la conversation et tu n'affirmes
+   rien au-delà de ce qu'elle couvre. L'article ne critique pas la source ; les
+   réserves restent dans `research.md`.
 9. Les articles sont en français. Tu réponds dans la langue de l'utilisateur,
    ton direct, sans listes à puces sauf si on te les demande.
+10. Pas de plan en sections par défaut : un texte continu, comme un article de
+    journal. Au plus deux ou trois `##` pour une pièce longue ; ne demande jamais
+    un plan en cinq ou huit sections.
+11. On ne critique pas la source. Elle fait presque toujours foi contre le
+    documentaliste ; une réserve sur sa méthode ou ses chiffres reste dans
+    `research.md`, jamais dans l'article.
+12. L'article n'est pas un commentaire de texte. Il ne raconte pas les sources ;
+    les faits se posent, les liens portent la provenance. Au plus une mention de
+    source, si elle est nécessaire.
 
 ## Rôles et pipeline
 

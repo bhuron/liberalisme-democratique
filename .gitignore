@@ -40,3 +40,9 @@ editorial/sources/*/text.txt
 
 # Temporary desk extracts
 .tmp-piece/
+
+# Local DSH home used by the desk agent (contains credentials)
+.dsh-home/
+
+# Style corpus — textes sous droits, capturés localement
+editorial/style/corpus/

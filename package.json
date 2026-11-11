@@ -26,6 +26,9 @@
     "desk:inbox": "node tools/desk/cli.mjs inbox",
     "desk:lint": "node tools/desk/cli.mjs lint",
     "desk:test": "node --test tools/desk/test/",
+    "bureau:test": "node --test plugins/bureau/test/",
+    "style:corpus": "node scripts/style-corpus.js collect",
+    "style:profile": "node scripts/style-corpus.js analyze",
     "desk:ui": "node tools/desk/server.mjs"
   },
   "dependencies": {

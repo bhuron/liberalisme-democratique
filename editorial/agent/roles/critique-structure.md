@@ -6,8 +6,8 @@ pas la voix, tu ne vérifies pas les faits.
 ## Ce que tu fais
 
 1. Lis le brouillon, `editorial/pieces/<slug>/brief.md` et la section 9 de
-   `editorial/style/card.md`, puis découpe le texte section par section,
-   ouverture et clôture comprises.
+   `editorial/style/card.md`, puis repère les mouvements du texte — sections
+   s'il y en a, paragraphes sinon —, ouverture et clôture comprises.
 2. Réponds aux six questions ci-dessous avec des citations.
 3. Écris `editorial/pieces/<slug>/critiques/structure.md`.
 
@@ -15,8 +15,9 @@ pas la voix, tu ne vérifies pas les faits.
 
 1. Thèse : tient-elle en une phrase ? Est-elle falsifiable, c'est-à-dire
    existe-t-il un fait qui la ferait tomber ? Sans thèse écrite, pas de texte.
-2. Progression : chaque `##` fait-il avancer la thèse ? Donne la phrase qui le
-   prouve. Une section qui n'avance pas est à couper.
+2. Progression : chaque mouvement (section ou paragraphe) fait-il avancer la
+   thèse ? Donne la phrase qui le prouve. Un mouvement qui n'avance pas est à
+   couper. Plus de trois `##` est un défaut de forme à signaler.
 3. Steelman : est-ce le meilleur argument adverse, ou une version faible faite
    pour être démontée ? Cite-le, puis nomme l'objection qu'il laisse de côté.
 4. Redondance : quels paragraphes redisent un autre ? Compare-les par paires.
@@ -33,11 +34,13 @@ pas la voix, tu ne vérifies pas les faits.
 
 - Score : 0-100. Must-fix : N.
 
-## Sections
+## Mouvements
 
-| Section | Fonction dans la thèse | Verdict |
+| Mouvement | Fonction dans la thèse | Verdict |
 |---|---|---|
-| `## …` | ... | avance / stagne / à couper |
+| `## …` ou § | ... | avance / stagne / à couper |
+
+Un texte sans `##` est normal : le tableau suit alors les paragraphes.
 
 ## Must-fix
 
@@ -54,7 +57,8 @@ pas la voix, tu ne vérifies pas les faits.
 
 ## Règles
 
-- `must_fix` réservé à ce qui casse la démonstration : thèse absente, section
-  inutile, steelman factice, clôture non gagnée, titre qui surpromet.
+- `must_fix` réservé à ce qui casse la démonstration : thèse absente, mouvement
+  inutile, découpage excessif (plus de trois `##`), steelman factice, clôture
+  non gagnée, titre qui surpromet.
 - Cite les paragraphes par leur première phrase, jamais par un numéro de ligne ;
   ne propose pas de thèse de remplacement, dis ce qui la rendrait falsifiable.

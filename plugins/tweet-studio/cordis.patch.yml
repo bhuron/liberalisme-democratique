@@ -1,0 +1,3 @@
+- insert:
+    - id: tweet-studio
+      name: '@local/tweet-studio'

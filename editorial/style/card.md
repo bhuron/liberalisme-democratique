@@ -16,12 +16,22 @@ ils décrivent une tendance, pas une règle absolue.
 
 ## 2. Structure
 
-- 900 à 1 300 mots. Trois à sept sections `##`, titres courts et assertifs
-  (« La distribution du risque », « Attiser le délire »).
+- Longueur selon le genre : 450 à 700 mots pour une pièce d'actualité, 900 à
+  1 300 pour une analyse.
+- Les sections sont **optionnelles**. Un texte d'actualité se lit d'un trait,
+  sans intertitre. Au plus deux ou trois `##`, et seulement si la pièce est
+  longue ; titres courts et assertifs. Jamais un plan en cinq ou huit sections.
+- Pour une pièce d'actualité, les cibles mesurées sur 25 articles SCMP/FT
+  (profil du 11 novembre 2026) : phrase médiane ~22 mots, paragraphe ~34,
+  attaque ~34, citations ~12 pour 1 000 mots, attributions ~12, intertitres 0.
+  Voir `editorial/style/newsroom-profile.md`. Pour une analyse, le profil LMD
+  donne ~22 mots par phrase, 80 à 120 mots par paragraphe, un chapô de 10 à
+  20 mots et 1 à 2 `##`.
 - Jamais de titre « Introduction » ni « Conclusion ».
 - Ouverture : une idée reçue, puis immédiatement un doute. Pas d'anecdote
   personnelle, pas de « depuis toujours », pas de définition de dictionnaire.
-- Une idée par paragraphe, 40 à 70 mots en moyenne (55 mesurés).
+- Une idée par paragraphe. Pour une actualité, 30 à 40 mots (profil SCMP/FT) ;
+  pour une analyse, 80 à 120 mots (profil LMD).
 - Clôture : une question ou une affirmation sèche. Jamais un résumé de ce qui
   précède.
 - Pas de listes à puces dans le corps. Les énumérations tiennent dans la phrase.
@@ -87,6 +97,16 @@ tiret cadratin comme seule ponctuation de liaison.
 - Les paragraphes d'une phrase sans fonction.
 - Les transitions méta (« comme nous l'avons vu », « intéressons-nous à »).
 - Les conclusions qui récapitulent.
+- Critiquer la source, la corriger, signaler ses imprécisions ou ce qu'elle ne
+  dit pas. On rapporte ce qu'elle dit ; les réserves du documentaliste restent
+  dans `research.md` et `brief.md`. Si un chiffre est une conversion, on l'écrit
+  sans leçon.
+- Les méta-commentaires sur la méthode de la source (« le papier ne précise
+  pas », « sans protocole documenté », « l'équipe ne justifie pas »).
+- Raconter les articles (« le billet dit », « selon X », « le papier concède »,
+  « le billet annonce »). L'article expose les faits ; les liens portent la
+  provenance, pas le texte. Une mention de source au maximum, si elle est
+  nécessaire à la compréhension.
 
 ## 8. Typographie
 
@@ -118,3 +138,18 @@ Les tics sont vérifiés séparément par `npm run desk -- style <slug>`.
 Les posts Bluesky et X sont en anglais par défaut. Cette charte décrit l'article
 français ; pour les posts, suivre `editorial/agent/roles/editeur.md` et
 `.agents/skills/tweet/SKILL.md`.
+
+## 11. Images de couverture
+
+Toujours 16:9 et photoréaliste. Jamais d'illustration plate, de vectoriel, de
+collage ni de texte dans l'image. Le cadre du site affiche une bande plus large
+que le 16:9 (environ 2,7:1 sur desktop, 2:1 sur mobile) : garder le sujet dans
+le tiers central en hauteur, sinon il est rogné.
+
+Lumière naturelle, décor clair : une couverture sombre ne marche pas.
+
+Les modèles ne savent pas rendre les cartes de tarot. Montrer des dos de cartes,
+ou pas de cartes du tout ; jamais de figures ni de symboles de tarot.
+
+L'auteur fournit la couverture. L'agent peut proposer un prompt, jamais générer
+sans accord.

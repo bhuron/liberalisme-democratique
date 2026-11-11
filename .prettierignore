@@ -15,3 +15,6 @@ scripts/article-template.md
 editorial/sources/
 editorial/pieces/
 editorial/archive/
+
+# DSH plugin artwork (Prettier has no SVG parser)
+plugins/tweet-studio/icon.svg

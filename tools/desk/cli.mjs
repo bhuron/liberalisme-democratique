@@ -332,7 +332,11 @@ function commandStyle({ positional, options }) {
   }
 
   const result = checkStyleFile(file);
+  const structure = result.structure;
   console.log(`\n${file} — ${result.words} mot(s)\n`);
+  console.log(
+    `Structure : ${structure.sentenceMedian} mots/phrase (p90 ${structure.sentenceP90}) · ${structure.paragraphMedian} mots/paragraphe · attaque ${structure.leadWords} · ${structure.headings} intertitre(s) · citations ${structure.quotesPer1000}/1000 · attributions ${structure.attributionsPer1000}/1000\n`,
+  );
 
   const rows = result.metrics.map((metric) => ({
     ...metric,

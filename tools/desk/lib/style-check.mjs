@@ -60,6 +60,66 @@ function strip(raw) {
     .replace(/https?:\/\/\S+/g, ' ');
 }
 
+function median(values) {
+	if (!values.length) return 0;
+	const sorted = [...values].sort((a, b) => a - b);
+	const middle = Math.floor(sorted.length / 2);
+	return sorted.length % 2 === 0
+		? (sorted[middle - 1] + sorted[middle]) / 2
+		: sorted[middle];
+}
+
+function percentile(values, ratio) {
+	if (!values.length) return 0;
+	const sorted = [...values].sort((a, b) => a - b);
+	return sorted[Math.min(sorted.length - 1, Math.round(ratio * (sorted.length - 1)))];
+}
+
+/** Mesures de registre : phrase, paragraphe, attaque, intertitres, citations. */
+function structureOf(text, words) {
+	const paragraphs = text
+		.split(/\n{2,}/)
+		.map((paragraph) => paragraph.trim())
+		.filter(Boolean);
+	const sentences = (text.match(/[^.!?]+[.!?]+/g) ?? [text])
+		.map((sentence) => sentence.trim())
+		.filter(Boolean);
+	const sentenceLengths = sentences
+		.map((sentence) => sentence.split(/\s+/).filter(Boolean).length)
+		.filter((length) => length > 0);
+	const paragraphLengths = paragraphs
+		.map((paragraph) => paragraph.split(/\s+/).filter(Boolean).length)
+		.filter((length) => length > 0);
+	const quotes = Math.ceil((text.match(/[“”"«»]/g) ?? []).length / 2);
+	const attributions = (
+		text.match(
+			/\b(?:selon|affirme|explique|précise|indique|rapporte|déclare|estime|ajoute|dit|note|souligne|rappelle|prévient|reconnaît|confie|assure|observe|constate|poursuit)\b/gi,
+		) ?? []
+	).length;
+	const per1000 = (count) =>
+		words ? Number(((count / words) * 1000).toFixed(1)) : 0;
+
+	return {
+		sentences: sentenceLengths.length,
+		sentenceMedian: Number(median(sentenceLengths).toFixed(1)),
+		sentenceMean: sentences.length
+			? Number(
+					(
+						sentenceLengths.reduce((total, value) => total + value, 0) /
+						sentenceLengths.length
+					).toFixed(1),
+				)
+			: 0,
+		sentenceP90: percentile(sentenceLengths, 0.9),
+		paragraphs: paragraphLengths.length,
+		paragraphMedian: Number(median(paragraphLengths).toFixed(1)),
+		leadWords: paragraphLengths[0] ?? 0,
+		headings: (text.match(/^##\s+/gm) ?? []).length,
+		quotesPer1000: per1000(quotes),
+		attributionsPer1000: per1000(attributions),
+	};
+}
+
 export function budgetLabel(budget) {
   return budget.absolute !== undefined
     ? `≤ ${budget.absolute}`
@@ -69,6 +129,8 @@ export function budgetLabel(budget) {
 export function checkStyle(raw) {
   const text = strip(raw);
   const words = text.match(/[A-Za-zÀ-ÿ'’\-]+/g)?.length ?? 0;
+
+  const structure = structureOf(text, words);
 
   const metrics = PATTERNS.map((definition) => {
     const matches = [
@@ -102,7 +164,7 @@ export function checkStyle(raw) {
     };
   });
 
-  return { words, metrics };
+  return { words, structure, metrics };
 }
 
 export function checkStyleFile(file) {

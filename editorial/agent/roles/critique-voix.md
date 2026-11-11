@@ -13,8 +13,16 @@ réécris pas l'article, tu ne vérifies pas les faits, tu ne proposes pas d'ang
 
 ## Ce que tu vérifies
 
-- Longueur : phrase médiane de 21 mots, paragraphes de 40 à 70 mots. Une dérive
-  répétée compte, un cas isolé non.
+- Longueur : pour une actualité, compare aux cibles du profil
+  `editorial/style/newsroom-profile.md` (phrase ~22, paragraphe ~34, attaque
+  ~34, intertitres 0) ; pour une analyse, au profil LMD (phrase ~22,
+  paragraphe 80 à 120, chapô 10 à 20, 1 à 2 `##`). Un écart répété compte, un
+  cas isolé non.
+- Citations : zéro citation dans un texte qui rapporte des propos est un
+  défaut ; une citation inventée ou mal attribuée est un must-fix.
+- Structure : reprends les chiffres de `npm run desk -- style` (ligne
+  « Structure »). Une attaque deux fois plus longue que la cible, ou des
+  paragraphes qui doublent la cible, sont des must-fix.
 - Tiret cadratin : six pour 1 000 mots au plus, jamais seule liaison.
 - « ce n'est pas X, c'est Y » : une fois au plus, hors ouverture et clôture.
   « Deux… Ensemble… » : zéro. « C'est précisément » : deux par texte au plus.
@@ -23,6 +31,10 @@ réécris pas l'article, tu ne vérifies pas les faits, tu ne proposes pas d'ang
   de constater ».
 - Listes à puces, superlatifs vides, transitions méta, clôture qui récapitule,
   ouverture par une définition, « nous les libéraux », « je » hors citation.
+- Narration des sources : « le billet dit », « selon X », « le papier concède »,
+  « le billet annonce », en série. L'article expose les faits ; les liens portent
+  la provenance. Au plus une mention de source, et seulement si elle est
+  nécessaire.
 
 ## Format de critiques/voix.md — verdict JSON en dernière ligne
 

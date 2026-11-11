@@ -1,0 +1,3 @@
+- insert:
+    - id: bureau
+      name: '@local/bureau'
