@@ -26,7 +26,7 @@ const METRICS_FILE = path.join(
 );
 const EXEMPLARS_FILE = path.join(CORPUS_DIR, 'newsroom-exemplars.md');
 const SITE_PATTERN =
-  /(south china morning post|scmp|financial times|ft\.com|le monde diplomatique|monde-diplomatique)/i;
+  /(south china morning post|scmp|financial times|ft\.com|le monde diplomatique|monde-diplomatique|le monde|lemonde|libération|liberation|les\s*échos|lesechos|mediapart|\bafp\b)/i;
 const MIN_CORPUS = 12;
 
 function siteSlug(name) {
@@ -38,6 +38,11 @@ function siteSlug(name) {
   if (/le monde diplomatique|monde-diplomatique/i.test(value)) {
     return 'le-monde-diplomatique';
   }
+  if (/libération|liberation/i.test(value)) return 'liberation';
+  if (/le monde|lemonde/i.test(value)) return 'le-monde';
+  if (/les\s*échos|lesechos/i.test(value)) return 'les-echos';
+  if (/mediapart/i.test(value)) return 'mediapart';
+  if (/\bafp\b/i.test(value)) return 'afp';
   return value
     .toLowerCase()
     .normalize('NFD')
@@ -404,6 +409,9 @@ ${table}
   rédacteur, pas des règles de style.
 - Les intertitres sont lus dans le HTML capturé (balises h1 à h6) ; la règle de
   la charte (sections optionnelles, deux ou trois au plus) reste la référence.
+- Les captures du Monde et de Libération ne sont pas des cibles : leurs
+  mesures d'attaque sont bruitées par le HTML (chapô, standfirst). La
+  référence reste FT/SCMP pour l'actualité, LMD pour l'analyse.
 - Les exemplaires courts pour le rédacteur sont dans
   \`editorial/style/corpus/newsroom-exemplars.md\` (local, non versionné).
 `;

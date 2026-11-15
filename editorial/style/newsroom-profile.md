@@ -1,7 +1,7 @@
 # Profil de registre — presse (SCMP, Financial Times)
 
 Profil provisoire établi le 2026-11-11 sur
-**40 article(s)** (Financial Times, Le Monde diplomatique, South China Morning Post).
+**49 article(s)** (Financial Times, Le Monde, Le Monde diplomatique, Libération, South China Morning Post).
 Les textes intégraux restent dans `editorial/style/corpus/` (non versionné) ;
 ce fichier ne contient que des mesures.
 
@@ -11,12 +11,12 @@ ce fichier ne contient que des mesures.
 | Mesure | Valeur |
 |---|---|
 | Phrase médiane | 22 mots |
-| Phrase moyenne | 23.4 mots |
-| 90e centile des phrases | 36.5 mots |
-| Paragraphe médian | 39.5 mots |
+| Phrase moyenne | 23.7 mots |
+| 90e centile des phrases | 38 mots |
+| Paragraphe médian | 44 mots |
 | Attaque (premier paragraphe) | 32 mots |
-| Citations pour 1 000 mots | 12.4 |
-| Attributions pour 1 000 mots | 8.4 |
+| Citations pour 1 000 mots | 12.9 |
+| Attributions pour 1 000 mots | 7.9 |
 | Intertitres par article (médiane) | 0 |
 
 ## Par site
@@ -24,7 +24,9 @@ ce fichier ne contient que des mesures.
 | Site | Articles | Phrase méd. | § méd. | Attaque | Intertitres | Citations/1000 | Attributions/1000 |
 |---|---|---|---|---|---|---|---|
 | Financial Times | 12 | 20.5 | 36.5 | 35.5 | 0 | 12.1 | 9.7 |
+| Le Monde | 5 | 22 | 51 | 5 | 2 | 15.4 | 5.8 |
 | Le Monde diplomatique | 15 | 22 | 112 | 11 | 1 | 12.8 | 2.6 |
+| Libération | 4 | 20.8 | 70.8 | 71 | 1 | 15.6 | 5.3 |
 | South China Morning Post | 13 | 22 | 31 | 34 | 0 | 12 | 14 |
 
 ## Par article
@@ -43,6 +45,11 @@ ce fichier ne contient que des mesures.
 | Financial Times | France and Belgium fall foul of Eurozone bond market’s new divide | 929 | 24 | 42 | 48 | 0 | 15.1 |
 | Financial Times | Spain roiled by first general strike in 14 years | 476 | 22 | 37 | 26 | 0 | 14.7 |
 | Financial Times | Senior US soldier arrested in UK on suspicion of spying for Russia | 501 | 22 | 24 | 21 | 0 | 18 |
+| Le Monde | En Italie, des centaines d’écoles évacuées à la suite de fausses alert | 497 | 28 | 28 | 5 | 0 | 22.1 |
+| Le Monde | Présidentielle 2027 : Marine Le Pen a rencontré plusieurs dirigeants d | 641 | 21 | 51 | 5 | 1 | 7.8 |
+| Le Monde | Défense : les espoirs déçus de la coopération franco-allemande sous Em | 1901 | 22 | 71 | 5 | 3 | 11.6 |
+| Le Monde | Influenceurs, « interfaces trompeuses », jeux vidéo : l’UE veut mieux  | 676 | 27.5 | 38 | 5 | 2 | 22.2 |
+| Le Monde | Près de Nice, un nouvel Institut du cœur à la pointe de la technologie | 1747 | 21 | 108 | 78 | 2 | 13.2 |
 | Le Monde diplomatique | Les soutiers camerounais de l’IA | 2020 | 17 | 160 | 11 | 1 | 13.4 |
 | Le Monde diplomatique | L’agité du Quai d’Orsay | 1654 | 14 | 123.5 | 15 | 0 | 18.1 |
 | Le Monde diplomatique | Le bateau ivre européen | 1942 | 25.5 | 101 | 11 | 2 | 8.2 |
@@ -58,6 +65,10 @@ ce fichier ne contient que des mesures.
 | Le Monde diplomatique | L’héritage des « Héritiers » | 1544 | 29 | 152 | 9 | 1 | 8.4 |
 | Le Monde diplomatique | Au Yémen du Sud, Saoudiens et Émiratis à couteaux tirés | 3787 | 15 | 79 | 62 | 4 | 9.5 |
 | Le Monde diplomatique | Dans l’Italie des années 1970, naissance de l’« extrémisme du centre » | 1739 | 29 | 65 | 11 | 3 | 27.6 |
+| Libération | En Syrie, sur la route embouteillée du pétrole irakien | 1560 | 26 | 80 | 167 | 0 | 10.9 |
+| Libération | Pourquoi Getty choisit (finalement) de pactiser avec l’IA | 977 | 17 | 69 | 68 | 0 | 4.1 |
+| Libération | Baisse de la TVA, blocage des prix, aides ciblées… Terra Nova évalue l | 680 | 22.5 | 72.5 | 74 | 3 | 29.4 |
+| Libération | En réaction à l’expulsion de Fedorova, la Russie interdit de territoir | 386 | 19 | 50 | 47 | 2 | 18.1 |
 | South China Morning Post | How North Korea turns child prodigies into crypto thieves | 1206 | 22 | 30 | 41 | 0 | 15.8 |
 | South China Morning Post | US judge rejects BBC bid to dismiss Trump defamation case | 437 | 21 | 24 | 28 | 0 | 18.3 |
 | South China Morning Post | Spanish workers stage general strike – first in 14 years – over housin | 671 | 22 | 26 | 34 | 0 | 3 |
@@ -79,5 +90,8 @@ ce fichier ne contient que des mesures.
   rédacteur, pas des règles de style.
 - Les intertitres sont lus dans le HTML capturé (balises h1 à h6) ; la règle de
   la charte (sections optionnelles, deux ou trois au plus) reste la référence.
+- Les captures du Monde et de Libération ne sont pas des cibles : leurs
+  mesures d'attaque sont bruitées par le HTML (chapô, standfirst). La
+  référence reste FT/SCMP pour l'actualité, LMD pour l'analyse.
 - Les exemplaires courts pour le rédacteur sont dans
   `editorial/style/corpus/newsroom-exemplars.md` (local, non versionné).

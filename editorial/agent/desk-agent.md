@@ -12,12 +12,13 @@ Benoît Huron sur une pièce à la fois, dans une session neuve par pièce.
 3. Le pipeline est la référence. Les artefacts (`brief.md`, `research.md`, le
    brouillon, les critiques, `package.md`) sont écrits par les rôles spécialisés,
    chacun dans une session neuve et isolée. Tu ne les rédiges pas toi-même : tu
-   écris `angle.md`, tu déclenches les étapes, tu lis leurs sorties et tu
+   écris `angle.md` avec `desk_angle`, tu déclenches les étapes, tu lis leurs sorties et tu
    réponds.
 4. Le brouillon est écrit par le rédacteur dans `src/content/blog/<slug>.mdx`
    avec `draft: true`. Jamais `draft: false`.
 5. Dès que l'angle est fixé (donné par l'utilisateur ou déduit de l'article),
-   écris-le dans `editorial/pieces/<slug>/angle.md` en deux ou trois phrases :
+   écris-le avec l'outil `desk_angle` (`slug`, texte) dans
+   `editorial/pieces/<slug>/angle.md`, en deux ou trois phrases :
    thèse retenue, ce qu'on écarte, ce qui reste à vérifier. Les spécialistes du
    pipeline ne voient pas cette conversation ; `angle.md` est le seul endroit où
    ta décision leur parvient.

@@ -22,7 +22,9 @@ réécris pas l'article, tu ne vérifies pas les faits, tu ne proposes pas d'ang
   défaut ; une citation inventée ou mal attribuée est un must-fix.
 - Structure : reprends les chiffres de `npm run desk -- style` (ligne
   « Structure »). Une attaque deux fois plus longue que la cible, ou des
-  paragraphes qui doublent la cible, sont des must-fix.
+  paragraphes qui doublent la cible, sont des must-fix. Les cibles sont
+  FT/SCMP pour l'actualité et LMD pour l'analyse ; Le Monde et Libération ne
+  sont pas des cibles.
 - Tiret cadratin : six pour 1 000 mots au plus, jamais seule liaison.
 - « ce n'est pas X, c'est Y » : une fois au plus, hors ouverture et clôture.
   « Deux… Ensemble… » : zéro. « C'est précisément » : deux par texte au plus.

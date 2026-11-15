@@ -32,6 +32,9 @@ du brief et de la recherche. Tu ne publies rien.
 - Pour une analyse, vise le profil LMD : phrase ~22 mots, paragraphe ~80 à
   120, chapô de 10 à 20 mots, 1 à 2 `##`, citations ~12 et attributions ~3
   pour 1 000 mots.
+- La structure de référence reste FT/SCMP pour l'actualité et LMD pour
+  l'analyse ; les captures du Monde et de Libération servent la langue, pas
+  les cibles.
 - Une citation attribuée quand la source en contient ; jamais de citation
   inventée.
 - Lis deux ou trois ouvertures de

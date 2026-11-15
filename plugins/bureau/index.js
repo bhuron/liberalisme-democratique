@@ -415,6 +415,33 @@ function attachTaps(childId, onDelta, onTool) {
   };
 }
 
+/** Keep the per-piece chat child read-only: it orchestrates, the specialists write. */
+function restrictChatChild(ctx, childId) {
+  const permissions =
+    typeof ctx.get === 'function' ? ctx.get('permissionPresets') : undefined;
+  const agents = typeof ctx.get === 'function' ? ctx.get('agents') : undefined;
+  if (!permissions || !agents || typeof permissions.set !== 'function') return;
+  const agent = typeof agents.get === 'function' ? agents.get(childId) : undefined;
+  const session = agent?.session;
+  if (!session) return;
+  let options = [];
+  try {
+    options = permissions.catalog?.()?.options ?? [];
+  } catch {
+    options = [];
+  }
+  for (const option of options) {
+    try {
+      if (permissions.resolve(option.value)?.sandbox === 'read-only') {
+        permissions.set(session, option.value);
+        return;
+      }
+    } catch {
+      // `auto` and `custom` are not fixed presets; keep looking.
+    }
+  }
+}
+
 /** Start one continuable child, keeping it resident for the next turn. */
 async function startConversation(ctx, parent, root, options) {
   const subagents = ctx.get('subagents');
@@ -451,6 +478,7 @@ async function startConversation(ctx, parent, root, options) {
     });
     // The first turn is awaited through the session feed, not this promise.
     activation.result?.catch?.(() => {});
+    restrictChatChild(ctx, activation.childId);
     return { turn, detach };
   } catch (error) {
     turn.cancel();
@@ -530,10 +558,26 @@ function toolEvent(event) {
 /** The most recent live root Agent, preferably one running in this workspace. */
 function pickParent(ctx, root) {
   const agents = typeof ctx.get === 'function' ? ctx.get('agents') : undefined;
-  const roots = typeof agents?.roots === 'function' ? agents.roots() : [];
+  // DSH exposes `list()`; older builds exposed `roots()`.
+  const live =
+    typeof agents?.list === 'function'
+      ? agents.list()
+      : typeof agents?.roots === 'function'
+        ? agents.roots()
+        : [];
+  // Keep roots only: subagent children carry an origin or a parent in their
+  // session header, and must not be used as the delegating parent.
+  const roots = live.filter((agent) => {
+    const header = agent?.session?.header;
+    if (!header) return true;
+    if (header.origin === 'subagent') return false;
+    if (header.parentSessionId) return false;
+    return true;
+  });
+  const candidates = roots.length ? roots : live;
   let fallback = null;
   let matching = null;
-  for (const agent of roots) {
+  for (const agent of candidates) {
     fallback = agent;
     try {
       if (ctx.workingDirectory.get(agent.session) === root) matching = agent;
@@ -1687,11 +1731,13 @@ function createDeskTools(ctx, settings) {
       async execute(args, exec) {
         const slug = str(args.slug, 200);
         const stage = str(args.stage, 40);
+        const root = await workspaceRoot(ctx, settings);
+        const parent = pickParent(ctx, root) ?? exec.agent;
         const events = [];
         const { result } = await runStage(
           ctx,
           settings,
-          exec.agent,
+          parent,
           slug,
           stage,
           (event) => {
@@ -1732,10 +1778,12 @@ function createDeskTools(ctx, settings) {
       isConcurrencySafe: () => false,
       async execute(args, exec) {
         const slug = str(args.slug, 200);
+        const root = await workspaceRoot(ctx, settings);
+        const parent = pickParent(ctx, root) ?? exec.agent;
         const { result } = await runLoop(
           ctx,
           settings,
-          exec.agent,
+          parent,
           slug,
           clampInt(args.maxIterations, 2, 1, 3),
           () => {},
@@ -1749,6 +1797,39 @@ function createDeskTools(ctx, settings) {
                 .join(', ')})`,
           )
           .join('\n');
+      },
+    }),
+    defineTool({
+      name: 'desk_angle',
+      description:
+        "Écrit l'angle d'une pièce dans editorial/pieces/<slug>/angle.md. Utilise cet outil pour l'angle, jamais write.",
+      parameters: {
+        slug: {
+          type: 'string',
+          required: true,
+          description: 'The desk piece slug (for example la-bulle-ia).',
+        },
+        text: {
+          type: 'string',
+          required: true,
+          description: "L'angle en deux ou trois phrases : thèse, ce qu'on écarte, à vérifier.",
+        },
+      },
+      output: {
+        schema: { type: 'string' },
+        render: (_args, value) => [{ type: 'text', text: String(value) }],
+      },
+      isConcurrencySafe: () => false,
+      async execute(args) {
+        const slug = str(args.slug, 200).replace(/[^a-zA-Z0-9-]/g, '');
+        const text = str(args.text, 20_000).trim();
+        if (!slug) throw new Error('Slug invalide.');
+        if (!text) throw new Error("L'angle est vide.");
+        const root = await workspaceRoot(ctx, settings);
+        const dir = path.join(root, 'editorial', 'pieces', slug);
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(path.join(dir, 'angle.md'), `${text}\n`, 'utf8');
+        return `angle.md écrit pour ${slug} (${text.length} caractères).`;
       },
     }),
   ];

@@ -27,6 +27,9 @@ ils décrivent une tendance, pas une règle absolue.
   Voir `editorial/style/newsroom-profile.md`. Pour une analyse, le profil LMD
   donne ~22 mots par phrase, 80 à 120 mots par paragraphe, un chapô de 10 à
   20 mots et 1 à 2 `##`.
+- Les captures du Monde et de Libération ne sont pas des cibles de structure :
+  elles servent de témoins pour la langue française. La référence reste
+  FT/SCMP pour l'actualité, LMD pour l'analyse.
 - Jamais de titre « Introduction » ni « Conclusion ».
 - Ouverture : une idée reçue, puis immédiatement un doute. Pas d'anecdote
   personnelle, pas de « depuis toujours », pas de définition de dictionnaire.
@@ -64,9 +67,14 @@ ils décrivent une tendance, pas une règle absolue.
   2000-2002), pas une analogie décorative.
 - Ordre de grandeur avant exemple : le chiffre structure le paragraphe, l'anecdote
   l'illustre.
-- Le renversement de cadre (« ce n'est pas X, c'est Y ») : au plus une fois
-  par texte, jamais en ouverture ni en conclusion. C'est une figure, pas une
-  structure de paragraphe.
+- Le renversement de cadre (« ce n'est pas X, c'est Y », « X n'est pas Y, elle
+  est Z », « non pas X mais Y ») est **banni**, pas limité : zéro occurrence,
+  variantes comprises. C'est le tic qui trahit un texte généré. La forme ne se
+  limite pas au verbe être : « ne rompt pas X, il déplace Y » et « ne forme pas
+  tout le monde : il trie » relèvent de la même figure, comptée par le détecteur
+  dès qu'une négation est reprise par une affirmative après virgule, point-virgule
+  ou deux-points. Quand une négation appelle une correction, écrire
+  l'affirmation directement, ou une concession vraie suivie de « mais ».
 - Une question rhétorique au maximum par texte, et seulement si le texte y
   répond.
 
@@ -78,7 +86,7 @@ des plafonds, pas des objectifs.
 | Tic | Budget | Corpus de référence |
 |---|---|---|
 | tiret cadratin | ≤ 6 pour 1 000 mots | 4,6 |
-| « ce n'est pas X, c'est Y » | ≤ 1 par texte | rare |
+| « ce n'est pas X, c'est Y » et variantes | 0 | rare |
 | phrase commençant par « C'est » | ≤ 4 pour 1 000 mots | — |
 | « précisément » / « exactement » | ≤ 2 par texte | — |
 | « Deux… Ensemble… » | 0 | absent |
