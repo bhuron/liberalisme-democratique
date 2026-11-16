@@ -45,6 +45,7 @@ window.__ModuleLoader__.load({
       'tab.brief': 'Brief',
       'tab.relecture': 'Style review',
       'tab.fixes': 'Fixes',
+      'tab.illustrations': 'Illustrations',
       'tab.package': 'Package',
       'tab.sources': 'Sources',
       'tab.checks': 'Checks',
@@ -64,6 +65,8 @@ window.__ModuleLoader__.load({
         'Open the discussion to set the angle, or use Pipeline to run a stage.',
       'fixes.hint':
         'Run the fixer from the conversation: it edits the draft in place and writes the report.',
+      'illustrations.hint':
+        'Run the illustrator from the conversation: it inserts licensed visuals or sourced charts and writes the report.',
       'source.open': 'Open the captured text',
       'source.empty': 'No frozen source.',
       'checks.run': 'Refresh',
@@ -134,6 +137,7 @@ window.__ModuleLoader__.load({
       'tab.brief': 'Brief',
       'tab.relecture': 'Relecture',
       'tab.fixes': 'Corrections',
+      'tab.illustrations': 'Illustrations',
       'tab.package': 'Paquet',
       'tab.sources': 'Sources',
       'tab.checks': 'Mesures',
@@ -153,6 +157,8 @@ window.__ModuleLoader__.load({
         "Ouvrez la discussion pour définir l'angle, ou utilisez Pipeline pour lancer une étape.",
       'fixes.hint':
         'Lancez le fixeur depuis la conversation : il corrige le brouillon en place et écrit le rapport.',
+      'illustrations.hint':
+        'Lancez l’illustrateur depuis la conversation : il insère des visuels libres ou des graphiques sourcés et écrit le rapport.',
       'source.open': 'Ouvrir le texte capturé',
       'source.empty': 'Aucune source figée.',
       'checks.run': 'Recharger',
@@ -1101,6 +1107,7 @@ window.__ModuleLoader__.load({
       { id: 'brief', key: 'tab.brief', name: 'brief' },
       { id: 'relecture', key: 'tab.relecture', name: 'relecture' },
       { id: 'fixes', key: 'tab.fixes', name: 'fixes' },
+      { id: 'illustrations', key: 'tab.illustrations', name: 'illustrations' },
       { id: 'package', key: 'tab.package', name: 'package' },
       { id: 'angle', key: 'angle.label', name: 'angle' },
       { id: 'sources', key: 'tab.sources' },

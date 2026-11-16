@@ -35,6 +35,7 @@ import {
   availableArtefacts,
   formatStageSummary,
   runFix,
+  runIllustration,
   runStage,
   stageStatus,
 } from './pipeline.js';
@@ -62,6 +63,7 @@ const ARTIFACT_NAMES = [
   'draft',
   'relecture',
   'fixes',
+  'illustrations',
   'package',
 ];
 
@@ -397,6 +399,7 @@ ${angle.trim() || "Aucune décision consignée. Déduis l'angle des sources et p
 - \`desk_angle\` : écrire \`editorial/pieces/${slug}/angle.md\`.
 - \`desk_run\` : lancer une étape (${Object.keys(STAGES).join(', ')}) dans une session isolée.
 - \`desk_fix\` : corrections mécaniques du brouillon en place (fautes, accents, ponctuation) ; le fixeur écrit fixes.md, sans réécrire l'article.
+- \`desk_illustrate\` : visuels de l'article (photos libres, graphiques sourcés, vidéo si demandée) ; l'illustrateur insère dans le brouillon et écrit illustrations.md.
 - \`desk_check\` : style, typographie et corpus du blog.
 - \`desk_instructions\` : relire un rôle ou la charte.
 
@@ -751,6 +754,32 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     }
   }
 
+  async function runIllustrationForAgent({ slug, agent, request, signal }) {
+    const root = await requireRoot();
+    const parent = agent ?? (await parentFor(slug));
+    const subagents = ctx.get?.('subagents');
+    if (!subagents) {
+      throw new Error(
+        'Le service subagents de DSH est indisponible : impossible de lancer l’illustrateur.',
+      );
+    }
+    const timeout = timeoutSignal(
+      signal ?? new AbortController().signal,
+      settings.stageTimeoutMinutes,
+    );
+
+    try {
+      return await runIllustration({
+        root,
+        slug,
+        request,
+        runAgent: specialistRunner({ parent, subagents, timeout, root }),
+      });
+    } finally {
+      timeout.clear();
+    }
+  }
+
   async function autoStatus(root, slug, stageId) {
     const piece = readPiece(root, slug);
     if (!piece) return;
@@ -1066,6 +1095,9 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     async runFixesForAgent(options) {
       return runFixesForAgent(options);
     },
+    async runIllustrationForAgent(options) {
+      return runIllustrationForAgent(options);
+    },
     async startStage(slug, stageId) {
       const root = await requireRoot();
       if (!STAGES[stageId]) {
@@ -1153,8 +1185,8 @@ ${exemplarSelection(root) || 'Aucun exemplaire local disponible.'}
 
 ## Outils
 
-\`desk_run\`, \`desk_fix\`, \`desk_angle\`, \`desk_piece\`, \`desk_sources\`,
-\`desk_artifact\`, \`desk_check\`, \`desk_instructions\`.`;
+\`desk_run\`, \`desk_fix\`, \`desk_illustrate\`, \`desk_angle\`, \`desk_piece\`,
+\`desk_sources\`, \`desk_artifact\`, \`desk_check\`, \`desk_instructions\`.`;
     },
     formatStageSummary,
     async dispose() {

@@ -248,7 +248,7 @@ export function registerTools(ctx, service, defineTool) {
     defineTool({
       name: 'desk_artifact',
       description:
-        'Lit les artefacts d’une pièce : angle, recherche, brief, brouillon, relecture de style, corrections, paquet. Utilisez-le après une étape pour vérifier le fichier produit.',
+        'Lit les artefacts d’une pièce : angle, recherche, brief, brouillon, relecture de style, corrections, illustrations, paquet. Utilisez-le après une étape pour vérifier le fichier produit.',
       parameters: {
         action: {
           type: 'string',
@@ -327,7 +327,7 @@ export function registerTools(ctx, service, defineTool) {
     defineTool({
       name: 'desk_instructions',
       description:
-        'Liste ou relit les instructions du bureau : agent, six rôles, charte de style, profil de registre. Les fichiers restent dans le dépôt du blog.',
+        'Liste ou relit les instructions du bureau : agent, sept rôles, charte de style, profil de registre. Les fichiers restent dans le dépôt du blog.',
       parameters: {
         action: {
           type: 'string',
@@ -466,6 +466,43 @@ export function registerTools(ctx, service, defineTool) {
         const result = await service.runStageForAgent({
           slug,
           stageId: args.stage,
+          agent: exec.agent,
+          signal: exec.signal,
+        });
+        return service.formatStageSummary(result);
+      },
+    }),
+
+    defineTool({
+      name: 'desk_illustrate',
+      description:
+        'Lance l’illustrateur : cherche des photos ou illustrations libres, peut créer des graphiques à partir de chiffres sourcés, insère dans l’article et écrit illustrations.md. Pas de cover, pas de vidéo et pas d’image générée sans demande explicite. À utiliser depuis la conversation ; le rédacteur n’est pas relancé.',
+      parameters: {
+        slug: { type: 'string', description: 'Slug de la pièce.' },
+        request: {
+          type: 'string',
+          description:
+            'Ce que vous voulez illustrer : sujet, photo précise, graphique, vidéo. Facultatif.',
+        },
+      },
+      output: {
+        schema: { type: 'string' },
+        render: (_args, value) => [{ type: 'text', text: String(value) }],
+      },
+      isConcurrencySafe: WRITE,
+      async execute(args, exec) {
+        if (!exec.agent) {
+          throw new Error("desk_illustrate a besoin de l'agent appelant.");
+        }
+        if (isSubagent(exec)) {
+          throw new Error(
+            'Un spécialiste écrit son artefact ; il ne lance pas l’illustrateur.',
+          );
+        }
+        const slug = resolveSlug(service, args, exec);
+        const result = await service.runIllustrationForAgent({
+          slug,
+          request: args.request,
           agent: exec.agent,
           signal: exec.signal,
         });

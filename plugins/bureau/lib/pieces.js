@@ -29,6 +29,7 @@ export const ARTIFACTS = {
   package: { label: 'Paquet', file: 'package.md' },
   relecture: { label: 'Relecture de style', file: 'relecture-style.md' },
   fixes: { label: 'Corrections', file: 'fixes.md' },
+  illustrations: { label: 'Illustrations', file: 'illustrations.md' },
   draft: { label: 'Brouillon' },
 };
 

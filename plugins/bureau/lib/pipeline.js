@@ -26,6 +26,7 @@ export const ROLES = {
     file: 'relecture-style.md',
   },
   fixeur: { label: 'Fixeur', file: 'fixeur.md' },
+  illustrateur: { label: 'Illustrateur', file: 'illustrateur.md' },
   editeur: { label: 'Éditeur', file: 'editeur.md' },
 };
 
@@ -91,6 +92,9 @@ export function roleOutput(roleId, slug) {
   if (roleId === 'fixeur') {
     return `editorial/pieces/${slug}/fixes.md`;
   }
+  if (roleId === 'illustrateur') {
+    return `editorial/pieces/${slug}/illustrations.md`;
+  }
   if (roleId === 'editeur') {
     return `editorial/pieces/${slug}/package.md`;
   }
@@ -149,6 +153,7 @@ export function availableArtefacts(root, piece) {
     `editorial/pieces/${piece.slug}/angle.md`,
     `editorial/pieces/${piece.slug}/relecture-style.md`,
     `editorial/pieces/${piece.slug}/fixes.md`,
+    `editorial/pieces/${piece.slug}/illustrations.md`,
   ];
   const draft = draftFile(root, piece.slug);
   if (draft) candidates.push(draft);
@@ -253,11 +258,15 @@ export function buildPrompt({
   const execution =
     roleId === 'fixeur'
       ? `Corrige le brouillon en place avec \`edit\` (jamais \`write\`), puis écris ${output}.`
-      : `Écris ton artefact avec les outils de fichier (\`write\`, \`edit\`) à ${output}.`;
+      : roleId === 'illustrateur'
+        ? `Insère les visuels dans le brouillon avec \`edit\` (jamais \`write\`), puis écris ${output}.`
+        : `Écris ton artefact avec les outils de fichier (\`write\`, \`edit\`) à ${output}.`;
   const expected =
     roleId === 'fixeur'
       ? `Corrige le brouillon avec \`edit\`, puis écris ${output}.`
-      : `Écris ${output}.`;
+      : roleId === 'illustrateur'
+        ? `Insère les visuels avec \`edit\`, puis écris ${output}.`
+        : `Écris ${output}.`;
 
   return `Tu exécutes le rôle « ${role.label} » du bureau éditorial.
 
@@ -470,6 +479,96 @@ export async function runFix({ root, slug, runAgent, onEvent }) {
   return {
     stage: 'fix',
     label: 'Corrections',
+    results: [entry],
+    outputs: [output, draft],
+  };
+}
+
+const ILLUSTRATE_TASK =
+  "Cherche et insère un à trois visuels utiles : photos ou illustrations libres, ou graphiques construits à partir de chiffres déjà sourcés. Utilise `edit` pour insérer dans le brouillon, sans réécrire le texte. Pas de cover, pas de vidéo et pas d'image générée sans demande explicite. Écris illustrations.md avec les sources, licences, emplacements et propositions non insérées.";
+
+export async function runIllustration({
+  root,
+  slug,
+  request,
+  runAgent,
+  onEvent,
+}) {
+  const piece = readPiece(root, slug);
+  if (!piece) throw new Error(`La pièce « ${slug} » n'existe pas`);
+
+  const draft = draftFile(root, slug) ?? draftPath(root, slug);
+  if (!exists(absolute(root, draft))) {
+    throw new Error('L’illustrateur a besoin d’un brouillon existant.');
+  }
+
+  const sources = listSourceMetas(root).filter((source) =>
+    piece.sources.includes(source.bd_id),
+  );
+  const available = availableArtefacts(root, piece);
+  const decision = readText(path.join(pieceDir(root, slug), 'angle.md'), '');
+  const output = roleOutput('illustrateur', slug);
+  const started = nowIso();
+  const task = `${ILLUSTRATE_TASK}${
+    request?.trim()
+      ? `
+
+Demande de l'utilisateur : ${request.trim()}`
+      : ''
+  }`;
+
+  const prompt = buildPrompt({
+    root,
+    piece,
+    roleId: 'illustrateur',
+    stageId: 'illustrate',
+    sources,
+    available,
+    decision,
+    task,
+  });
+  const result = await runAgent({
+    prompt,
+    role: 'illustrateur',
+    piece,
+    stageId: 'illustrate',
+    output,
+    onEvent: (event) => onEvent?.({ ...event, role: 'illustrateur' }),
+  });
+
+  if (!exists(absolute(root, output))) {
+    throw new Error(
+      `L'illustrateur n'a pas écrit ${output}. Réponse : ${String(result.text).slice(0, 400)}`,
+    );
+  }
+  const raw = readText(absolute(root, draft), '');
+  if (!hasDraftTrue(raw)) {
+    throw new Error(
+      "L'illustrateur a cassé le frontmatter : « draft: true » manque.",
+    );
+  }
+
+  const entry = {
+    role: 'illustrateur',
+    label: ROLES.illustrateur.label,
+    output,
+    session: result.sessionId ?? null,
+    text: result.text,
+  };
+  const record = {
+    stage: 'illustrate',
+    started,
+    ended: nowIso(),
+    results: [entry],
+  };
+  writeJson(
+    path.join(pieceDir(root, slug), 'runs', `illustrate-${Date.now()}.json`),
+    record,
+  );
+
+  return {
+    stage: 'illustrate',
+    label: 'Illustrations',
     results: [entry],
     outputs: [output, draft],
   };

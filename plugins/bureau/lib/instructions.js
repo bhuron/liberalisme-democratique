@@ -16,6 +16,7 @@ export const ROLE_FILES = {
   redacteur: 'redacteur.md',
   'relecture-style': 'relecture-style.md',
   fixeur: 'fixeur.md',
+  illustrateur: 'illustrateur.md',
   editeur: 'editeur.md',
 };
 

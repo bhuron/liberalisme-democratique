@@ -34,6 +34,19 @@ corrections qui demandent une réécriture sont seulement signalées.
 Ne relance pas `draft` pour une correction locale : le rédacteur réécrirait
 tout l'article.
 
+## Illustrations
+
+L'illustrateur est disponible **depuis la conversation**, hors pipeline :
+`desk_illustrate`. Il cherche des photos ou illustrations libres, peut créer un
+graphique à partir de chiffres déjà sourcés, insère dans l'article avec `edit` et
+écrit `illustrations.md`.
+
+- pas de cover-image sauf demande explicite ;
+- pas de vidéo sauf demande explicite ;
+- pas d'image générée sans demande explicite ;
+- licences vérifiées ; une image incertaine reste une proposition ;
+- le rédacteur n'est pas relancé pour ajouter un visuel.
+
 ## Exemples de registre
 
 Le préparateur reçoit le catalogue des articles de référence
@@ -72,6 +85,7 @@ référence.
 - `rédacteur` : article en français, dans la voix du blog ;
 - `relecture de style` : comparaison avec les articles de référence ;
 - `fixeur` : corrections mécaniques ciblées, hors pipeline ;
+- `illustrateur` : visuels, graphiques et vidéos sur demande, hors pipeline ;
 - `éditeur` : titre, description, étiquettes, liens internes, posts.
 
 Les instructions des rôles sont dans `editorial/agent/roles/`. La charte est

@@ -5,7 +5,13 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { createBureauService } from '../lib/service.js';
-import { buildPrompt, runFix, runStage, STAGES } from '../lib/pipeline.js';
+import {
+  buildPrompt,
+  runFix,
+  runIllustration,
+  runStage,
+  STAGES,
+} from '../lib/pipeline.js';
 import { checkStyle, lintText } from '../lib/checks.js';
 import { assessCoverage } from '../lib/coverage.js';
 import {
@@ -30,6 +36,7 @@ function makeWorkspace() {
     'redacteur',
     'relecture-style',
     'fixeur',
+    'illustrateur',
     'editeur',
   ];
   for (const role of roles) {
@@ -207,7 +214,7 @@ test('the service reads the desk, creates a piece, writes the angle and archives
   const health = await service.health();
   assert.equal(health.ok, true);
   assert.equal(health.instructions.agent, true);
-  assert.equal(health.instructions.roles, 6);
+  assert.equal(health.instructions.roles, 7);
 
   const instructions = await service.instructions();
   assert.ok(instructions.some((doc) => doc.id === 'agent'));
@@ -453,6 +460,96 @@ test('the fixer edits the draft in place and writes a report', async () => {
   assert.equal(
     fs.existsSync(
       path.join(root, 'editorial', 'pieces', 'fix-test', 'fixes.md'),
+    ),
+    true,
+  );
+});
+
+test('the illustrator inserts a visual in place and writes a report', async () => {
+  const root = makeWorkspace();
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'meta.json'),
+    JSON.stringify({
+      bd_id: 1,
+      title: 'La source',
+      site: 'Test',
+      captured_at: '2026-01-03',
+      word_count: 500,
+      coverage: { level: 'full', reasons: [] },
+    }),
+  );
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'text.txt'),
+    'Texte de la source.',
+  );
+  createPiece(root, {
+    slug: 'illustration-test',
+    title: 'Pièce à illustrer',
+    intent: 'Ajouter une photo.',
+    sources: [1],
+  });
+  const draft = path.join(
+    root,
+    'src',
+    'content',
+    'blog',
+    'illustration-test.mdx',
+  );
+  write(
+    draft,
+    '---\ntitle: "T"\ndescription: "D"\npubDate: 2026-01-01\ndraft: true\n---\n\nCorps.\n',
+  );
+
+  let seen = '';
+  const result = await runIllustration({
+    root,
+    slug: 'illustration-test',
+    request: 'une photo de port',
+    runAgent: async (job) => {
+      seen = job.prompt;
+      const before = fs.readFileSync(draft, 'utf8');
+      write(
+        draft,
+        `${before}\n![Port](../../assets/illustration-test-port.jpg)\n`,
+      );
+      write(
+        path.join(
+          root,
+          'editorial',
+          'pieces',
+          'illustration-test',
+          'illustrations.md',
+        ),
+        '# Illustrations\n\n## Insérées\n\n- port.jpg — photo libre.\n',
+      );
+      return { text: 'illustré', sessionId: 'child' };
+    },
+  });
+
+  assert.match(seen, /Rôle : illustrateur/);
+  assert.match(seen, /edit/);
+  assert.match(seen, /photo de port/);
+  assert.equal(result.stage, 'illustrate');
+  assert.ok(
+    result.outputs.includes(
+      'editorial/pieces/illustration-test/illustrations.md',
+    ),
+  );
+  assert.equal(
+    fs
+      .readFileSync(draft, 'utf8')
+      .includes('![Port](../../assets/illustration-test-port.jpg)'),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(
+      path.join(
+        root,
+        'editorial',
+        'pieces',
+        'illustration-test',
+        'illustrations.md',
+      ),
     ),
     true,
   );
