@@ -20,3 +20,6 @@ editorial/archive/
 plugins/tweet-studio/icon.svg
 plugins/bureau/icon.svg
 plugins/bureau/docs/preview.svg
+
+# Local scratch files
+.tmp-*

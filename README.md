@@ -106,6 +106,27 @@ volontairement exclus pour préserver la mise en forme éditoriale.
 Le site est déployé sur **Cloudflare Pages**. Un push sur `master` déclenche un
 build avec `npm run build` ; le dossier publié est `dist/`.
 
+## Publier un article
+
+Un article terminé se publie de deux façons, toujours sur instruction explicite :
+
+```bash
+# Préflight en lecture seule : vérifications, build, état git, aucun changement
+npm run publish:article -- <slug> --check
+
+# Publication : draft:false, vérifications, commit de l'article et de ses visuels, push master
+npm run publish:article -- <slug> --publish
+```
+
+La commande ne stage que `src/content/blog/<slug>.mdx` (ou `.md`) et les visuels
+locaux qu'il référence. Elle refuse un index déjà chargé, une branche en retard,
+une image distante, un visuel manquant ou un marqueur de travail (`TODO`,
+`FIXME`, lorem ipsum). Un push sur `master` déclenche Cloudflare Pages.
+
+Depuis le bureau, l'outil `desk_publish` fait la même chose : sans `confirm`,
+c'est un préflight ; avec `confirm: true`, c'est la publication. Le desk ne
+publie jamais sans un accord explicite de l'utilisateur.
+
 ## Migration Ghost (héritage)
 
 Les scripts `import:ghost`, `export:ghost` et `images:download` servent à la

@@ -95,6 +95,26 @@ Les instructions des rôles sont dans `editorial/agent/roles/`. La charte est
 dans `editorial/style/card.md` ; le profil de registre dans
 `editorial/style/newsroom-profile.md`.
 
+## Publication
+
+Un article terminé peut être publié par la commande ou par l'outil de
+conversation :
+
+```bash
+npm run publish:article -- <slug> --check
+npm run publish:article -- <slug> --publish
+```
+
+- `--check` : préflight en lecture seule ; aucun fichier modifié, aucun commit,
+  aucun push.
+- `--publish` : passe `draft: false`, refait les vérifications, commit l'article
+  et ses visuels locaux, puis pousse `master` ; Cloudflare Pages déploie.
+- Jamais de publication sans instruction explicite de l'utilisateur et sans
+  préflight montré.
+
+Depuis la conversation, `desk_publish({ slug })` est le préflight ;
+`desk_publish({ slug, confirm: true })` publie, après accord.
+
 ## Ce que le desk ne fait pas
 
 - Il ne publie pas, ne commit pas, ne merge pas.

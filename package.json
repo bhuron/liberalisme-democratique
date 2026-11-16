@@ -29,7 +29,8 @@
     "bureau:test": "node --test plugins/bureau/test/",
     "style:corpus": "node scripts/style-corpus.js collect",
     "style:profile": "node scripts/style-corpus.js analyze",
-    "desk:ui": "node tools/desk/server.mjs"
+    "desk:ui": "node tools/desk/server.mjs",
+    "publish:article": "node scripts/publish-article.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.5",

@@ -474,6 +474,38 @@ export function registerTools(ctx, service, defineTool) {
     }),
 
     defineTool({
+      name: 'desk_publish',
+      description:
+        'Préflight ou publication d’un article terminé. Sans `confirm`, exécute un préflight en lecture seule (vérifications, build, état git) : aucun fichier modifié, aucun commit, aucun push. Avec `confirm: true`, passe draft:false, refait les vérifications, commit uniquement l’article et ses visuels locaux, puis push master ; Cloudflare Pages déploie. Ne passer confirm:true qu’après une demande explicite de l’utilisateur et après lui avoir montré le préflight.',
+      parameters: {
+        slug: { type: 'string', description: 'Slug de la pièce.' },
+        confirm: {
+          type: 'boolean',
+          description:
+            'true uniquement après accord explicite de l’utilisateur pour publier ; sinon préflight en lecture seule.',
+        },
+      },
+      output: {
+        schema: { type: 'string' },
+        render: (_args, value) => [{ type: 'text', text: String(value) }],
+      },
+      isConcurrencySafe: WRITE,
+      async execute(args, exec) {
+        if (isSubagent(exec)) {
+          throw new Error(
+            'Un spécialiste n’a pas le droit de publier ; seul l’agent de conversation le fait, après accord.',
+          );
+        }
+        const slug = resolveSlug(service, args, exec);
+        return await service.publishForAgent({
+          slug,
+          confirm: args.confirm === true,
+          signal: exec.signal,
+        });
+      },
+    }),
+
+    defineTool({
       name: 'desk_illustrate',
       description:
         'Lance l’illustrateur : cherche des photos ou illustrations libres, peut créer des graphiques à partir de chiffres sourcés, insère dans l’article et écrit illustrations.md. Pas de cover, pas de vidéo et pas d’image générée sans demande explicite. À utiliser depuis la conversation ; le rédacteur n’est pas relancé.',

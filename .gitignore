@@ -46,3 +46,6 @@ editorial/sources/*/text.txt
 
 # Style corpus — textes sous droits, capturés localement
 editorial/style/corpus/
+
+# Local scratch files
+.tmp-*

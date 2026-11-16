@@ -28,6 +28,12 @@ contains all the desk code.
   no video and no generated image without an explicit request. Inserts go through
   the `Figure` component: full-width, uncropped, short caption, discreet source;
   the optional video uses `YoutubeEmbed` with the same caption/source treatment.
+- **Publication is an explicit command, not a stage.** `desk_publish` without
+  `confirm` runs a read-only preflight (checks, build, local images, git state);
+  with `confirm: true` it sets `draft: false`, rechecks, commits only the article
+  and its local assets, and pushes `master`. Cloudflare Pages deploys. The desk
+  agent must show the preflight and wait for the user's explicit agreement before
+  confirming.
 - **One session per piece.** Each piece owns a normal DSH conversation whose
   system prompt is built from `editorial/agent/desk-agent.md`, the style card
   and the current dossier. **Open the discussion** creates or resumes that
@@ -76,7 +82,7 @@ pair of full articles.
 
 | Resource | Use |
 |---|---|
-| `ctx.tools` | `desk_status`, `desk_piece`, `desk_sources`, `desk_artifact`, `desk_angle`, `desk_instructions`, `desk_check`, `desk_run`, `desk_fix`, `desk_illustrate` |
+| `ctx.tools` | `desk_status`, `desk_piece`, `desk_sources`, `desk_artifact`, `desk_angle`, `desk_instructions`, `desk_check`, `desk_run`, `desk_fix`, `desk_illustrate`, `desk_publish` |
 | `ctx.subagents` | One isolated `spawn` activation per role, with cwd, timeout and the caller as parent |
 | `ctx.agents` | One durable conversation per piece, created or resumed by the plugin |
 | `ctx.systemPrompt` | Per-agent section with the desk agent instructions and the live dossier |
@@ -134,9 +140,9 @@ needs web search/fetch. A profile without `standard` should set `agentPreset` to
 another full-tool preset.
 
 The desk tools are guarded against recursion: a specialist cannot call
-`desk_run`, `desk_fix`, `desk_illustrate`, `desk_angle`, or the write actions of
-`desk_piece` and `desk_sources`. It writes its artefact and returns three
-sentences.
+`desk_run`, `desk_fix`, `desk_illustrate`, `desk_publish`, `desk_angle`, or the
+write actions of `desk_piece` and `desk_sources`. It writes its artefact and
+returns three sentences.
 
 ## Stopping a stage
 

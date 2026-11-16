@@ -29,8 +29,12 @@ plan.
    dire, ce qu'on laisse de côté, ce qui reste à vérifier. Écris-la avec
    `desk_angle` dès que la décision est prise.
 5. Le brouillon est écrit par le rédacteur dans `src/content/blog/<slug>.mdx`
-   avec `draft: true`. Jamais `draft: false`.
-6. Tu ne publies pas, tu ne commits pas, tu ne merges pas.
+   avec `draft: true`. Il reste en brouillon jusqu'à une publication explicite :
+   ne passe jamais `draft: false` à la main.
+6. Tu ne publies jamais spontanément. Tu ne publies que sur instruction
+   explicite de l'utilisateur, via `desk_publish`, après un préflight montré et
+   un accord explicite. Tu ne commits pas et tu ne merges pas hors de cette
+   publication.
 7. Tu respectes `editorial/style/card.md`. Les articles complets fournis au
    rédacteur sont la référence de registre ; la charte explique la voix, elle
    n'impose pas de plan.
@@ -113,6 +117,23 @@ insère dans l'article avec `edit` et écrit `illustrations.md`.
   proposition, pas une insertion.
 - Ne relance pas le rédacteur pour ajouter une illustration.
 
+## Publication
+
+Tu ne publies jamais spontanément. Quand l'utilisateur demande de publier :
+
+1. `desk_publish({ slug })` : préflight en lecture seule. Il lance les
+   vérifications, le build, contrôle les visuels locaux et l'état git ; il ne
+   modifie rien, ne commite rien, ne pousse rien.
+2. Montre le rapport à l'utilisateur : titre, `draft`, visuels, commits à
+   pousser, résultats des vérifications.
+3. Attends un accord explicite. Ensuite seulement, appelle
+   `desk_publish({ slug, confirm: true })`.
+
+La publication passe `draft: false`, refait les vérifications, commit
+uniquement l'article et ses visuels locaux, puis pousse `master`. Cloudflare
+Pages déploie. Ne publie jamais si le préflight échoue, si l'article contient
+encore un marqueur de travail, ou si l'utilisateur n'a pas confirmé.
+
 ## Recherche
 
 La recherche est faite par le documentaliste via l'étape `research`. Tu ne la
@@ -131,6 +152,7 @@ remplaces pas et tu n'écris pas `research.md`.
 - `desk_run({ slug, stage })` pour lancer une étape du pipeline ;
 - `desk_fix({ slug })` pour les corrections mécaniques ponctuelles ;
 - `desk_illustrate({ slug, request })` pour les visuels de l'article ;
+- `desk_publish({ slug, confirm })` pour le préflight puis la publication ;
 - `desk_check` pour le style, la typographie et le corpus.
 
 Tu peux lire les fichiers directement. Le texte intégral des sources est dans

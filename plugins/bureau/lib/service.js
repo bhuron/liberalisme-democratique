@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -400,6 +401,7 @@ ${angle.trim() || "Aucune décision consignée. Déduis l'angle des sources et p
 - \`desk_run\` : lancer une étape (${Object.keys(STAGES).join(', ')}) dans une session isolée.
 - \`desk_fix\` : corrections mécaniques du brouillon en place (fautes, accents, ponctuation) ; le fixeur écrit fixes.md, sans réécrire l'article.
 - \`desk_illustrate\` : visuels de l'article (photos libres, graphiques sourcés, vidéo si demandée) ; l'illustrateur insère dans le brouillon et écrit illustrations.md.
+- \`desk_publish\` : préflight puis publication de l'article sur le site, sur instruction explicite ; sans \`confirm\`, aucun changement.
 - \`desk_check\` : style, typographie et corpus du blog.
 - \`desk_instructions\` : relire un rôle ou la charte.
 
@@ -780,6 +782,74 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     }
   }
 
+  async function publishForAgent({ slug, confirm, signal }) {
+    const root = await requireRoot();
+    const script = path.join(root, 'scripts', 'publish-article.mjs');
+    if (!fs.existsSync(script)) {
+      throw new Error('scripts/publish-article.mjs est introuvable.');
+    }
+
+    const args = [script, slug, confirm === true ? '--publish' : '--check'];
+    return await new Promise((resolve, reject) => {
+      if (signal?.aborted) {
+        reject(abortError());
+        return;
+      }
+
+      const child = spawn(process.execPath, args, {
+        cwd: root,
+        env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      let stdout = '';
+      let stderr = '';
+      let settled = false;
+
+      const finish = (callback, value) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        signal?.removeEventListener('abort', onAbort);
+        callback(value);
+      };
+      const onAbort = () => {
+        child.kill('SIGKILL');
+        finish(reject, abortError());
+      };
+      const timer = setTimeout(
+        () => {
+          child.kill('SIGKILL');
+          finish(reject, new Error('Publication : délai dépassé (30 min).'));
+        },
+        30 * 60 * 1000,
+      );
+
+      signal?.addEventListener('abort', onAbort, { once: true });
+      child.stdout.on('data', (chunk) => {
+        stdout += chunk;
+      });
+      child.stderr.on('data', (chunk) => {
+        stderr += chunk;
+      });
+      child.on('error', (error) => finish(reject, error));
+      child.on('close', (code) => {
+        const full = `${stdout}${stderr}`.trim();
+        const text =
+          full.length > 16000
+            ? `… (sortie tronquée)\n${full.slice(-16000)}`
+            : full;
+        if (code === 0) {
+          finish(resolve, text);
+        } else {
+          finish(
+            reject,
+            new Error(text || `Publication échouée (code ${code}).`),
+          );
+        }
+      });
+    });
+  }
+
   async function autoStatus(root, slug, stageId) {
     const piece = readPiece(root, slug);
     if (!piece) return;
@@ -1098,6 +1168,9 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     async runIllustrationForAgent(options) {
       return runIllustrationForAgent(options);
     },
+    async publishForAgent(options) {
+      return publishForAgent(options);
+    },
     async startStage(slug, stageId) {
       const root = await requireRoot();
       if (!STAGES[stageId]) {
@@ -1185,8 +1258,8 @@ ${exemplarSelection(root) || 'Aucun exemplaire local disponible.'}
 
 ## Outils
 
-\`desk_run\`, \`desk_fix\`, \`desk_illustrate\`, \`desk_angle\`, \`desk_piece\`,
-\`desk_sources\`, \`desk_artifact\`, \`desk_check\`, \`desk_instructions\`.`;
+\`desk_run\`, \`desk_fix\`, \`desk_illustrate\`, \`desk_publish\`, \`desk_angle\`,
+\`desk_piece\`, \`desk_sources\`, \`desk_artifact\`, \`desk_check\`, \`desk_instructions\`.`;
     },
     formatStageSummary,
     async dispose() {
