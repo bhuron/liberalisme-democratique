@@ -44,6 +44,7 @@ window.__ModuleLoader__.load({
       'tab.research': 'Research',
       'tab.brief': 'Brief',
       'tab.relecture': 'Style review',
+      'tab.fixes': 'Fixes',
       'tab.package': 'Package',
       'tab.sources': 'Sources',
       'tab.checks': 'Checks',
@@ -57,10 +58,12 @@ window.__ModuleLoader__.load({
       'angle.save': 'Save',
       'angle.cancel': 'Cancel',
       'angle.placeholder':
-        'Two or three sentences: the thesis, what you set aside, what remains to check.',
+        'Two or three sentences: what the piece says, what you set aside, what remains to check.',
       'artifact.missing': 'This piece has no document yet.',
       'artifact.hint':
         'Open the discussion to set the angle, or use Pipeline to run a stage.',
+      'fixes.hint':
+        'Run the fixer from the conversation: it edits the draft in place and writes the report.',
       'source.open': 'Open the captured text',
       'source.empty': 'No frozen source.',
       'checks.run': 'Refresh',
@@ -130,6 +133,7 @@ window.__ModuleLoader__.load({
       'tab.research': 'Recherche',
       'tab.brief': 'Brief',
       'tab.relecture': 'Relecture',
+      'tab.fixes': 'Corrections',
       'tab.package': 'Paquet',
       'tab.sources': 'Sources',
       'tab.checks': 'Mesures',
@@ -147,6 +151,8 @@ window.__ModuleLoader__.load({
       'artifact.missing': "Cette pièce n'a pas encore de document.",
       'artifact.hint':
         "Ouvrez la discussion pour définir l'angle, ou utilisez Pipeline pour lancer une étape.",
+      'fixes.hint':
+        'Lancez le fixeur depuis la conversation : il corrige le brouillon en place et écrit le rapport.',
       'source.open': 'Ouvrir le texte capturé',
       'source.empty': 'Aucune source figée.',
       'checks.run': 'Recharger',
@@ -1094,6 +1100,7 @@ window.__ModuleLoader__.load({
       { id: 'research', key: 'tab.research', name: 'research' },
       { id: 'brief', key: 'tab.brief', name: 'brief' },
       { id: 'relecture', key: 'tab.relecture', name: 'relecture' },
+      { id: 'fixes', key: 'tab.fixes', name: 'fixes' },
       { id: 'package', key: 'tab.package', name: 'package' },
       { id: 'angle', key: 'angle.label', name: 'angle' },
       { id: 'sources', key: 'tab.sources' },
@@ -1102,7 +1109,14 @@ window.__ModuleLoader__.load({
 
     function firstView(detail) {
       if (!detail) return 'draft';
-      const order = ['draft', 'research', 'brief', 'relecture', 'package'];
+      const order = [
+        'draft',
+        'research',
+        'brief',
+        'relecture',
+        'fixes',
+        'package',
+      ];
       return (
         order.find((name) =>
           detail.artifacts?.some(
@@ -1605,7 +1619,13 @@ window.__ModuleLoader__.load({
                           'div',
                           { className: 'bureau-empty' },
                           h('strong', null, t('artifact.missing')),
-                          h('span', null, t('artifact.hint')),
+                          h(
+                            'span',
+                            null,
+                            t(
+                              view === 'fixes' ? 'fixes.hint' : 'artifact.hint',
+                            ),
+                          ),
                           h(
                             'button',
                             {

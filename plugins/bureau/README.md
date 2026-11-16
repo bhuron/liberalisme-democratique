@@ -17,6 +17,11 @@ contains all the desk code.
   subagent, writes one artefact, and returns a three-sentence summary. `style`
   is an optional review of the draft against the writing examples; there is no
   thesis/steelman/structure critique.
+- **Targeted fixes are not a stage.** The conversation can call `desk_fix`:
+  a fixer edits the existing draft in place with `edit` (typos, accents,
+  punctuation, spacing, repeated words, obvious agreement), writes a `fixes.md`
+  report, and never rewrites the article. This avoids relaunching the writer
+  for a comma.
 - **One session per piece.** Each piece owns a normal DSH conversation whose
   system prompt is built from `editorial/agent/desk-agent.md`, the style card
   and the current dossier. **Open the discussion** creates or resumes that
@@ -24,7 +29,7 @@ contains all the desk code.
   with a bootstrap message (piece, intent, frozen sources) so the agent begins
   instead of showing a blank session. A legacy session that is ungrouped or has
   no model selection is archived and replaced.
-- **Instructions viewer.** The panel renders the desk agent, the five roles,
+- **Instructions viewer.** The panel renders the desk agent, the six roles,
   the style card, the register profile and the local exemplar file, read live
   from the repository.
 - **Writing references are chosen by the LLM.** The preparer receives the full
@@ -43,7 +48,7 @@ The only code dependency is **zero**: `lib/` never imports `tools/desk/`. The
 plugin reads:
 
 - `editorial/agent/desk-agent.md`
-- `editorial/agent/roles/*.md` (five roles)
+- `editorial/agent/roles/*.md` (six roles)
 - `editorial/style/card.md`, `editorial/style/newsroom-profile.md`
 - `editorial/style/corpus/newsroom-exemplars.md` (short extracts; local and
   optional — the writer falls back to the profile if it is absent)
@@ -65,7 +70,7 @@ pair of full articles.
 
 | Resource | Use |
 |---|---|
-| `ctx.tools` | `desk_status`, `desk_piece`, `desk_sources`, `desk_artifact`, `desk_angle`, `desk_instructions`, `desk_check`, `desk_run` |
+| `ctx.tools` | `desk_status`, `desk_piece`, `desk_sources`, `desk_artifact`, `desk_angle`, `desk_instructions`, `desk_check`, `desk_run`, `desk_fix` |
 | `ctx.subagents` | One isolated `spawn` activation per role, with cwd, timeout and the caller as parent |
 | `ctx.agents` | One durable conversation per piece, created or resumed by the plugin |
 | `ctx.systemPrompt` | Per-agent section with the desk agent instructions and the live dossier |
@@ -123,13 +128,13 @@ needs web search/fetch. A profile without `standard` should set `agentPreset` to
 another full-tool preset.
 
 The desk tools are guarded against recursion: a specialist cannot call
-`desk_run`, `desk_angle`, or the write actions of `desk_piece` and
+`desk_run`, `desk_fix`, `desk_angle`, or the write actions of `desk_piece` and
 `desk_sources`. It writes its artefact and returns three sentences.
 
 ## Stopping a stage
 
 While a stage runs in the conversation, the normal **Stop** control aborts the
-`desk_run` call: the tool stops waiting and disposes the specialist
+`desk_run` / `desk_fix` call: the tool stops waiting and disposes the specialist
 instead of holding the turn. A stage launched from **Pipeline** has its own
 **Stop** button in the run banner (`POST /api/bureau/runs/<id>/cancel`).
 

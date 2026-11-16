@@ -25,6 +25,7 @@ export const ROLES = {
     label: 'Relecture de style',
     file: 'relecture-style.md',
   },
+  fixeur: { label: 'Fixeur', file: 'fixeur.md' },
   editeur: { label: 'Éditeur', file: 'editeur.md' },
 };
 
@@ -87,6 +88,9 @@ export function roleOutput(roleId, slug) {
   if (roleId === 'relecture-style') {
     return `editorial/pieces/${slug}/relecture-style.md`;
   }
+  if (roleId === 'fixeur') {
+    return `editorial/pieces/${slug}/fixes.md`;
+  }
   if (roleId === 'editeur') {
     return `editorial/pieces/${slug}/package.md`;
   }
@@ -144,6 +148,7 @@ export function availableArtefacts(root, piece) {
     `editorial/pieces/${piece.slug}/research.md`,
     `editorial/pieces/${piece.slug}/angle.md`,
     `editorial/pieces/${piece.slug}/relecture-style.md`,
+    `editorial/pieces/${piece.slug}/fixes.md`,
   ];
   const draft = draftFile(root, piece.slug);
   if (draft) candidates.push(draft);
@@ -206,6 +211,9 @@ ${refs.catalogText}`);
   return parts.join('\n\n');
 }
 
+const FIX_TASK =
+  "Corrige uniquement les fautes de frappe, accents, ponctuation, espaces, répétitions involontaires et accords évidents. Utilise `edit` avec le texte exact ; ne réécris jamais un paragraphe ; ne change ni les faits, ni les chiffres, ni les noms, ni l'ordre, ni le style. Écris fixes.md avec les corrections appliquées et celles qui demandent une réécriture.";
+
 export function buildPrompt({
   root,
   piece,
@@ -214,6 +222,7 @@ export function buildPrompt({
   sources,
   available,
   decision,
+  task,
 }) {
   const role = ROLES[roleId];
   const stage = STAGES[stageId];
@@ -240,6 +249,15 @@ export function buildPrompt({
 
   const availableList =
     available.map((file) => `- ${file}`).join('\n') || '- aucun';
+  const output = roleOutput(roleId, piece.slug);
+  const execution =
+    roleId === 'fixeur'
+      ? `Corrige le brouillon en place avec \`edit\` (jamais \`write\`), puis écris ${output}.`
+      : `Écris ton artefact avec les outils de fichier (\`write\`, \`edit\`) à ${output}.`;
+  const expected =
+    roleId === 'fixeur'
+      ? `Corrige le brouillon avec \`edit\`, puis écris ${output}.`
+      : `Écris ${output}.`;
 
   return `Tu exécutes le rôle « ${role.label} » du bureau éditorial.
 
@@ -267,17 +285,16 @@ ${decision?.trim() || "Aucune décision consignée. Déduis l'angle des sources 
 
 ## Tâche
 
-${stage.task(roleId)}
+${task ?? stage.task(roleId)}
 
 ## Exécution
 
-Tu es un spécialiste isolé. Écris ton artefact avec les outils de fichier
-(\`write\`, \`edit\`) à \`${roleOutput(roleId, piece.slug)}\`. N'appelle jamais
-\`desk_run\` : le pipeline est lancé par l'agent de conversation.
+Tu es un spécialiste isolé. ${execution} N'appelle jamais \`desk_run\` : le
+pipeline est lancé par l'agent de conversation.
 
 ## Sortie attendue
 
-Écris ${roleOutput(roleId, piece.slug)}.
+${expected}
 
 Termine ta réponse par trois phrases maximum : ce que tu as fait, ce qui bloque,
 ce que l'humain doit décider.`;
@@ -381,6 +398,80 @@ export async function runStage({ root, slug, stageId, onEvent, runAgent }) {
     label: stage.label,
     results,
     outputs: stageOutputs(stageId, slug),
+  };
+}
+
+export async function runFix({ root, slug, runAgent, onEvent }) {
+  const piece = readPiece(root, slug);
+  if (!piece) throw new Error(`La pièce « ${slug} » n'existe pas`);
+
+  const draft = draftFile(root, slug) ?? draftPath(root, slug);
+  if (!exists(absolute(root, draft))) {
+    throw new Error('Le fixeur a besoin d’un brouillon existant.');
+  }
+
+  const sources = listSourceMetas(root).filter((source) =>
+    piece.sources.includes(source.bd_id),
+  );
+  const available = availableArtefacts(root, piece);
+  const decision = readText(path.join(pieceDir(root, slug), 'angle.md'), '');
+  const output = roleOutput('fixeur', slug);
+  const started = nowIso();
+
+  const prompt = buildPrompt({
+    root,
+    piece,
+    roleId: 'fixeur',
+    stageId: 'fix',
+    sources,
+    available,
+    decision,
+    task: FIX_TASK,
+  });
+  const result = await runAgent({
+    prompt,
+    role: 'fixeur',
+    piece,
+    stageId: 'fix',
+    output,
+    onEvent: (event) => onEvent?.({ ...event, role: 'fixeur' }),
+  });
+
+  if (!exists(absolute(root, output))) {
+    throw new Error(
+      `Le fixeur n'a pas écrit ${output}. Réponse : ${String(result.text).slice(0, 400)}`,
+    );
+  }
+  const raw = readText(absolute(root, draft), '');
+  if (!hasDraftTrue(raw)) {
+    throw new Error(
+      'Le fixeur a cassé le frontmatter : « draft: true » manque.',
+    );
+  }
+
+  const entry = {
+    role: 'fixeur',
+    label: ROLES.fixeur.label,
+    output,
+    session: result.sessionId ?? null,
+    text: result.text,
+  };
+  const record = {
+    stage: 'fix',
+    started,
+    ended: nowIso(),
+    results: [entry],
+  };
+  writeJson(
+    path.join(pieceDir(root, slug), 'runs', `fix-${Date.now()}.json`),
+    record,
+  );
+
+  return {
+    stage: 'fix',
+    label: 'Corrections',
+    results: [entry],
+    outputs: [output, draft],
   };
 }
 

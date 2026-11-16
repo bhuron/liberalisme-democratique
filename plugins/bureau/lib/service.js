@@ -34,6 +34,7 @@ import {
   STAGES,
   availableArtefacts,
   formatStageSummary,
+  runFix,
   runStage,
   stageStatus,
 } from './pipeline.js';
@@ -60,6 +61,7 @@ const ARTIFACT_NAMES = [
   'brief',
   'draft',
   'relecture',
+  'fixes',
   'package',
 ];
 
@@ -391,9 +393,10 @@ ${angle.trim() || "Aucune décision consignée. Déduis l'angle des sources et p
 
 - \`desk_piece\` : lister, lire, créer, archiver une pièce ; changer son statut.
 - \`desk_sources\` : inbox des captures, métadonnées, texte d'une source, snapshot.
-- \`desk_artifact\` : lire un artefact (angle, recherche, brief, brouillon, relecture, paquet).
+- \`desk_artifact\` : lire un artefact (angle, recherche, brief, brouillon, relecture, corrections, paquet).
 - \`desk_angle\` : écrire \`editorial/pieces/${slug}/angle.md\`.
 - \`desk_run\` : lancer une étape (${Object.keys(STAGES).join(', ')}) dans une session isolée.
+- \`desk_fix\` : corrections mécaniques du brouillon en place (fautes, accents, ponctuation) ; le fixeur écrit fixes.md, sans réécrire l'article.
 - \`desk_check\` : style, typographie et corpus du blog.
 - \`desk_instructions\` : relire un rôle ou la charte.
 
@@ -670,6 +673,32 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     return chosen;
   }
 
+  function specialistRunner({ parent, subagents, timeout, root }) {
+    return async (job) => {
+      const activation = await subagents.startActivation({
+        provider: 'spawn',
+        label: `${job.stageId} · ${job.role}`,
+        ...(settings.agentPreset ? { agentPreset: settings.agentPreset } : {}),
+        cwd: root,
+        prompt: [{ type: 'text', text: job.prompt }],
+        parent,
+        signal: timeout.signal,
+        delivery: 'caller',
+      });
+
+      try {
+        const result = await awaitActivation(activation, timeout.signal);
+        return {
+          sessionId: String(activation.childId),
+          text: textOfBlocks(result.output),
+          structured: result.structured,
+        };
+      } finally {
+        await disposeActivation(activation, timeout.signal);
+      }
+    };
+  }
+
   async function runStageForAgent({ slug, stageId, agent, signal, onEvent }) {
     const root = await requireRoot();
     const parent = agent ?? (await parentFor(slug));
@@ -690,31 +719,32 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
         slug,
         stageId,
         onEvent,
-        runAgent: async (job) => {
-          const activation = await subagents.startActivation({
-            provider: 'spawn',
-            label: `${job.stageId} · ${job.role}`,
-            ...(settings.agentPreset
-              ? { agentPreset: settings.agentPreset }
-              : {}),
-            cwd: root,
-            prompt: [{ type: 'text', text: job.prompt }],
-            parent,
-            signal: timeout.signal,
-            delivery: 'caller',
-          });
+        runAgent: specialistRunner({ parent, subagents, timeout, root }),
+      });
+    } finally {
+      timeout.clear();
+    }
+  }
 
-          try {
-            const result = await awaitActivation(activation, timeout.signal);
-            return {
-              sessionId: String(activation.childId),
-              text: textOfBlocks(result.output),
-              structured: result.structured,
-            };
-          } finally {
-            await disposeActivation(activation, timeout.signal);
-          }
-        },
+  async function runFixesForAgent({ slug, agent, signal }) {
+    const root = await requireRoot();
+    const parent = agent ?? (await parentFor(slug));
+    const subagents = ctx.get?.('subagents');
+    if (!subagents) {
+      throw new Error(
+        'Le service subagents de DSH est indisponible : impossible de lancer le fixeur.',
+      );
+    }
+    const timeout = timeoutSignal(
+      signal ?? new AbortController().signal,
+      settings.stageTimeoutMinutes,
+    );
+
+    try {
+      return await runFix({
+        root,
+        slug,
+        runAgent: specialistRunner({ parent, subagents, timeout, root }),
       });
     } finally {
       timeout.clear();
@@ -1033,6 +1063,9 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
     async runStageForAgent(options) {
       return runStageForAgent(options);
     },
+    async runFixesForAgent(options) {
+      return runFixesForAgent(options);
+    },
     async startStage(slug, stageId) {
       const root = await requireRoot();
       if (!STAGES[stageId]) {
@@ -1120,7 +1153,7 @@ ${exemplarSelection(root) || 'Aucun exemplaire local disponible.'}
 
 ## Outils
 
-\`desk_run\`, \`desk_angle\`, \`desk_piece\`, \`desk_sources\`,
+\`desk_run\`, \`desk_fix\`, \`desk_angle\`, \`desk_piece\`, \`desk_sources\`,
 \`desk_artifact\`, \`desk_check\`, \`desk_instructions\`.`;
     },
     formatStageSummary,

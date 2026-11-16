@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { createBureauService } from '../lib/service.js';
-import { buildPrompt, runStage, STAGES } from '../lib/pipeline.js';
+import { buildPrompt, runFix, runStage, STAGES } from '../lib/pipeline.js';
 import { checkStyle, lintText } from '../lib/checks.js';
 import { assessCoverage } from '../lib/coverage.js';
 import {
@@ -29,6 +29,7 @@ function makeWorkspace() {
     'strategist',
     'redacteur',
     'relecture-style',
+    'fixeur',
     'editeur',
   ];
   for (const role of roles) {
@@ -206,7 +207,7 @@ test('the service reads the desk, creates a piece, writes the angle and archives
   const health = await service.health();
   assert.equal(health.ok, true);
   assert.equal(health.instructions.agent, true);
-  assert.equal(health.instructions.roles, 5);
+  assert.equal(health.instructions.roles, 6);
 
   const instructions = await service.instructions();
   assert.ok(instructions.some((doc) => doc.id === 'agent'));
@@ -394,6 +395,67 @@ test('the pipeline builds a role prompt and runs brief, draft and style with a f
   );
 
   setStatus(root, 'piece-test', 'drafted');
+});
+
+test('the fixer edits the draft in place and writes a report', async () => {
+  const root = makeWorkspace();
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'meta.json'),
+    JSON.stringify({
+      bd_id: 1,
+      title: 'La source',
+      site: 'Test',
+      captured_at: '2026-01-03',
+      word_count: 500,
+      coverage: { level: 'full', reasons: [] },
+    }),
+  );
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'text.txt'),
+    'Texte de la source.',
+  );
+  createPiece(root, {
+    slug: 'fix-test',
+    title: 'Pièce à corriger',
+    intent: 'Corriger une faute.',
+    sources: [1],
+  });
+  const draft = path.join(root, 'src', 'content', 'blog', 'fix-test.mdx');
+  write(
+    draft,
+    '---\ntitle: "T"\ndescription: "D"\npubDate: 2026-01-01\ndraft: true\n---\n\nLe comerce russo-chinois progresse.\n',
+  );
+
+  let seen = '';
+  const result = await runFix({
+    root,
+    slug: 'fix-test',
+    runAgent: async (job) => {
+      seen = job.prompt;
+      const before = fs.readFileSync(draft, 'utf8');
+      write(draft, before.replace('comerce', 'commerce'));
+      write(
+        path.join(root, 'editorial', 'pieces', 'fix-test', 'fixes.md'),
+        '# Corrections\n\n- « comerce » → « commerce » — typo.\n',
+      );
+      return { text: 'corrigé', sessionId: 'child' };
+    },
+  });
+
+  assert.match(seen, /Rôle : fixeur/);
+  assert.match(seen, /edit/);
+  assert.equal(result.stage, 'fix');
+  assert.ok(result.outputs.includes('editorial/pieces/fix-test/fixes.md'));
+  assert.equal(
+    fs.readFileSync(draft, 'utf8').includes('commerce russo-chinois'),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(
+      path.join(root, 'editorial', 'pieces', 'fix-test', 'fixes.md'),
+    ),
+    true,
+  );
 });
 
 test('a piece session is created with a scoped desk prompt and resumed after restart', async () => {

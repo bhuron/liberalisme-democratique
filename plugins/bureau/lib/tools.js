@@ -248,7 +248,7 @@ export function registerTools(ctx, service, defineTool) {
     defineTool({
       name: 'desk_artifact',
       description:
-        'Lit les artefacts d’une pièce : angle, recherche, brief, brouillon, relecture de style, paquet. Utilisez-le après une étape pour vérifier le fichier produit.',
+        'Lit les artefacts d’une pièce : angle, recherche, brief, brouillon, relecture de style, corrections, paquet. Utilisez-le après une étape pour vérifier le fichier produit.',
       parameters: {
         action: {
           type: 'string',
@@ -259,7 +259,15 @@ export function registerTools(ctx, service, defineTool) {
         slug: { type: 'string', description: 'Slug de la pièce.' },
         name: {
           type: 'string',
-          enum: ['angle', 'research', 'brief', 'draft', 'relecture', 'package'],
+          enum: [
+            'angle',
+            'research',
+            'brief',
+            'draft',
+            'relecture',
+            'fixes',
+            'package',
+          ],
           description: 'Artefact à lire.',
         },
       },
@@ -319,7 +327,7 @@ export function registerTools(ctx, service, defineTool) {
     defineTool({
       name: 'desk_instructions',
       description:
-        'Liste ou relit les instructions du bureau : agent, cinq rôles, charte de style, profil de registre. Les fichiers restent dans le dépôt du blog.',
+        'Liste ou relit les instructions du bureau : agent, six rôles, charte de style, profil de registre. Les fichiers restent dans le dépôt du blog.',
       parameters: {
         action: {
           type: 'string',
@@ -458,6 +466,37 @@ export function registerTools(ctx, service, defineTool) {
         const result = await service.runStageForAgent({
           slug,
           stageId: args.stage,
+          agent: exec.agent,
+          signal: exec.signal,
+        });
+        return service.formatStageSummary(result);
+      },
+    }),
+
+    defineTool({
+      name: 'desk_fix',
+      description:
+        'Corrige le brouillon en place : fautes de frappe, accents, ponctuation, espaces, répétitions involontaires, accords évidents. Le fixeur utilise edit, ne réécrit pas un paragraphe, ne change ni les faits ni le style, et écrit fixes.md. À utiliser pour une correction ponctuelle ; ne relance pas le rédacteur pour une faute.',
+      parameters: {
+        slug: { type: 'string', description: 'Slug de la pièce.' },
+      },
+      output: {
+        schema: { type: 'string' },
+        render: (_args, value) => [{ type: 'text', text: String(value) }],
+      },
+      isConcurrencySafe: WRITE,
+      async execute(args, exec) {
+        if (!exec.agent) {
+          throw new Error("desk_fix a besoin de l'agent appelant.");
+        }
+        if (isSubagent(exec)) {
+          throw new Error(
+            'Un spécialiste corrige son propre artefact ; il ne lance pas le fixeur.',
+          );
+        }
+        const slug = resolveSlug(service, args, exec);
+        const result = await service.runFixesForAgent({
+          slug,
           agent: exec.agent,
           signal: exec.signal,
         });

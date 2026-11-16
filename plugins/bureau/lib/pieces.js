@@ -28,6 +28,7 @@ export const ARTIFACTS = {
   brief: { label: 'Brief', file: 'brief.md' },
   package: { label: 'Paquet', file: 'package.md' },
   relecture: { label: 'Relecture de style', file: 'relecture-style.md' },
+  fixes: { label: 'Corrections', file: 'fixes.md' },
   draft: { label: 'Brouillon' },
 };
 

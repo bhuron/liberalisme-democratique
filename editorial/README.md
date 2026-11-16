@@ -23,6 +23,17 @@ conversation. Les étapes tournent dans des sessions de spécialistes isolées e
 corrections concrètes. Il n'y a ni score, ni `must_fix`, ni boucle de révision
 automatique.
 
+## Corrections ponctuelles
+
+Pour une faute de frappe, un accent, une ponctuation ou une coquille, le fixeur
+est disponible **depuis la conversation**, hors pipeline : `desk_fix`. Il
+modifie le brouillon en place avec `edit`, sans le réécrire, et écrit
+`fixes.md`. Il ne touche ni aux faits, ni aux chiffres, ni au style ; les
+corrections qui demandent une réécriture sont seulement signalées.
+
+Ne relance pas `draft` pour une correction locale : le rédacteur réécrirait
+tout l'article.
+
 ## Exemples de registre
 
 Le préparateur reçoit le catalogue des articles de référence
@@ -60,6 +71,7 @@ référence.
 - `préparateur` : dossier de faits, liens, titre de travail, inconnues ;
 - `rédacteur` : article en français, dans la voix du blog ;
 - `relecture de style` : comparaison avec les articles de référence ;
+- `fixeur` : corrections mécaniques ciblées, hors pipeline ;
 - `éditeur` : titre, description, étiquettes, liens internes, posts.
 
 Les instructions des rôles sont dans `editorial/agent/roles/`. La charte est

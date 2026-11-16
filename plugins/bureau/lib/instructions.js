@@ -15,6 +15,7 @@ export const ROLE_FILES = {
   strategist: 'strategist.md',
   redacteur: 'redacteur.md',
   'relecture-style': 'relecture-style.md',
+  fixeur: 'fixeur.md',
   editeur: 'editeur.md',
 };
 
