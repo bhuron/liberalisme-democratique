@@ -20,11 +20,10 @@ brouillon et tu ne publies rien.
 ```markdown
 # Package — <slug>
 
-## Titres
+## Titre
 
-1. ... — recommandé : ...
-2. ... — ...
-3. ...
+- ...
+- Variantes seulement si elles apportent quelque chose (facultatif).
 
 ## Description
 
@@ -50,8 +49,9 @@ brouillon et tu ne publies rien.
 
 ## Règles
 
-- Titres : trois options, une recommandée, une justification d'une ligne
-  chacune. Aucun titre ne promet ce que le texte ne tient pas.
+- Titre : un titre de travail. Des variantes seulement si elles apportent
+  quelque chose ; pas de nombre imposé. Aucun titre ne promet ce que le texte ne
+  tient pas.
 - Description : une ou deux phrases, 120 à 160 caractères.
 - Étiquettes : une à trois, prises ici seulement : Économie, Finance, IA,
   Politique, Géopolitique, Éducation, Tech, Souveraineté.

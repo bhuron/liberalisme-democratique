@@ -1,83 +1,104 @@
-# Le bureau — the editorial desk as a Harness plugin
+# Le bureau — the editorial desk as a DSH bundle
 
-A DSH Web plugin that adds a **Le bureau** entry to the left sidebar and a main
-panel for the editorial desk in `editorial/`. It keeps the simplified desk UI —
-one column, three tabs, Inter — and runs the multi-agent pipeline **in-process**
-instead of spawning `dsh --profile headless` once per action.
+A DeepSeek Harness plugin that opens **Le bureau** in the left sidebar and
+replaces the local desk application with native DSH machinery. The blog
+repository supplies only its **instruction files** and its data; the plugin
+contains all the desk code.
 
 ## What it does
 
-- **The same three tabs as the desk.** Discussion, Recherche, Brouillon. The
-  conversation is the control surface: the agent decides when to launch a stage
-  with `desk_run` / `desk_loop`, writes `angle.md`, and reads the artefacts.
-- **The same one-column page.** Left column: “+ Nouvel article”, the piece list,
-  the agent status. Main column: title, source line, tabs, document. No
-  dashboard, no workflow grid, no status pills.
-- **The same face.** The panel loads the desk's own `InterVariable.woff2`
-  (served at `/api/bureau/font`) and reuses its type scale, spacing and control
-  sizes.
-- **The same files.** `editorial/pieces/<slug>/…`, `editorial/sources/<id>/…`,
-  and `src/content/blog/<slug>.mdx`. The CLI (`npm run desk`) keeps working;
-  the plugin and the CLI share the same libraries.
-- **In-process specialists.** Each role runs in an isolated child session via
-  `ctx.subagents` (`provider: 'spawn'`), with the live GUI credentials. No CLI
-  boot, no `DSH_BIN`, no headless credential patch. While a specialist works,
-  its role and tool labels stream to the panel's progress line.
-- **Stop and retry.** While a turn runs, *Arrêter* aborts the request: the host
-  interrupts the conversation child and, through the tool signal, a specialist
-  started by `desk_run`. *Relancer* re-sends the last user message after an
-  error.
-- **A durable conversation per piece.** The chat agent is a continuable child
-  stored on the piece (`bureau_session_id`, `bureau_parent_id`). The next
-  message resumes that session instead of replaying the bootstrap and the
-  transcript; the desk CLI keeps its own `session_id`, so the two do not
-  collide. If the child cannot be reached, the plugin falls back to one fresh
-  child with a replayed context.
-- **Agent tools.** `desk_run` and `desk_loop`, with the names and semantics the
-  desk agent instructions already use.
-- **Never publishes.** Like the desk: no commit, no post, no merge.
+- **Pieces.** Create a piece from one or more captures, record the intent and
+  the angle, follow its status, archive it.
+- **Frozen sources.** Snapshot a capture into `editorial/sources/<id>/` with its
+  coverage diagnosis, so a later deletion in the reading app does not remove
+  the evidence.
+- **Pipeline.** Five stages (`research`, `brief`, `draft`, `style`,
+  `package`) and five specialist roles. Each role runs in an isolated DSH
+  subagent, writes one artefact, and returns a three-sentence summary. `style`
+  is an optional review of the draft against the writing examples; there is no
+  thesis/steelman/structure critique.
+- **One session per piece.** Each piece owns a normal DSH conversation whose
+  system prompt is built from `editorial/agent/desk-agent.md`, the style card
+  and the current dossier. **Open the discussion** creates or resumes that
+  session in the current workspace, attaches it to the workspace, and starts it
+  with a bootstrap message (piece, intent, frozen sources) so the agent begins
+  instead of showing a blank session. A legacy session that is ungrouped or has
+  no model selection is archived and replaced.
+- **Instructions viewer.** The panel renders the desk agent, the five roles,
+  the style card, the register profile and the local exemplar file, read live
+  from the repository.
+- **Writing references are chosen by the LLM.** The preparer receives the full
+  catalogue of local exemplars and writes two or three paths into the brief,
+  varying them by piece and domain. The writer prompt inlines those full
+  articles and keeps the rest of the catalogue as a “spill” list it can read on
+  demand. The style review receives the same references.
+- **Checks.** French typography, style tics and budgets, and proximity to the
+  blog corpus, exposed both in the panel and through `desk_check`.
+- **Skill.** The same instructions are published as the `bureau` DSH skill, so
+  any agent can load them with the ordinary `skill` tool.
+
+## Dependency on the blog
+
+The only code dependency is **zero**: `lib/` never imports `tools/desk/`. The
+plugin reads:
+
+- `editorial/agent/desk-agent.md`
+- `editorial/agent/roles/*.md` (five roles)
+- `editorial/style/card.md`, `editorial/style/newsroom-profile.md`
+- `editorial/style/corpus/newsroom-exemplars.md` (short extracts; local and
+  optional — the writer falls back to the profile if it is absent)
+- and it writes the same data the desk CLI owns:
+  `editorial/pieces/<slug>/…`, `editorial/sources/<id>/…`,
+  `src/content/blog/<slug>.mdx`, `editorial/archive/<slug>/`.
+
+`bookmark-digest` is read through `node:sqlite` or its REST API; when neither is
+available the desk still opens and every operation except the capture inbox
+works.
+
+The preparer chooses the inline examples, prioritising FT/SCMP for news and
+Le Monde diplomatique for analysis, and varying the choice from one piece to the
+next. Le Monde and Libération remain language witnesses, not structural targets.
+If a brief has no reference section, the writer falls back to a domain-matched
+pair of full articles.
+
+## DSH resources used
+
+| Resource | Use |
+|---|---|
+| `ctx.tools` | `desk_status`, `desk_piece`, `desk_sources`, `desk_artifact`, `desk_angle`, `desk_instructions`, `desk_check`, `desk_run` |
+| `ctx.subagents` | One isolated `spawn` activation per role, with cwd, timeout and the caller as parent |
+| `ctx.agents` | One durable conversation per piece, created or resumed by the plugin |
+| `ctx.systemPrompt` | Per-agent section with the desk agent instructions and the live dossier |
+| `ctx.webServer` | Same-origin JSON API for the panel (`/api/bureau/...`) |
+| Client `slots` | `main` panel and `sidebar.panellist` entry |
+| `ctx.locale` | Panel dictionaries (English and French) |
+| `ctx.skills` | Runtime `bureau` skill provider |
+| `Config` | Workspace, bookmark paths, stage timeout, loop iterations |
 
 ## Use
 
-1. Open **Le bureau** in the left sidebar.
-2. Press **+ Nouvel article**, pick one or more captures, add the intent.
-3. Start the discussion; the first message sends the frozen sources, the
-   intent and the charter.
-4. Ask for a stage (“lance la recherche”, “fais le brief”, “écris le
-   brouillon”, “lance les critiques”); the agent calls `desk_run` /
-   `desk_loop` and the artefact appears in its tab.
-5. Keep `draft: true` until you publish by hand.
+1. Install the bundle through **Plugins** (or `plugin_manager`), then open
+   **Le bureau** in the sidebar.
+2. Press **+ Nouvelle pièce**, pick captures, add an intent, create the piece.
+   With no title, the slug is dated (`piece-YYYY-MM-DD`) and the intent excerpt
+   becomes the working title.
+3. Press **Ouvrir la discussion**; the piece session is created in the current
+   workspace and the agent immediately receives the piece, intent and sources.
+   Ask for a stage in the conversation, or open **Pipeline** to run one.
+4. Read the artefacts with the single **Document** selector; the angle, sources
+   and checks are documents too. Open **Pipeline** only when you need to run or
+   change a stage. Keep `draft: true` until you publish by hand.
 
-## Requirements
+## Typography and layout
 
-- The workspace must contain `tools/desk/lib/` (the desk CLI and its libraries)
-  and `tools/desk/ui/fonts/InterVariable.woff2`.
-- `bookmark-digest` must be reachable to list or snapshot captured articles
-  (`BOOKMARK_DIGEST_ROOT`, `BOOKMARK_DIGEST_DB`, `BOOKMARK_DIGEST_API`).
-- At least one live chat session: the panel attaches its specialists to the
-  most recent root agent, because a subagent needs a live parent. Without one,
-  the sidebar status reads “agent : aucune session” and stage runs refuse.
+The panel is deliberately quiet: one top bar, a narrow piece list, a document
+column, and one **Document** selector. There are no tabs. The pipeline is hidden
+behind the **Pipeline** button; the angle is one of the documents, never a block
+above the draft. The draft frontmatter is stripped from the reading view.
 
-## Endpoints
-
-Same-origin only; requests without an `Origin` header are allowed for local
-tooling.
-
-| Method | Path | Purpose |
-|---|---|---|
-| `GET` | `/api/bureau/health` | Desk availability, piece count, default model, live sessions. |
-| `GET` | `/api/bureau/font` | The desk's `InterVariable.woff2`. |
-| `GET` | `/api/bureau/pieces` | Pieces, newest first. |
-| `POST` | `/api/bureau/pieces` | Create a piece from `sourceIds` and `intent`. |
-| `GET` | `/api/bureau/inbox?q=…` | Captured articles with coverage and reuse. |
-| `GET` | `/api/bureau/pieces/:slug` | Piece, sources, messages, artefact presence. |
-| `DELETE` | `/api/bureau/pieces/:slug` | Archive the piece. |
-| `POST` | `/api/bureau/pieces/:slug/status` | Change the status. |
-| `GET` | `/api/bureau/pieces/:slug/artifact?name=…` | `brief`, `research`, `draft`, `critiques`, `package`, `angle`. |
-| `GET` | `/api/bureau/pieces/:slug/source?id=…` | Captured text of one source. |
-| `POST` | `/api/bureau/pieces/:slug/chat` | NDJSON: `meta`, `delta`, `role`, `tool`, `done`, `error`. |
-| `POST` | `/api/bureau/pieces/:slug/run` | NDJSON: `start`, `role`, `tool`, `done`, `error`. |
-| `POST` | `/api/bureau/pieces/:slug/loop` | Same, for critique → revision. |
+Inter is bundled in `fonts/InterVariable.woff2` (SIL Open Font License, see
+`fonts/OFL.txt`) and served by the plugin at `/api/bureau/font`; the panel falls
+back to the system sans-serif stack if the font cannot load.
 
 ## Configuration
 
@@ -85,64 +106,52 @@ tooling.
 - id: bureau
   name: '@local/bureau'
   config:
-    # Defaults to the workspace that holds tools/desk.
-    workspaceDir: ''
-    # Characters of conversation replayed when a session has to be rebuilt.
-    historyChars: 60000
-    # Wall-clock cap for one specialist (0 disables it).
-    stageTimeoutMinutes: 30
-    # Wall-clock cap for one conversation turn, including a stage it launched.
-    chatTimeoutMinutes: 45
-    # Deterministic answers and artefacts, no model call.
-    fake: false
+    workspaceDir: ''            # defaults to the live Session directory
+    bookmarkRoot: ''            # defaults to ../bookmark-digest
+    bookmarkDb: ''              # defaults to backend/data/bookmark-digest.db
+    bookmarkApi: ''             # defaults to http://localhost:3001
+    agentPreset: standard       # must provide read/write/edit and web tools
+    stageTimeoutMinutes: 15     # 0 disables the cap
 ```
 
-## Fake mode and tests
+## Specialist tooling
 
-Set `fake: true` to exercise the panel without a model: the chat answers
-`(fake start) …` / `(fake continue) …`, and each stage writes a deterministic
-artefact (research, brief, draft with `draft: true`, three critique scorecards,
-revision, package). Nothing is sent to a provider and no subagent is started.
+Specialists run under `agentPreset` (default `standard`), not under the parent
+session's minimal composition. That preset must provide `read`, `write`, `edit`,
+`glob`/`grep` and the web tools; the writer needs `write`, the documentalist
+needs web search/fetch. A profile without `standard` should set `agentPreset` to
+another full-tool preset.
 
-The route tests use the same mode against a temporary workspace:
+The desk tools are guarded against recursion: a specialist cannot call
+`desk_run`, `desk_angle`, or the write actions of `desk_piece` and
+`desk_sources`. It writes its artefact and returns three sentences.
 
-```bash
-npm run bureau:test
-```
+## Stopping a stage
 
-They copy `tools/desk/lib` and `editorial/agent|style` into a temp directory,
-create a piece, and drive the real HTTP handler: health, pieces, chat
-start/continue, the five stages, the artifact route, the critique/revision
-loop, the session fallback, an unknown piece, and archive. Nothing touches the
-real desk, and no token is spent.
+While a stage runs in the conversation, the normal **Stop** control aborts the
+`desk_run` call: the tool stops waiting and disposes the specialist
+instead of holding the turn. A stage launched from **Pipeline** has its own
+**Stop** button in the run banner (`POST /api/bureau/runs/<id>/cancel`).
+
+The fallback cap is `stageTimeoutMinutes` (15 minutes by default; `0` disables
+it). A partial artefact is left in place and can be inspected or overwritten by
+rerunning the stage.
 
 ## Limits
 
-- The conversation child is owned by the session that started it. If that
-  parent session is closed, or the child can no longer be resumed, the next
-  message starts a fresh child and replays the bootstrap plus the last 24
-  messages. Archiving a piece drains its child.
-- A child activation settles when its turn ends; the next message cold-resumes
-  the session from its log. The parent session then receives the harness's
-  standard `subagent-settled` notice (a compact notice row, not a chat
-  bubble).
-- A specialist needs a live root Agent as its parent.
-- The panel does not render the pipeline's tool transcripts; it shows the
-  running role and the last tool label. Full transcripts are in the child
-  session log.
-- Timeouts are wall-clock caps, not inactivity timers: a specialist gets
-  `stageTimeoutMinutes` (30 by default), a conversation turn gets
-  `chatTimeoutMinutes` (45, so a stage launched from the chat is not strangled
-  by the chat's own cap). `0` disables either. The CLI keeps its own
-  `DESK_AGENT_TIMEOUT_MS`.
-- `npm run desk` and the panel can be used on the same piece, but not at the
-  same instant: both write the same files, and they keep separate model
-  sessions.
+- The desk never publishes, commits, merges, or modifies bookmark-digest.
+- The full text of captures stays out of git (`editorial/sources/*/text.txt`).
+- A stage needs its prerequisites: `sources` for research and brief, `brief`
+  for draft, `draft` for style and package. The panel shows what is missing.
+- If the piece session is archived or cannot be resumed, the next open creates
+  a fresh session and records its id on the piece.
+- The panel is a normal DSH page: the conversation itself opens in the central
+  conversation panel, not inside this page.
 
-## Files
+## Tests
 
-- `index.js` — desk loading, HTTP routes, in-process specialists, `desk_run` /
-  `desk_loop`.
-- `client.js` — sidebar icon, main panel, React UI, locale dictionaries.
-- `locale/en.json`, `locale/fr.json` — Plugin Manager title and description.
-- `icon.svg` — original plugin artwork.
+```bash
+node --test plugins/bureau/test/
+```
+
+They use a temporary workspace and a fake specialist; no model is called.

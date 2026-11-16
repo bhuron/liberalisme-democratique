@@ -8,36 +8,25 @@ ils décrivent une tendance, pas une règle absolue.
 
 - Analytique et impersonnelle. « on » (56 occurrences) plutôt que « je » (12).
   Le « nous » reste rare (16) et réservé au collectif réel.
-- On explique avant de juger. La thèse arrive après la concession, jamais avant.
 - L'ironie passe par la parenthèse (232 dans le corpus), pas par l'emoji, le
   point d'exclamation ou le sarcasme explicite.
 - Le lecteur est un pair informé, pas un élève. Aucun « nous les libéraux »,
   aucune pédagogie condescendante.
 
-## 2. Structure
+## 2. Longueur et lisibilité
 
-- Longueur selon le genre : 450 à 700 mots pour une pièce d'actualité, 900 à
-  1 300 pour une analyse.
-- Les sections sont **optionnelles**. Un texte d'actualité se lit d'un trait,
-  sans intertitre. Au plus deux ou trois `##`, et seulement si la pièce est
-  longue ; titres courts et assertifs. Jamais un plan en cinq ou huit sections.
-- Pour une pièce d'actualité, les cibles mesurées sur 25 articles SCMP/FT
-  (profil du 11 novembre 2026) : phrase médiane ~22 mots, paragraphe ~34,
-  attaque ~34, citations ~12 pour 1 000 mots, attributions ~12, intertitres 0.
-  Voir `editorial/style/newsroom-profile.md`. Pour une analyse, le profil LMD
-  donne ~22 mots par phrase, 80 à 120 mots par paragraphe, un chapô de 10 à
-  20 mots et 1 à 2 `##`.
-- Les captures du Monde et de Libération ne sont pas des cibles de structure :
-  elles servent de témoins pour la langue française. La référence reste
-  FT/SCMP pour l'actualité, LMD pour l'analyse.
-- Jamais de titre « Introduction » ni « Conclusion ».
-- Ouverture : une idée reçue, puis immédiatement un doute. Pas d'anecdote
-  personnelle, pas de « depuis toujours », pas de définition de dictionnaire.
-- Une idée par paragraphe. Pour une actualité, 30 à 40 mots (profil SCMP/FT) ;
-  pour une analyse, 80 à 120 mots (profil LMD).
-- Clôture : une question ou une affirmation sèche. Jamais un résumé de ce qui
-  précède.
-- Pas de listes à puces dans le corps. Les énumérations tiennent dans la phrase.
+- La longueur suit le sujet. Une pièce d'actualité tourne autour de 600 à 900
+  mots, une analyse autour de 900 à 1 300. Ce sont des repères, pas des quotas.
+- Les sections sont optionnelles. Un texte d'actualité se lit d'un trait, sans
+  intertitre ; une analyse peut en avoir un ou deux si le sujet l'exige. Pas de
+  plan imposé, pas de nombre de sections imposé.
+- Le profil `editorial/style/newsroom-profile.md` et les articles complets
+  fournis au rédacteur sont des références de registre : des exemples de
+  construction et de rythme, pas une grille à remplir.
+- Les captures du Monde et de Libération servent de témoins pour la langue
+  française ; FT/SCMP et Le Monde diplomatique sont les références de registre.
+- Une idée par paragraphe reste un bon repère, sans longueur imposée.
+- Pas de listes à puces dans le corps si une phrase suffit.
 
 ## 3. Syntaxe
 
@@ -59,14 +48,8 @@ ils décrivent une tendance, pas une règle absolue.
 - Chiffres : jamais sans source. Espace insécable comme séparateur de milliers,
   virgule décimale, unités explicites (milliards de dollars, MW, %).
 
-## 5. Mouvements argumentatifs
+## 5. Ce qui trahit un texte généré
 
-- Steelman puis réfutation : exposer l'argument adverse dans sa meilleure
-  version avant de le démonter.
-- Analogie historique datée et chiffrée (la fibre de 1997-2001, le NASDAQ de
-  2000-2002), pas une analogie décorative.
-- Ordre de grandeur avant exemple : le chiffre structure le paragraphe, l'anecdote
-  l'illustre.
 - Le renversement de cadre (« ce n'est pas X, c'est Y », « X n'est pas Y, elle
   est Z », « non pas X mais Y ») est **banni**, pas limité : zéro occurrence,
   variantes comprises. C'est le tic qui trahit un texte généré. La forme ne se
@@ -132,9 +115,9 @@ Les tics sont vérifiés séparément par `npm run desk -- style <slug>`.
 
 ## 9. Checklist avant publication
 
-- [ ] La thèse tient en une phrase et n'est pas déjà dans un autre article.
 - [ ] Chaque chiffre a un lien vers sa source.
-- [ ] Le steelman est présent, et c'est le meilleur argument adverse.
+- [ ] Le texte se lit comme les articles de référence, sans effet de
+  démonstration.
 - [ ] Aucun paragraphe ne peut être supprimé sans perte.
 - [ ] Le titre ne promet pas plus que le texte.
 - [ ] `npm run desk:lint <slug> -- --strict` ne remonte aucune erreur.

@@ -1,6 +1,7 @@
 {
   "meta": {
-    "title": "The desk",
-    "description": "The editorial desk in the sidebar: pieces, captured sources, brief, draft, critiques and the six-stage multi-agent workflow, executed in-process."
+    "title": "The editorial desk",
+    "description": "Opens Le bureau in the sidebar: pieces, frozen sources, pipeline stages run by isolated specialists, and the blog's own instruction files. Uses the workspace at editorial/agent and writes only the desk's files.",
+    "detail": "docs/DETAIL.md"
   }
 }

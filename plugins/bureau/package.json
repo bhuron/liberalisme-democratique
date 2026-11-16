@@ -1,9 +1,9 @@
 {
   "name": "@local/bureau",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Le bureau — the editorial desk as a left-sidebar Harness plugin with in-process specialists.",
+  "description": "Le bureau — the editorial desk of Libéralisme Démocratique as a DSH bundle.",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -14,7 +14,10 @@
     "index.js",
     "client.js",
     "cordis.patch.yml",
+    "lib",
+    "fonts",
     "locale/*.json",
+    "docs",
     "icon.svg",
     "README.md"
   ],

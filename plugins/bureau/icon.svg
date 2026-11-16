@@ -1,14 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Le bureau">
-  <defs>
-    <linearGradient id="bureau-bg" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#f59e0b"/>
-      <stop offset="1" stop-color="#b45309"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="16" fill="url(#bureau-bg)"/>
-  <rect x="14" y="11" width="25" height="35" rx="4" fill="#fffbeb"/>
-  <path d="M20 20h13M20 26h13M20 32h8" stroke="#b45309" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M35 53l3-9 13-29" fill="none" stroke="#fffbeb" stroke-width="3.2" stroke-linecap="round"/>
-  <path d="M35 53l-3 5 6-2-3-3Z" fill="#fffbeb"/>
-  <path d="M48 15.5l4 1.8" stroke="#b45309" stroke-width="2.2" stroke-linecap="round"/>
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Le bureau">
+  <rect x="7" y="5" width="22" height="26" rx="3" fill="#f7f3ea" stroke="#2f5d8a" stroke-width="2"/>
+  <path d="M11 11h14M11 15h14M11 19h9" stroke="#2f5d8a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M11 26h7" stroke="#c4553d" stroke-width="3" stroke-linecap="round"/>
 </svg>

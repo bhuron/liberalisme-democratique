@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "Le bureau",
-    "description": "Le desk éditorial dans la barre latérale : pièces, sources capturées, brief, brouillon, critiques et les six étapes du workflow multi-agent, exécutées en processus."
+    "description": "Ouvre Le bureau dans la barre latérale : pièces, sources figées, étapes du pipeline exécutées par des spécialistes isolés, et les fichiers d'instructions du blog. Lit editorial/agent et n'écrit que les fichiers du bureau.",
+    "detail": "docs/DETAIL.md"
   }
 }

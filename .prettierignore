@@ -18,3 +18,5 @@ editorial/archive/
 
 # DSH plugin artwork (Prettier has no SVG parser)
 plugins/tweet-studio/icon.svg
+plugins/bureau/icon.svg
+plugins/bureau/docs/preview.svg

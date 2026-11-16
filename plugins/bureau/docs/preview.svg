@@ -1,0 +1,35 @@
+<svg width="640" height="300" viewBox="0 0 640 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Le panneau du bureau : pièces à gauche, artefacts et instructions à droite">
+  <rect x="40" y="28" width="560" height="244" rx="18" fill="#f7f3ea" stroke="#d8cfc0" stroke-width="2"/>
+  <path d="M58 28h124v244H58a18 18 0 0 1-18-18V46a18 18 0 0 1 18-18Z" fill="#efe8da"/>
+  <rect x="60" y="64" width="120" height="34" rx="9" fill="#2f5d8a"/>
+  <rect x="72" y="74" width="72" height="5" rx="2.5" fill="#f7f3ea"/>
+  <rect x="72" y="84" width="48" height="4" rx="2" fill="#b9c7d4"/>
+  <rect x="60" y="108" width="120" height="34" rx="9" fill="#ffffff" stroke="#e3d9c9"/>
+  <rect x="72" y="118" width="80" height="5" rx="2.5" fill="#9aa7b4"/>
+  <rect x="72" y="128" width="44" height="4" rx="2" fill="#cfc6b6"/>
+  <rect x="60" y="152" width="120" height="34" rx="9" fill="#ffffff" stroke="#e3d9c9"/>
+  <rect x="72" y="162" width="66" height="5" rx="2.5" fill="#9aa7b4"/>
+  <rect x="72" y="172" width="52" height="4" rx="2" fill="#cfc6b6"/>
+  <rect x="60" y="208" width="92" height="26" rx="13" fill="#c4553d"/>
+  <rect x="78" y="219" width="56" height="5" rx="2.5" fill="#f7f3ea"/>
+
+  <rect x="208" y="52" width="372" height="196" rx="14" fill="#ffffff" stroke="#e3d9c9"/>
+  <rect x="228" y="76" width="56" height="7" rx="3.5" fill="#c4553d"/>
+  <rect x="228" y="94" width="196" height="8" rx="4" fill="#2f5d8a"/>
+  <rect x="228" y="112" width="150" height="5" rx="2.5" fill="#9aa7b4"/>
+  <rect x="228" y="126" width="170" height="5" rx="2.5" fill="#9aa7b4"/>
+  <rect x="228" y="150" width="310" height="4" rx="2" fill="#ddd5c7"/>
+  <rect x="228" y="162" width="310" height="4" rx="2" fill="#ddd5c7"/>
+  <rect x="228" y="174" width="240" height="4" rx="2" fill="#ddd5c7"/>
+  <rect x="228" y="194" width="310" height="4" rx="2" fill="#ddd5c7"/>
+  <rect x="228" y="206" width="280" height="4" rx="2" fill="#ddd5c7"/>
+  <rect x="228" y="218" width="120" height="4" rx="2" fill="#ddd5c7"/>
+
+  <circle cx="214" cy="236" r="5" fill="#2f5d8a"/>
+  <circle cx="232" cy="236" r="5" fill="#2f5d8a"/>
+  <circle cx="250" cy="236" r="5" fill="#2f5d8a"/>
+  <circle cx="268" cy="236" r="5" fill="#c4553d"/>
+  <circle cx="286" cy="236" r="5" fill="#e3d9c9"/>
+  <circle cx="304" cy="236" r="5" fill="#e3d9c9"/>
+  <circle cx="322" cy="236" r="5" fill="#e3d9c9"/>
+</svg>

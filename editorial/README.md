@@ -1,238 +1,74 @@
 # Le desk éditorial
 
-Un espace de travail pour passer de quelques liens à un brouillon publiable,
-sans jamais publier automatiquement.
+Le desk accompagne l'écriture d'une pièce : il fige les sources, cherche des
+liens, prépare un dossier, écrit le brouillon et prépare le paquet de
+publication. Il ne critique pas les articles et ne cherche pas à démontrer une
+thèse.
 
-## Principe
+L'interface est le panneau **Bureau** de DSH. Chaque pièce a sa session de
+conversation. Les étapes tournent dans des sessions de spécialistes isolées et
+écrivent un artefact chacune.
 
-Trois couches, dans cet ordre :
+## Étapes
 
-1. **bookmark-digest** capture le texte depuis le navigateur, y compris derrière
-   un paywall. C'est la couche d'accès ; elle n'est pas modifiée par le desk.
-2. **Le desk** fige chaque source, garde la trace des pièces et vérifie ce qui
-   est vérifiable mécaniquement.
-3. **Les agents** lisent et écrivent dans le desk. Ils n'ont pas d'état propre :
-   on peut les remplacer, les relancer ou les arrêter sans perdre le travail.
-
-## Commandes
-
-```bash
-npm run desk:inbox                 # capturer ce qui attend dans bookmark-digest
-npm run desk -- inbox --since 7d   # les sept derniers jours
-npm run desk -- add 1 2 5 --slug ma-piece --title "Ma pièce"
-npm run desk -- pieces             # état des pièces
-npm run desk -- show ma-piece      # détail et artefacts
-npm run desk -- promote ma-piece approved
-npm run desk -- lint ma-piece      # typographie du brouillon
-npm run desk -- style ma-piece     # tics de style (tirets, renversements…)
-npm run desk -- pipeline ma-piece   # état des six étapes
-npm run desk -- run ma-piece critique
-npm run desk -- find "une URL ou un titre" # retrouver une source capturée
-npm run desk -- search "data centre" # bibliothèque capturée
-npm run desk -- related "data centres, bulle IA"
-npm run desk:test                  # tests du desk
-```
-
-Le desk lit la base SQLite de bookmark-digest en lecture seule. Si `node:sqlite`
-n'est pas disponible, il bascule sur l'API REST (`http://localhost:3001`) avec
-la clé de `bookmark-digest/config.json`. Variables d'environnement :
-`BOOKMARK_DIGEST_ROOT`, `BOOKMARK_DIGEST_DB`, `BOOKMARK_DIGEST_API`.
-
-## Écrire un brief
-
-Le brief est un document de travail, pas un article. Phrases déclaratives,
-tableaux, options, risques. La voix de l'auteur n'apparaît que dans les ledes,
-qui servent à choisir l'angle. Un brief qui « sonne bien » est un brief qui a
-pris la place du texte.
-
-## L'interface
-
-```bash
-npm run desk:ui
-# http://127.0.0.1:4322
-```
-
-Le bureau est une petite application locale, sans build :
-
-1. **Nouvelle pièce** : choisir un ou plusieurs articles capturés, et une
-   intention.
-2. **Discussion** : une session neuve par pièce, avec pour seul contexte les
-   sources choisies, la charte et l'intention. Rien d'autre.
-3. **Brief** : l'agent écrit `brief.md` quand vous le demandez. Vous le relisez,
-   vous critiquez, vous validez l'angle.
-4. **Recherche** : l'agent vérifie les faits et complète les manques. Le détail
-   va dans `research.md`, pas dans le chat.
-5. **Brouillon** : une fois l'angle validé, l'agent écrit
-   `src/content/blog/<slug>.mdx` avec `draft: true`.
-6. **Sources** : le texte capturé, avec le diagnostic de couverture.
-
-Le bouton **Supprimer** de l'en-tête déplace la pièce dans `editorial/archive/`.
-Le brouillon dans `src/content/blog/` n'est pas supprimé. Pour purger, supprimez
-le dossier d'archive.
-
-Les tweets et threads ne passent pas par le bureau : ils se font avec la skill
-`tweet` dans une session DSH.
-
-Chaque pièce a son dossier et son `session_id` : commencer une nouvelle idée
-n'ajoute rien à la précédente. Le serveur n'écoute que sur `127.0.0.1` et ne
-demande pas d'authentification ; ne l'exposez pas.
-
-### Le moteur d'agent
-
-| Variable | Effet |
-|---|---|
-| `DESK_AGENT=dsh` (défaut) | `dsh --profile headless --json`, avec `tools/desk/headless-auth.cordis.yml` pour réutiliser la connexion DSH enregistrée |
-| `DESK_AGENT=fake` | réponses de démonstration, sans modèle |
-| `DESK_AGENT=off` | désactive l'agent |
-| `DSH_BIN` | chemin explicite de `dsh` (prioritaire sur le PATH et le cache npx) |
-| `DESK_PORT` | port du bureau (4322 par défaut) |
-
-### Quel dsh, et faut-il lancer `dsh web` ?
-
-Le bureau ne parle pas au serveur Web DSH. Il lance
-`dsh --profile headless` pour chaque action, puis le processus se termine. Il
-faut donc le CLI `dsh`, pas `dsh web`, et le GUI n'a pas besoin de tourner.
-
-Résolution : `DSH_BIN`, puis `dsh` dans le PATH, puis le cache npx. S'il y a
-plusieurs caches npx, le choix n'est pas garanti : fixez `DSH_BIN` pour être
-sûr.
-
-```bash
-DSH_BIN="$(command -v dsh)" npm run desk:ui
-```
-
-Le chemin utilisé est affiché au démarrage et dans `/api/health`.
-
-Sans `dsh`, le bureau s'ouvre et les artefacts restent consultables, mais aucune
-génération ne fonctionne. `DESK_AGENT=fake` donne la démo.
-
-La skill `tweet` est l'inverse : elle tourne dans une session DSH, pas dans le
-bureau, et n'a pas besoin que le bureau soit lancé.
-
-Le profil headless ignore par défaut le magasin de credentials du GUI ; le
-patch fourni le réactive, et c'est la voie normale : aucune clé n'est alors
-nécessaire.
-
-Si la connexion échoue, fournissez la clé par l'environnement du processus,
-jamais par un fichier du dépôt :
-
-```bash
-DEEPSEEK_API_KEY="$(pass show deepseek/api)" npm run desk:ui
-```
-
-Adaptez à votre gestionnaire de secrets (`pass`, `op run`, `secret-tool`). Ne
-créez jamais `.env` dans ce dépôt : le profil headless le lirait, et un fichier
-ignoré finit toujours par être copié, forcé ou poussé.
-
-## Boucle humaine
-
-Le brouillon est un fichier : `src/content/blog/<slug>.mdx`. L'humain peut le
-modifier entre deux passes (corps, images, frontmatter). Le bureau relit la
-version courante :
-
-- les onglets Recherche et Brouillon revalident le fichier (ETag) à chaque
-  ouverture, et proposent un bouton « Recharger » ; une réponse 304 signifie
-  « inchangé », le texte en cache reste affiché ;
-- le pipeline calcule l'empreinte du brouillon au début de la critique et refuse
-  de réviser s'il a changé entre-temps ;
-- le réviseur conserve le frontmatter, les images et les blocs ajoutés par
-  l'humain.
-
-Le cycle : éditer → demander une critique → réviser → éditer de nouveau. Garder
-`draft: true` jusqu'à la publication.
-
-## Le workflow multi-agent
-
-Le desk n'est pas un agent unique. Six étapes, huit rôles, et chaque rôle tourne
-dans une session neuve :
-
-| Étape | Rôles | Sortie |
-|---|---|---|
-| `research` | documentaliste | `research.md` |
-| `brief` | stratège | `brief.md` |
+| Étape | Rôle | Sortie |
+| --- | --- | --- |
+| `research` | documentaliste | `editorial/pieces/<slug>/research.md` |
+| `brief` | préparateur | `editorial/pieces/<slug>/brief.md` |
 | `draft` | rédacteur | `src/content/blog/<slug>.mdx` |
-| `critique` | faits, voix, structure (en parallèle) | `critiques/*.md` + scorecards |
-| `revise` | réviseur | brouillon révisé + `critiques/revision.md` |
-| `package` | éditeur | `package.md` |
+| `style` | relecture de style (optionnelle) | `editorial/pieces/<slug>/relecture-style.md` |
+| `package` | éditeur | `editorial/pieces/<slug>/package.md` |
 
-Correspondance avec le chapitre 9 :
+`style` compare le brouillon aux articles de référence et propose des
+corrections concrètes. Il n'y a ni score, ni `must_fix`, ni boucle de révision
+automatique.
 
-- **Workflow** : l'ordre est fixé par le desk, pas par le modèle.
-- **Agent as Tool** : chaque rôle tourne dans une session isolée et ne renvoie
-  qu'un artefact et trois phrases.
-- **Parallel** : les trois critiques tournent en même temps.
-- **Loop** : critique → révision ; la boucle est pilotée par l'utilisateur
-  (relancer `revise` jusqu'à ce que les must-fix tombent à zéro).
-- **Transfer** : la conversation est la porte d'entrée ; elle délègue au
-  spécialiste via `angle.md` et les étapes.
-- **A2A** : non utilisé ; les sessions sont locales.
+## Exemples de registre
 
-`angle.md` est la décision de l'utilisateur (angle retenu, écarté, à vérifier).
-L'agent de conversation l'écrit ; les spécialistes le lisent, car ils ne voient
-pas le chat.
+Le préparateur reçoit le catalogue des articles de référence
+(`editorial/style/newsroom-corpus.json`) et choisit **deux ou trois** articles
+pour la pièce, en variant selon le sujet et le domaine. Il écrit leurs chemins
+dans le brief :
 
-L'onglet **Workflow** de l'interface expose les six étapes, leur état et un
-bouton pour les lancer.
-
-## Langues
-
-Les articles, leurs titres, leurs descriptions et leurs étiquettes sont en
-français. Les posts sociaux (Bluesky, X) sont en anglais par défaut ; le
-français seulement sur demande explicite. La conversation avec l'agent suit la
-langue de l'utilisateur.
-
-## Organisation
-
-```
-editorial/
-  style/card.md              # la charte de style
-  sources/<id>/meta.json     # provenance, hash, couverture
-  sources/<id>/text.txt      # texte intégral, ignoré par git
-  pieces/<slug>/piece.json   # état, sources, titre
-  pieces/<slug>/intent.md    # pourquoi cette pièce, ce que je veux dire
-  agent/roles/*.md           # les huit spécialistes
-  pieces/<slug>/angle.md     # décision de l'utilisateur, lue par les rôles
-  pieces/<slug>/brief.md     # angle, thèse, ledger, steelman
-  pieces/<slug>/research.md  # sources, dates, à capturer, incertitudes
-  pieces/<slug>/critiques/   # faits, voix, structure, révision
-  pieces/<slug>/package.md   # titres, description, thread
-  pieces/<slug>/runs/        # journal des exécutions par étape
-  pieces/<slug>/log.jsonl    # journal des transitions
+```markdown
+## Références de style
+- path: editorial/style/corpus/financial-times/30.txt
+- path: editorial/style/corpus/le-monde-diplomatique/50.txt
 ```
 
-Le texte des articles vit dans `src/content/blog/<slug>.mdx`, avec
-`draft: true`. Le desk ne le crée pas encore : c'est l'étape suivante.
+Le rédacteur reçoit ces articles **complets** dans son prompt. Le reste du
+catalogue lui est fourni en « spill » : il peut lire un autre exemple avec
+l'outil `read` s'il en a besoin, sans payer tout le corpus à chaque fois.
 
-## Couverture des sources
+Si un brief ne contient pas de section « Références de style », le rédacteur
+reçoit une paire d'exemples choisie par domaine, pour ne jamais écrire sans
+référence.
 
-Une capture peut être complète, partielle (paywall, texte court, coupure) ou
-échouée. `meta.json` porte ce diagnostic :
+## Sources et artefacts
 
-- `full` : le texte va jusqu'au bout ;
-- `partial` : appel à l'abonnement, texte trop court ou fin suspecte ;
-- `failed` : capture vide ou en erreur.
+- Les captures sont figées dans `editorial/sources/<id>/` ;
+- le texte intégral est dans `editorial/sources/<id>/text.txt` ;
+- `angle.md` est la note de travail de la conversation : ce que la pièce veut
+  dire, ce qu'on écarte, ce qui reste à vérifier ;
+- le brouillon reste `draft: true` tant que l'humain ne le publie pas ;
+- l'archive déplace `editorial/pieces/<slug>` dans `editorial/archive/` et
+  laisse le brouillon en place.
 
-Un agent ne doit jamais affirmer au-delà de ce que la source couvre. En cas de
-doute, il demande.
+## Rôles
 
-## Statuts d'une pièce
+- `documentaliste` : liens et sources primaires ;
+- `préparateur` : dossier de faits, liens, titre de travail, inconnues ;
+- `rédacteur` : article en français, dans la voix du blog ;
+- `relecture de style` : comparaison avec les articles de référence ;
+- `éditeur` : titre, description, étiquettes, liens internes, posts.
 
-`new` → `briefed` → `approved` → `drafted` → `reviewed` → `published`
-
-Le passage à `approved` est le point de contrôle humain : on valide l'angle
-avant d'écrire mille mots.
+Les instructions des rôles sont dans `editorial/agent/roles/`. La charte est
+dans `editorial/style/card.md` ; le profil de registre dans
+`editorial/style/newsroom-profile.md`.
 
 ## Ce que le desk ne fait pas
 
-- Il ne publie pas, ne merge pas, ne poste pas.
-- Il ne modifie pas bookmark-digest.
-- Il ne garde pas le texte intégral dans git (droits d'auteur).
-
-## Prochaines étapes
-
-1. Générateur de brief et de brouillon (agents).
-2. Route `/brouillon/<slug>` activée uniquement sur les previews Cloudflare
-   (`DRAFT_PREVIEW=1`).
-3. Publication : branche `article/<slug>`, PR, merge humain.
-4. Déclinaisons Bluesky, puis X.
-5. Serveur MCP pour exposer le desk aux autres clients.
+- Il ne publie pas, ne commit pas, ne merge pas.
+- Il ne critique pas la source.
+- Il n'impose pas de plan, de thèse, de steelman ni de structure.
+- Il ne remplit pas un formulaire : les étapes se lancent à la demande.
