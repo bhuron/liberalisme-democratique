@@ -158,3 +158,6 @@ sans accord.
 - Un graphique doit se lire seul ; sa légende porte la source et la période.
 - Pas de cover dans le corps ; la cover reste le frontmatter `image`, sur
   demande explicite.
+- Vidéo éventuelle : composant `YoutubeEmbed` avec `caption` et `source`,
+  embed 16:9 pleine largeur, bordure légère, sans ombre. Une vidéo maximum, et
+  seulement si elle est demandée ; pas d'autoplay.

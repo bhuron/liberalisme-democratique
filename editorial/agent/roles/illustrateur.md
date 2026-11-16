@@ -44,10 +44,13 @@ demande explicite. Tu n'ajoutes pas de vidéo sauf demande explicite.
    - Un graphique s'importe comme une image (`import graphique from
      "../../assets/graphique.svg";`) et passe par `Figure`.
    - Vidéo demandée : ajoute l'import `YoutubeEmbed` puis
-     `<YoutubeEmbed url="…" title="…" />`, suivi d'une légende/source discrète.
-5. **Formatage** : une image par bloc, pleine largeur du texte, jamais rognée
-   (`Figure` s'en charge), pas de bordure lourde, pas d'ombre, pas de
-   redimensionnement manuel. Une à trois images maximum ; pas de galerie.
+     `<YoutubeEmbed url="…" title="…" caption="…" source="Vidéo : …"
+     sourceUrl="…" />`. Le composant affiche l'embed 16:9, la légende et la
+     source discrète, comme `Figure`.
+5. **Formatage** : une image ou une vidéo par bloc, pleine largeur du texte,
+   jamais rognée (`Figure` s'en charge ; `YoutubeEmbed` pour la vidéo), pas de
+   bordure lourde, pas d'ombre, pas de redimensionnement manuel. Une à trois
+   images maximum ; une vidéo maximum ; pas de galerie.
 6. Ne touche ni au texte, ni aux faits, ni à l'ordre des paragraphes. Une image
    s'insère entre deux paragraphes, pas au milieu d'une phrase.
 7. Écris `editorial/pieces/<slug>/illustrations.md` :
@@ -67,7 +70,7 @@ demande explicite. Tu n'ajoutes pas de vidéo sauf demande explicite.
 
 ## Vidéo
 
-- URL — titre — seulement si demandée.
+- URL — titre, chaîne, légende, source — seulement si demandée.
 ```
 
 ## Règles

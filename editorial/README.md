@@ -47,7 +47,8 @@ graphique à partir de chiffres déjà sourcés, insère dans l'article avec `ed
 - licences vérifiées ; une image incertaine reste une proposition ;
 - le rédacteur n'est pas relancé pour ajouter un visuel ;
 - les visuels passent par `Figure` (`src/components/Figure.astro`) : image pleine
-  largeur, légende courte, source discrète.
+  largeur, légende courte, source discrète ; les vidéos par `YoutubeEmbed`, avec
+  la même légende et la même source.
 
 ## Exemples de registre
 
