@@ -45,7 +45,9 @@ graphique à partir de chiffres déjà sourcés, insère dans l'article avec `ed
 - pas de vidéo sauf demande explicite ;
 - pas d'image générée sans demande explicite ;
 - licences vérifiées ; une image incertaine reste une proposition ;
-- le rédacteur n'est pas relancé pour ajouter un visuel.
+- le rédacteur n'est pas relancé pour ajouter un visuel ;
+- les visuels passent par `Figure` (`src/components/Figure.astro`) : image pleine
+  largeur, légende courte, source discrète.
 
 ## Exemples de registre
 

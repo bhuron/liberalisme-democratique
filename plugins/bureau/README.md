@@ -25,7 +25,8 @@ contains all the desk code.
 - **The illustrator is not a stage either.** `desk_illustrate` searches
   licensed photos, can build a chart from already-sourced numbers, inserts the
   visual in the draft with `edit`, and writes `illustrations.md`. No cover image,
-  no video and no generated image without an explicit request.
+  no video and no generated image without an explicit request. Inserts go through
+  the `Figure` component: full-width, uncropped, short caption, discreet source.
 - **One session per piece.** Each piece owns a normal DSH conversation whose
   system prompt is built from `editorial/agent/desk-agent.md`, the style card
   and the current dossier. **Open the discussion** creates or resumes that

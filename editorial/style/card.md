@@ -144,3 +144,17 @@ ou pas de cartes du tout ; jamais de figures ni de symboles de tarot.
 
 L'auteur fournit la couverture. L'agent peut proposer un prompt, jamais générer
 sans accord.
+
+## 12. Images dans le corps
+
+- Toujours par le composant `Figure` (`src/components/Figure.astro`), jamais une
+  image Markdown nue : image pleine largeur, jamais rognée, sans ombre ni
+  bordure lourde.
+- `alt` descriptif, `caption` d'une phrase courte et factuelle, `source`
+  discrète sous la légende (`Photo : … — licence`, `Données : … (période)`),
+  avec `sourceUrl` quand un lien existe.
+- Une à trois images maximum, insérées entre deux paragraphes. Pas de galerie,
+  pas de hotlink : les fichiers sont importés depuis `src/assets/`.
+- Un graphique doit se lire seul ; sa légende porte la source et la période.
+- Pas de cover dans le corps ; la cover reste le frontmatter `image`, sur
+  demande explicite.
