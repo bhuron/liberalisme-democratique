@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 528" width="960" height="528" role="img" aria-label="Histogramme du commerce Russie-Chine en milliards de dollars, de 2020 à 2026">
+  <rect width="960" height="528" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="90" y="32" font-size="19" fill="#6b7280">milliards de dollars</text>
+
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="90" y1="368.6" x2="920" y2="368.6"/>
+      <line x1="90" y1="297.1" x2="920" y2="297.1"/>
+      <line x1="90" y1="225.7" x2="920" y2="225.7"/>
+      <line x1="90" y1="154.3" x2="920" y2="154.3"/>
+      <line x1="90" y1="82.9" x2="920" y2="82.9"/>
+    </g>
+
+    <g font-size="16" fill="#6b7280" text-anchor="end">
+      <text x="76" y="444.6">0</text>
+      <text x="76" y="373.2">50</text>
+      <text x="76" y="301.7">100</text>
+      <text x="76" y="230.3">150</text>
+      <text x="76" y="158.9">200</text>
+      <text x="76" y="87.4">250</text>
+    </g>
+
+    <line x1="90" y1="440" x2="920" y2="440" stroke="#9ca3af" stroke-width="1.5"/>
+
+    <g>
+      <rect x="131" y="285.7" width="84" height="154.3" fill="#2f4a6d"/>
+      <rect x="297" y="97.1" width="84" height="342.9" fill="#2f4a6d"/>
+      <rect x="463" y="90.3" width="84" height="349.7" fill="#2f4a6d"/>
+      <rect x="629" y="114.1" width="84" height="325.9" fill="#2f4a6d"/>
+      <rect x="795" y="175.7" width="84" height="264.3" fill="#9fb2c9"/>
+    </g>
+
+    <g font-size="21" font-weight="600" fill="#111827" text-anchor="middle">
+      <text x="173" y="273.7">108</text>
+      <text x="339" y="85.1">240</text>
+      <text x="505" y="78.3">244,8</text>
+      <text x="671" y="102.1">228,1</text>
+      <text x="837" y="163.7">185,0</text>
+    </g>
+
+    <g font-size="18" fill="#374151" text-anchor="middle">
+      <text x="173" y="466">2020</text>
+      <text x="339" y="466">2023</text>
+      <text x="505" y="466">2024</text>
+      <text x="671" y="466">2025</text>
+      <text x="837" y="466">2026</text>
+    </g>
+
+    <g font-size="14" fill="#6b7280" text-anchor="middle">
+      <text x="837" y="488">janvier-août</text>
+    </g>
+
+    <text x="90" y="514" font-size="13" fill="#9ca3af">2021 et 2022 n’ont pas été publiés dans les sources de l’article.</text>
+  </g>
+</svg>
