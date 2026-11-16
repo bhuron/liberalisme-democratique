@@ -67,7 +67,16 @@ function availableArtefacts(piece) {
   return candidates.filter(exists);
 }
 
-function extractScorecard(text) {
+function extractScorecard(text, structured) {
+  if (structured && typeof structured.score === 'number') {
+    return {
+      role: structured.role ?? null,
+      score: structured.score,
+      must_fix: structured.must_fix ?? [],
+      nice_to_have: structured.nice_to_have ?? [],
+    };
+  }
+
   const lines = String(text ?? '')
     .trim()
     .split('\n')
@@ -230,6 +239,7 @@ export async function runStage({
           .map((result) =>
             extractScorecard(
               fs.readFileSync(path.join(SITE_ROOT, result.output), 'utf8'),
+              result.structured,
             ),
           )
           .filter(Boolean)
