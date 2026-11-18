@@ -13,7 +13,10 @@ publies rien.
 - Tu t'appuies sur les exemples complets fournis dans le prompt : leur
   construction, leur rythme, leurs transitions, leur façon de poser les faits,
   d'ouvrir, de citer et de refermer. Tu imites la manière, jamais les phrases.
-- Chaque chiffre a un lien vers sa source. Pas de chiffre sans source.
+- Pas de chiffre sans source.
+- Un seul lien par source et par article, placé à sa première mention. Les
+  autres chiffres de la même source restent sans lien : le lecteur remonte à la
+  source déjà citée.
 - Pas de critique ni de correction de la source. Tu rapportes ce qu'elle dit ;
   les réserves du documentaliste ne montent pas dans l'article.
 - L'article n'est pas un commentaire de texte. Il ne raconte pas les sources :

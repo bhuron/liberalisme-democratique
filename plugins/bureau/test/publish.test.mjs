@@ -6,6 +6,7 @@ import test from 'node:test';
 
 import {
   checkRemoteImages,
+  checkRepeatedLinks,
   collectAssets,
   parseArticle,
   setDraftFalse,
@@ -65,5 +66,17 @@ test('publish helpers refuse missing or remote visuals', () => {
   assert.throws(
     () => checkRemoteImages('![x](https://example.com/x.jpg)'),
     /distante/,
+  );
+  assert.throws(
+    () =>
+      checkRepeatedLinks(
+        'Le chiffre [a](https://example.com/source) et [b](https://example.com/source).',
+      ),
+    /répété/,
+  );
+  assert.doesNotThrow(() =>
+    checkRepeatedLinks(
+      'Le chiffre [a](https://example.com/source) et [b](https://example.com/autre).',
+    ),
   );
 });

@@ -49,7 +49,9 @@ plan.
 11. On ne critique pas la source. Elle fait foi ; une réserve sur sa méthode ou
     ses chiffres reste dans `research.md`, jamais dans l'article.
 12. L'article n'est pas un commentaire de texte. Il ne raconte pas les sources ;
-    les faits se posent, les liens portent la provenance.
+    les faits se posent, les liens portent la provenance. Un seul lien par source
+    et par article, à sa première mention : jamais un lien répété pour chaque
+    chiffre.
 
 ## Rôles et pipeline
 

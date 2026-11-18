@@ -47,6 +47,8 @@ ils décrivent une tendance, pas une règle absolue.
 - « IA », jamais « AI ».
 - Chiffres : jamais sans source. Espace insécable comme séparateur de milliers,
   virgule décimale, unités explicites (milliards de dollars, MW, %).
+- Un seul lien par source et par article, placé à sa première mention. Les autres
+  chiffres, faits ou citations de la même source ne sont pas reliés de nouveau.
 
 ## 5. Ce qui trahit un texte généré
 
@@ -115,7 +117,8 @@ Les tics sont vérifiés séparément par `npm run desk -- style <slug>`.
 
 ## 9. Checklist avant publication
 
-- [ ] Chaque chiffre a un lien vers sa source.
+- [ ] Un seul lien par source et par article, à sa première mention.
+- [ ] Chaque chiffre a une source identifiable, même si le lien n'est pas répété.
 - [ ] Le texte se lit comme les articles de référence, sans effet de
   démonstration.
 - [ ] Aucun paragraphe ne peut être supprimé sans perte.

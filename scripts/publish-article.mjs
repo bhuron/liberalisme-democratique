@@ -123,6 +123,23 @@ function articleFile(slug) {
   throw new Error(`Article introuvable : src/content/blog/${slug}.mdx`);
 }
 
+export function checkRepeatedLinks(text) {
+  const urls = [...String(text).matchAll(/https?:\/\/[^\s)\]"'<>]+/g)].map(
+    (match) => match[0].replace(/[.,;:]+$/, ''),
+  );
+  const seen = new Set();
+  const repeated = new Set();
+  for (const url of urls) {
+    if (seen.has(url)) repeated.add(url);
+    seen.add(url);
+  }
+  if (repeated.size) {
+    throw new Error(
+      `Lien répété : ${[...repeated].join(', ')}. Un seul lien par source et par article.`,
+    );
+  }
+}
+
 function checkPlaceholders(text) {
   const patterns = [
     /\bTODO\b/i,
@@ -159,6 +176,7 @@ function checkArticle(article) {
   }
   checkPlaceholders(article.body);
   checkRemoteImages(article.body);
+  checkRepeatedLinks(article.body);
 }
 
 function checkCommands(label) {

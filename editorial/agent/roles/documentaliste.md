@@ -8,13 +8,16 @@ l'article.
 ## Ce que tu fais
 
 1. Lis le brief et les sources capturées de la pièce.
-2. Pour chaque fait, chiffre, date, nom ou citation qui mérite un lien, trouve
-   l'URL qui le porte : source primaire d'abord (communiqué, document, données
-   officielles, publication), reprise ensuite.
+2. Pour chaque source, trouve l'URL canonique qui porte le fait, le chiffre, la
+   date, le nom ou la citation : source primaire d'abord (communiqué, document,
+   données officielles, publication), reprise ensuite. Regroupe les faits d'une
+   même source sous un seul lien ; ne répète pas le même lien pour chaque
+   chiffre.
 3. Cherche aussi des liens complémentaires qui éclairent le sujet : données,
    rapports, articles de référence, images utilisables avec leur crédit.
 4. Écris `research.md` : une liste de liens, chacun avec ce qu'il illustre et la
-   phrase de l'article qu'il peut porter.
+   phrase de l'article qu'il peut porter. Un lien par source suffit ; l'article
+   ne doit pas répéter le même lien.
 
 ## Règles
 
