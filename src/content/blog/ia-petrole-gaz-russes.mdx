@@ -1,0 +1,62 @@
+---
+title: "Ce que l’IA rapporte au pétrole et au gaz russes"
+description: "Prospection, exploitation, stockage et surveillance des gazoducs : comment les compagnies russes utilisent l’IA et quels gains elles en attendent."
+pubDate: 2026-11-18
+author: Benoît Huron
+image:
+  src: ../../assets/ai-oil-gaz.png
+  alt: "Vue aérienne au lever du soleil d’un champ pétrolier dans une plaine de lacs et de marais : deux derricks dressés sur une plateforme de forage, des routes de sable qui traversent l’eau, des bouquets de conifères au premier plan."
+draft: false
+tags:
+  - IA
+  - Économie
+  - Russie
+---
+
+import Figure from "../../components/Figure.astro";
+import samotlor from "../../assets/samotlor-iougra-aerien.jpg";
+import gazoduc from "../../assets/gazoduc-remplacement-conduite.jpg";
+
+Trouver un gisement, décider où forer, maintenir le débit d’un stockage de gaz en hiver : les compagnies pétrolières et gazières russes utilisent l’intelligence artificielle pour prendre ces décisions plus rapidement et exploiter au mieux leurs installations.
+
+Les bénéfices recherchés vont du temps gagné sur l’exploration à la préservation des ressources déjà découvertes. Gazprom et sa filiale pétrolière Gazprom Neft appliquent ces outils à des données recueillies dans les airs, sous terre et à l’intérieur des gazoducs.
+
+Pour la prospection, un avion équipé d’instruments survole une zone et enregistre les caractéristiques physiques du terrain. L’IA compare ces relevés à ceux de [gisements déjà connus](https://vz.ru/economy/2026/11/17/1476920.html), dont les géologues possèdent les cartes. Elle peut ainsi désigner des secteurs prometteurs sur lesquels concentrer les recherches.
+
+Cette indication aide à choisir où envoyer les équipes, mais la présence d’hydrocarbures doit encore être confirmée. « Il faudra quand même forer », rappelle Oleg Kazanov, directeur de Rosnedra, l’agence russe chargée du sous-sol. Les géologues conservent un rôle dans l’interprétation et l’entraînement des outils : Kazanov les décrit comme des « entraîneurs-joueurs ».
+
+Une fois une zone repérée, les entreprises cherchent aussi à mieux comprendre ce qui se trouve en profondeur. La prospection sismique envoie des ondes dans le sol et recueille leur réponse ; leur interprétation aide à reconstituer les couches géologiques et les failles susceptibles de contenir des hydrocarbures.
+
+Chez Gazprom, l’IA permet de réduire de [trois à sept fois](https://lng.expert/2026/10/gazprom-ai-digital-transformation/) la durée de certaines étapes d’interprétation des données sismiques. Gazprom Neft indique de son côté que ses outils ont accéléré cette analyse de 10 à 30 %, rapprochant d’[environ un an](https://energo-news.ru/archives/197378) le début du développement de gisements.
+
+Les modèles permettent également de réunir des relevés anciens, obtenus à des périodes et par des méthodes différentes. Leur lecture commune fait apparaître des structures géologiques qui aident à chercher des réserves dans des régions déjà exploitées.
+
+Dans ces bassins, les grandes découvertes ont laissé place à des gisements plus petits. Leur intérêt tient aussi aux installations existantes : les équipes peuvent s’appuyer sur des infrastructures déjà présentes au lieu d’équiper un territoire éloigné. La mise en valeur de ces réserves dans les régions matures coûte [dix à vingt fois moins cher](https://energy-policy.ru/dorazvedka-i-dorabotka-dejstvuyushhih-uchastkov-stanet-odnim-iz-glavnyh-napravlenij-grr-gazprom-nefti/novosti/glavnye-novosti/2025/12/15/) que sur de nouveaux territoires dépourvus d’infrastructures, estime Gazprom Neft.
+
+En surface, la préparation d’un chantier pose une autre question : où faire passer les engins et installer le matériel ? En Iougra, dans la taïga de Sibérie occidentale, Gazprom Neft a testé en 2025 un [service fondé sur l’IA](https://ai.cnews.ru/news/line/2026-05-27_gazprom_neft_sozdala) sur 500 km² de forêt.
+
+Il combine photographies aériennes et relevés laser pour produire une carte du relief et des arbres, avec leur espèce, leur hauteur et leur emplacement. Les équipes peuvent s’en servir pour tracer les routes et placer les équipements en contournant les zones où poussent des essences rares ou précieuses.
+
+<Figure
+  src={samotlor}
+  alt="Vue aérienne d’une plaine inondée : des routes de sable traversent des lacs et des marais et desservent des plateformes rectangulaires où stationne du matériel de forage ; un ciel d’orage couvre l’horizon."
+  caption="À Samotlor, en Iougra, les plateformes de forage et les routes qui les desservent sont posées sur des remblais de sable, au milieu des lacs et des marais de la plaine de l’Ob."
+  source="Photo : An2nv — CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:%D0%A4%D0%BE%D1%82%D0%BE_%D0%A1%D0%B0%D0%BC%D0%BE%D1%82%D0%BB%D0%BE%D1%80%D0%B0_%D1%81_%D0%B2%D0%BE%D0%B7%D0%B4%D1%83%D1%85%D0%B0.jpg"
+/>
+
+Après l’extraction, le gaz peut être conservé dans des stockages souterrains afin de répondre aux besoins pendant la saison de chauffe. Leur gestion dépend notamment de la pression dans le sous-sol et des puits utilisés pour retirer le gaz. L’enjeu est de conserver un débit suffisant tout au long de l’hiver, y compris en cas de froid tardif.
+
+Le module NeuroPHG calcule des scénarios d’exploitation et estime l’évolution de la pression lors du soutirage. Au cours de la saison de chauffe 2025-2026, son utilisation sur un stockage russe a permis d’augmenter sa productivité journalière de 5 %. Gazprom estime qu’obtenir une hausse équivalente par le forage de nouveaux puits aurait demandé environ 5 milliards de roubles.
+
+Un autre exemple se trouve à Kouchtchevskaïa, dans la région de Krasnodar. Gazprom y a entraîné un [modèle en trois dimensions](https://nangs.org/news/it/gazprom-s-pomoshchyu-ii-maksimiziruet-proizvoditelnost-pkhg) capable de comparer des scénarios de gestion des puits pour préserver le débit disponible jusqu’à la fin de la saison. D’autres modèles sont en préparation pour plusieurs stockages.
+
+<Figure
+  src={gazoduc}
+  alt="Chantier de pose d’une conduite en rase campagne : au premier plan, une longue conduite métallique descend dans une tranchée de terre fraîchement ouverte ; derrière, une grue à chenilles, des pelles mécaniques et un camion ; à droite, une autre conduite court au ras du sol."
+  caption="Remplacement d’un tronçon du gazoduc Voskresensk–Moscou, en 2015 : l’ancienne conduite et la neuve, le long de la même tranchée ouverte."
+  source="Photo : Incnis Mrsi — CC0 (domaine public), via Wikimedia Commons"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4%D0%B0_41%2C2_%D0%BA%D0%BC_%D0%BE%D1%82_%D0%92%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D1%81%D0%BA%D0%B0_%D0%BD%D0%B0_%D0%9A%D0%A0%D0%9F-11.jpg"
+/>
+
+Le transport bénéficie lui aussi d’une lecture accélérée des données. Pour le diagnostic interne des gazoducs, la vision artificielle aide à analyser les résultats des inspections : leur traitement prend des heures au lieu de jours. Les équipes disposent ainsi plus rapidement des informations nécessaires à la surveillance des conduites.
