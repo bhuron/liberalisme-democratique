@@ -216,6 +216,123 @@ export function archivePiece(root, slug) {
   return path.relative(editorialDir(root), target);
 }
 
+function textFiles(dir) {
+  const files = [];
+  const walk = (current) => {
+    if (!fs.existsSync(current)) return;
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const file = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        walk(file);
+      } else if (/\.(?:md|mdx|json|jsonl|txt|ya?ml)$/i.test(entry.name)) {
+        files.push(file);
+      }
+    }
+  };
+  walk(dir);
+  return files;
+}
+
+/** Rename the piece directory and its draft, then update every slug reference. */
+export function renamePiece(root, slug, newSlug) {
+  const target = String(newSlug ?? '').trim();
+  if (
+    !slug ||
+    !target ||
+    slugify(target) !== target ||
+    target.length > MAX_SLUG_LENGTH
+  ) {
+    throw new Error(`Slug invalide : « ${target} »`);
+  }
+  if (target === slug) return readPiece(root, slug);
+
+  const source = pieceDir(root, slug);
+  if (!exists(source)) throw new Error(`La pièce « ${slug} » n'existe pas`);
+  const destination = pieceDir(root, target);
+  if (exists(destination)) {
+    throw new Error(`La pièce « ${target} » existe déjà`);
+  }
+
+  const relativeDraft = draftFile(root, slug);
+  const oldDraft = relativeDraft ? path.join(root, relativeDraft) : null;
+  const newDraft = oldDraft
+    ? path.join(contentDir(root), `${target}${path.extname(oldDraft)}`)
+    : null;
+  if (newDraft && exists(newDraft)) {
+    throw new Error(`Le brouillon « ${target} » existe déjà`);
+  }
+
+  const piece = readPiece(root, slug);
+  if (!piece) throw new Error(`La pièce « ${slug} » n'existe pas`);
+
+  const snapshots = new Map();
+  for (const file of textFiles(source)) {
+    snapshots.set(file, fs.readFileSync(file, 'utf8'));
+  }
+  if (oldDraft) snapshots.set(oldDraft, fs.readFileSync(oldDraft, 'utf8'));
+  const escaped = slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const assetPattern = new RegExp(`assets/[^\\s)\"']*${escaped}`);
+  for (const text of snapshots.values()) {
+    if (assetPattern.test(text)) {
+      throw new Error(
+        `Un visuel de la pièce porte encore « ${slug} » dans son chemin. Renommez le fichier de src/assets avant la pièce.`,
+      );
+    }
+  }
+
+  let directoryMoved = false;
+  let draftMoved = false;
+  try {
+    fs.renameSync(source, destination);
+    directoryMoved = true;
+    if (oldDraft) {
+      fs.renameSync(oldDraft, newDraft);
+      draftMoved = true;
+    }
+
+    const nextPiece = {
+      ...piece,
+      slug: target,
+      updated_at: nowIso(),
+    };
+    const pieceFile = path.join(destination, 'piece.json');
+    writeJson(pieceFile, nextPiece);
+    for (const file of textFiles(destination)) {
+      if (file === pieceFile) continue;
+      const text = fs.readFileSync(file, 'utf8');
+      const next = text.split(slug).join(target);
+      if (next !== text) fs.writeFileSync(file, next);
+    }
+    if (newDraft) {
+      const text = fs.readFileSync(newDraft, 'utf8');
+      const next = text.split(slug).join(target);
+      if (next !== text) fs.writeFileSync(newDraft, next);
+    }
+    appendLog(root, target, { event: 'renamed', from: slug });
+
+    return {
+      oldSlug: slug,
+      newSlug: target,
+      piece: nextPiece,
+      draft: newDraft ? path.relative(root, newDraft) : null,
+    };
+  } catch (error) {
+    if (draftMoved && newDraft && fs.existsSync(newDraft)) {
+      fs.renameSync(newDraft, oldDraft);
+    }
+    if (directoryMoved && fs.existsSync(destination)) {
+      fs.renameSync(destination, source);
+    }
+    for (const [file, text] of snapshots) {
+      if (!fs.existsSync(path.dirname(file))) {
+        fs.mkdirSync(path.dirname(file), { recursive: true });
+      }
+      fs.writeFileSync(file, text);
+    }
+    throw error;
+  }
+}
+
 export function writeAngle(root, slug, text) {
   const piece = readPiece(root, slug);
   if (!piece) throw new Error(`La pièce « ${slug} » n'existe pas`);

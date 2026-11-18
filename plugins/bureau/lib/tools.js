@@ -85,18 +85,22 @@ export function registerTools(ctx, service, defineTool) {
     defineTool({
       name: 'desk_piece',
       description:
-        'Gère les pièces du bureau : lister, lire le dossier complet, créer depuis des captures, archiver, changer le statut. Une pièce est un dossier editorial/pieces/<slug> ; le brouillon vit dans src/content/blog/<slug>.mdx.',
+        'Gère les pièces du bureau : lister, lire le dossier complet, créer depuis des captures, renommer, archiver, changer le statut. Une pièce est un dossier editorial/pieces/<slug> ; le brouillon vit dans src/content/blog/<slug>.mdx.',
       parameters: {
         action: {
           type: 'string',
           required: true,
-          enum: ['list', 'get', 'create', 'archive', 'status'],
+          enum: ['list', 'get', 'create', 'rename', 'archive', 'status'],
           description: 'Opération à effectuer.',
         },
         slug: {
           type: 'string',
           description:
             'Slug de la pièce. Omis, la pièce de la session courante est utilisée.',
+        },
+        newSlug: {
+          type: 'string',
+          description: 'Nouveau slug (action rename).',
         },
         title: { type: 'string', description: 'Titre de la pièce à créer.' },
         intent: {
@@ -122,7 +126,7 @@ export function registerTools(ctx, service, defineTool) {
       async execute(args, exec) {
         if (
           isSubagent(exec) &&
-          ['create', 'archive', 'status'].includes(args.action)
+          ['create', 'rename', 'archive', 'status'].includes(args.action)
         ) {
           throw new Error(
             'Un spécialiste ne modifie pas la pièce ; écris ton artefact.',
@@ -165,6 +169,13 @@ export function registerTools(ctx, service, defineTool) {
               )
               .join('\n'),
           ].join('\n');
+        }
+        if (args.action === 'rename') {
+          if (!args.newSlug) {
+            throw new Error('newSlug requis pour renommer une pièce.');
+          }
+          const result = await service.renamePiece(slug, args.newSlug);
+          return `Pièce renommée : ${result.oldSlug} → ${result.newSlug}${result.draft ? ` (brouillon ${result.draft})` : ''}`;
         }
         if (args.action === 'archive') {
           const result = await service.archivePiece(slug);

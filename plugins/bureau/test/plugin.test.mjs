@@ -18,6 +18,7 @@ import {
   MAX_SLUG_LENGTH,
   createPiece,
   readPiece,
+  renamePiece,
   setStatus,
   updatePiece,
 } from '../lib/pieces.js';
@@ -595,6 +596,61 @@ test('the illustrator inserts a visual in place and writes a report', async () =
     ),
     true,
   );
+});
+
+test('a piece and its draft can be renamed together', () => {
+  const root = makeWorkspace();
+  createPiece(root, {
+    slug: 'old-slug',
+    title: 'Ancienne pièce',
+    intent: 'Renommer.',
+  });
+  write(
+    path.join(root, 'editorial', 'pieces', 'old-slug', 'angle.md'),
+    '# Angle\n\nVoir editorial/pieces/old-slug et src/content/blog/old-slug.mdx.\n',
+  );
+  write(
+    path.join(root, 'editorial', 'pieces', 'old-slug', 'brief.md'),
+    '# Brief\n\nVoir src/content/blog/old-slug.mdx.\n',
+  );
+  write(
+    path.join(root, 'src', 'content', 'blog', 'old-slug.mdx'),
+    '---\ntitle: "T"\ndescription: "D"\npubDate: 2026-01-01\ndraft: true\n---\n\nVoir editorial/pieces/old-slug.\n',
+  );
+
+  const result = renamePiece(root, 'old-slug', 'new-slug');
+  assert.equal(result.oldSlug, 'old-slug');
+  assert.equal(result.newSlug, 'new-slug');
+  assert.equal(
+    fs.existsSync(path.join(root, 'editorial', 'pieces', 'old-slug')),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, 'editorial', 'pieces', 'new-slug')),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, 'src', 'content', 'blog', 'old-slug.mdx')),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, 'src', 'content', 'blog', 'new-slug.mdx')),
+    true,
+  );
+  const piece = readPiece(root, 'new-slug');
+  assert.equal(piece.slug, 'new-slug');
+  const angle = fs.readFileSync(
+    path.join(root, 'editorial', 'pieces', 'new-slug', 'angle.md'),
+    'utf8',
+  );
+  assert.match(angle, /editorial\/pieces\/new-slug/);
+  assert.doesNotMatch(angle, /old-slug/);
+  const draft = fs.readFileSync(
+    path.join(root, 'src', 'content', 'blog', 'new-slug.mdx'),
+    'utf8',
+  );
+  assert.match(draft, /editorial\/pieces\/new-slug/);
+  assert.doesNotMatch(draft, /old-slug/);
 });
 
 test('a piece session is created with a scoped desk prompt and resumed after restart', async () => {

@@ -27,6 +27,7 @@ import {
   pieceDir,
   readArtifact,
   readPiece,
+  renamePiece as renamePieceOnDisk,
   setStatus as setStatusOnDisk,
   uniqueSlug,
   updatePiece,
@@ -1062,6 +1063,34 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
         sources: ids,
       });
       return summarizePiece(piece);
+    },
+    async renamePiece(slug, newSlug) {
+      const root = await requireRoot();
+      if (activeRuns.has(slug)) {
+        throw new Error(
+          'Une étape tourne sur cette pièce : terminez-la avant de la renommer.',
+        );
+      }
+      if (sessionLocks.has(slug)) {
+        throw new Error(
+          'La session de cette pièce est en cours de création : réessayez dans un instant.',
+        );
+      }
+      const result = renamePieceOnDisk(root, slug, newSlug);
+      const handle = handles.get(slug);
+      if (handle) {
+        handles.delete(slug);
+        handles.set(result.newSlug, handle);
+      }
+      for (const [sessionId, bound] of [...bindings]) {
+        if (bound === slug) bindings.set(sessionId, result.newSlug);
+      }
+      return {
+        ...summarizePiece(result.piece),
+        oldSlug: result.oldSlug,
+        newSlug: result.newSlug,
+        draft: result.draft,
+      };
     },
     async archivePiece(slug) {
       const root = await requireRoot();
