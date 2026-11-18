@@ -51,7 +51,7 @@ plan.
 12. L'article n'est pas un commentaire de texte. Il ne raconte pas les sources ;
     les faits se posent, les liens portent la provenance. Un seul lien par source
     et par article, à sa première mention : jamais un lien répété pour chaque
-    chiffre.
+    chiffre. Les crédits photo/vidéo peuvent répéter le lien de leur source.
 
 ## Rôles et pipeline
 

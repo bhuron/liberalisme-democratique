@@ -49,6 +49,8 @@ ils décrivent une tendance, pas une règle absolue.
   virgule décimale, unités explicites (milliards de dollars, MW, %).
 - Un seul lien par source et par article, placé à sa première mention. Les autres
   chiffres, faits ou citations de la même source ne sont pas reliés de nouveau.
+  Les crédits photo et vidéo peuvent reprendre le lien de leur source : ce n'est
+  pas une citation répétée.
 
 ## 5. Ce qui trahit un texte généré
 

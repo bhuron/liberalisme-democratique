@@ -124,8 +124,14 @@ function articleFile(slug) {
 }
 
 export function checkRepeatedLinks(text) {
-  const urls = [...String(text).matchAll(/https?:\/\/[^\s)\]"'<>]+/g)].map(
-    (match) => match[0].replace(/[.,;:]+$/, ''),
+  // A credit is not a citation: Figure.sourceUrl and YoutubeEmbed.url/sourceUrl
+  // may repeat the source link that already appears in the body. Only body
+  // links are counted for the one-link-per-source rule.
+  const body = String(text)
+    .replace(/\b(?:sourceUrl|url)\s*=\s*"(?:[^"\\]|\\.)*"/g, '')
+    .replace(/\b(?:sourceUrl|url)\s*=\s*'(?:[^'\\]|\\.)*'/g, '');
+  const urls = [...body.matchAll(/https?:\/\/[^\s)\]"'<>]+/g)].map((match) =>
+    match[0].replace(/[.,;:]+$/, ''),
   );
   const seen = new Set();
   const repeated = new Set();
@@ -135,7 +141,7 @@ export function checkRepeatedLinks(text) {
   }
   if (repeated.size) {
     throw new Error(
-      `Lien répété : ${[...repeated].join(', ')}. Un seul lien par source et par article.`,
+      `Lien répété dans le corps : ${[...repeated].join(', ')}. Un seul lien par source et par article ; les crédits photo/vidéo peuvent répéter le lien de leur source.`,
     );
   }
 }

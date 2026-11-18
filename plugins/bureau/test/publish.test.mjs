@@ -79,4 +79,9 @@ test('publish helpers refuse missing or remote visuals', () => {
       'Le chiffre [a](https://example.com/source) et [b](https://example.com/autre).',
     ),
   );
+  assert.doesNotThrow(() =>
+    checkRepeatedLinks(
+      'Le [Kremlin](https://kremlin.ru/81286).\n\n<Figure sourceUrl="https://kremlin.ru/81286" />\n\n<YoutubeEmbed url="https://youtu.be/abc" sourceUrl="https://youtu.be/abc" />',
+    ),
+  );
 });

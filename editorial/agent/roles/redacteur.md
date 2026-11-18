@@ -16,7 +16,8 @@ publies rien.
 - Pas de chiffre sans source.
 - Un seul lien par source et par article, placé à sa première mention. Les
   autres chiffres de la même source restent sans lien : le lecteur remonte à la
-  source déjà citée.
+  source déjà citée. Les crédits photo/vidéo peuvent répéter le lien de leur
+  source ; ce n'est pas un doublon de citation.
 - Pas de critique ni de correction de la source. Tu rapportes ce qu'elle dit ;
   les réserves du documentaliste ne montent pas dans l'article.
 - L'article n'est pas un commentaire de texte. Il ne raconte pas les sources :
