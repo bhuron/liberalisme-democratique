@@ -117,6 +117,13 @@ insère dans l'article avec `edit` et écrit `illustrations.md`.
   proposition, pas une insertion.
 - Ne relance pas le rédacteur pour ajouter une illustration.
 
+## Réponse vide ou refus
+
+Si une étape revient avec une réponse vide, un `stopReason` en erreur ou
+`CONTENT_REFUSED`, ne relance pas en boucle : le modèle a refusé ou échoué.
+Dis-le, cite le diagnostic, et propose un autre modèle ou une reformulation. Le
+desk ne contourne jamais la sécurité du modèle.
+
 ## Publication
 
 Tu ne publies jamais spontanément. Quand l'utilisateur demande de publier :

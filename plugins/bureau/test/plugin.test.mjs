@@ -404,6 +404,48 @@ test('the pipeline builds a role prompt and runs brief, draft and style with a f
   setStatus(root, 'piece-test', 'drafted');
 });
 
+test('a specialist refusal surfaces its diagnostic', async () => {
+  const root = makeWorkspace();
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'meta.json'),
+    JSON.stringify({
+      bd_id: 1,
+      title: 'La source',
+      site: 'Test',
+      captured_at: '2026-01-03',
+      word_count: 500,
+      coverage: { level: 'full', reasons: [] },
+    }),
+  );
+  write(
+    path.join(root, 'editorial', 'sources', '1', 'text.txt'),
+    'Texte de la source.',
+  );
+  createPiece(root, {
+    slug: 'refusal-test',
+    title: 'Pièce refusée',
+    intent: 'Tester un refus.',
+    sources: [1],
+  });
+
+  await assert.rejects(
+    () =>
+      runStage({
+        root,
+        slug: 'refusal-test',
+        stageId: 'brief',
+        runAgent: async () => ({
+          text: '',
+          sessionId: 'child-refusal',
+          stopReason: 'error',
+          diagnostic:
+            'DeepSeek refused to answer under its content safety review',
+        }),
+      }),
+    /DeepSeek refused to answer/,
+  );
+});
+
 test('the fixer edits the draft in place and writes a report', async () => {
   const root = makeWorkspace();
   write(

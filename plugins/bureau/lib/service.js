@@ -1,7 +1,9 @@
 import { spawn } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
+import { zstdDecompressSync } from 'node:zlib';
 
 import { openBookmarkReader, bookmarkSettings } from './bookmark.js';
 import { assessCoverage } from './coverage.js';
@@ -104,6 +106,57 @@ function textOfBlocks(blocks) {
     .map((block) => block.text)
     .join('\n')
     .trim();
+}
+
+function storedSessionDiagnostic(sessionId) {
+  try {
+    const home = process.env.DSH_HOME ?? path.join(os.homedir(), '.dsh');
+    const sessions = path.join(home, 'sessions');
+    for (const project of fs.readdirSync(sessions)) {
+      const directory = path.join(sessions, project, sessionId);
+      if (!fs.existsSync(directory)) continue;
+      for (const file of fs.readdirSync(directory)) {
+        if (!/^session.*\.jsonl\.zstd$/.test(file)) continue;
+        const raw = zstdDecompressSync(
+          fs.readFileSync(path.join(directory, file)),
+        ).toString('utf8');
+        const lines = raw.split('\n');
+        for (let index = lines.length - 1; index >= 0; index -= 1) {
+          let event;
+          try {
+            event = JSON.parse(lines[index]);
+          } catch {
+            continue;
+          }
+          if (event?.type !== 'turn/end') continue;
+          const error = event.data?.reason?.error;
+          if (error?.message) {
+            return `${error.message}${error.code ? ` (${error.code})` : ''}`;
+          }
+        }
+      }
+    }
+  } catch {
+    // The stored session layout may differ or the file may be gone.
+  }
+  return '';
+}
+
+function sessionDiagnostic(session) {
+  try {
+    const events = session?.snapshotEvents?.() ?? session?.ownEvents?.() ?? [];
+    for (let index = events.length - 1; index >= 0; index -= 1) {
+      const event = events[index];
+      if (event?.type !== 'turn/end') continue;
+      const error = event.data?.reason?.error;
+      if (error?.message) {
+        return `${error.message}${error.code ? ` (${error.code})` : ''}`;
+      }
+    }
+  } catch {
+    // The session may already be torn down; the activation diagnostic remains.
+  }
+  return '';
 }
 
 function abortError() {
@@ -693,10 +746,19 @@ editorial/style/card.md ; les outils desk_* ciblent cette pièce par défaut.`;
 
       try {
         const result = await awaitActivation(activation, timeout.signal);
+        const sessions = ctx.get?.('sessions');
+        const session = sessions?.get?.(activation.childId);
+        const diagnostic =
+          result.diagnostic ||
+          sessionDiagnostic(session) ||
+          storedSessionDiagnostic(String(activation.childId)) ||
+          undefined;
         return {
           sessionId: String(activation.childId),
           text: textOfBlocks(result.output),
           structured: result.structured,
+          stopReason: result.stopReason,
+          diagnostic,
         };
       } finally {
         await disposeActivation(activation, timeout.signal);

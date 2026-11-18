@@ -355,10 +355,9 @@ export async function runStage({ root, slug, stageId, onEvent, runAgent }) {
     });
 
     if (!exists(absolute(root, output))) {
+      const session = result.sessionId ? ` (session ${result.sessionId})` : '';
       throw new Error(
-        `${ROLES[roleId].label} n'a pas écrit ${output}. Réponse : ${String(
-          result.text,
-        ).slice(0, 400)}`,
+        `${ROLES[roleId].label} n'a pas écrit ${output}${session}.\n${failureText(result)}`,
       );
     }
 
@@ -447,8 +446,9 @@ export async function runFix({ root, slug, runAgent, onEvent }) {
   });
 
   if (!exists(absolute(root, output))) {
+    const session = result.sessionId ? ` (session ${result.sessionId})` : '';
     throw new Error(
-      `Le fixeur n'a pas écrit ${output}. Réponse : ${String(result.text).slice(0, 400)}`,
+      `Le fixeur n'a pas écrit ${output}${session}.\n${failureText(result)}`,
     );
   }
   const raw = readText(absolute(root, draft), '');
@@ -537,8 +537,9 @@ Demande de l'utilisateur : ${request.trim()}`
   });
 
   if (!exists(absolute(root, output))) {
+    const session = result.sessionId ? ` (session ${result.sessionId})` : '';
     throw new Error(
-      `L'illustrateur n'a pas écrit ${output}. Réponse : ${String(result.text).slice(0, 400)}`,
+      `L'illustrateur n'a pas écrit ${output}${session}.\n${failureText(result)}`,
     );
   }
   const raw = readText(absolute(root, draft), '');
@@ -572,6 +573,17 @@ Demande de l'utilisateur : ${request.trim()}`
     results: [entry],
     outputs: [output, draft],
   };
+}
+
+function failureText(result) {
+  const parts = [];
+  if (result.diagnostic) parts.push(String(result.diagnostic));
+  if (result.stopReason && result.stopReason !== 'completed') {
+    parts.push(`stopReason: ${result.stopReason}`);
+  }
+  const text = String(result.text ?? '').trim();
+  if (text) parts.push(`Réponse : ${text.slice(0, 400)}`);
+  return parts.length ? parts.join('\n') : 'Réponse vide, sans diagnostic.';
 }
 
 export function formatStageSummary(result) {
