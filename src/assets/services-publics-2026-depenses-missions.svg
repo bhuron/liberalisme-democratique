@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 452" width="960" height="452" role="img" aria-label="Barres horizontales des dépenses par mission en 2024, en milliards d’euros, et de leur part de rémunérations">
+  <rect width="960" height="452" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="245" y="46" font-size="14" fill="#6b7280">en milliards d’euros</text>
+    <rect x="536" y="34" width="14" height="14" rx="2" fill="#9fb2c9"/>
+    <text x="557" y="46" font-size="13.5" fill="#374151">Ensemble des dépenses</text>
+    <rect x="730" y="34" width="14" height="14" rx="2" fill="#2f4a6d"/>
+    <text x="751" y="46" font-size="13.5" fill="#374151">dont rémunérations</text>
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="245.0" y1="78" x2="245.0" y2="408"/>
+      <line x1="335.7" y1="78" x2="335.7" y2="408"/>
+      <line x1="426.4" y1="78" x2="426.4" y2="408"/>
+      <line x1="517.1" y1="78" x2="517.1" y2="408"/>
+      <line x1="607.9" y1="78" x2="607.9" y2="408"/>
+      <line x1="698.6" y1="78" x2="698.6" y2="408"/>
+      <line x1="789.3" y1="78" x2="789.3" y2="408"/>
+      <line x1="880.0" y1="78" x2="880.0" y2="408"/>
+    </g>
+    <rect x="245" y="88" width="615.0" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="88" width="20.9" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="102.5" font-size="15" fill="#374151" text-anchor="end">Social</text>
+    <text x="868.0" y="102.5" font-size="15" font-weight="600" fill="#111827">678</text>
+    <rect x="245" y="128" width="236.9" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="128" width="63.6" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="142.5" font-size="15" fill="#374151" text-anchor="end">Santé</text>
+    <text x="489.9" y="142.5" font-size="15" font-weight="600" fill="#111827">261,2</text>
+    <rect x="245" y="168" width="132.4" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="168" width="94.3" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="182.5" font-size="15" fill="#374151" text-anchor="end">Éducation</text>
+    <text x="385.4" y="182.5" font-size="15" font-weight="600" fill="#111827">146</text>
+    <rect x="245" y="208" width="113.4" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="208" width="20.0" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="222.5" font-size="15" fill="#374151" text-anchor="end">Logement, réseaux et transports</text>
+    <text x="366.4" y="222.5" font-size="15" font-weight="600" fill="#111827">125</text>
+    <rect x="245" y="248" width="35.1" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="248" width="26.1" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="262.5" font-size="15" fill="#374151" text-anchor="end">Sécurité</text>
+    <text x="288.1" y="262.5" font-size="15" font-weight="600" fill="#111827">38,7</text>
+    <rect x="245" y="288" width="24.9" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="288" width="9.0" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="302.5" font-size="15" fill="#374151" text-anchor="end">Culture</text>
+    <text x="277.9" y="302.5" font-size="15" font-weight="600" fill="#111827">27,5</text>
+    <rect x="245" y="328" width="14.2" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="328" width="4.4" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="342.5" font-size="15" fill="#374151" text-anchor="end">Sport</text>
+    <text x="267.2" y="342.5" font-size="15" font-weight="600" fill="#111827">15,6</text>
+    <rect x="245" y="368" width="12.2" height="20" rx="2" fill="#9fb2c9"/>
+    <rect x="245" y="368" width="6.9" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="231" y="382.5" font-size="15" fill="#374151" text-anchor="end">Justice</text>
+    <text x="265.2" y="382.5" font-size="15" font-weight="600" fill="#111827">13,4</text>
+    <line x1="245" y1="408" x2="880" y2="408" stroke="#9ca3af" stroke-width="1.5"/>
+    <g font-size="13" fill="#6b7280" text-anchor="middle">
+      <text x="245.0" y="430">0</text>
+      <text x="335.7" y="430">100</text>
+      <text x="426.4" y="430">200</text>
+      <text x="517.1" y="430">300</text>
+      <text x="607.9" y="430">400</text>
+      <text x="698.6" y="430">500</text>
+      <text x="789.3" y="430">600</text>
+      <text x="880.0" y="430">700</text>
+    </g>
+  </g>
+</svg>

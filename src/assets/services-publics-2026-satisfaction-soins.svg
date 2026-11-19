@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 452" width="960" height="452" role="img" aria-label="Graphique en haltères de la satisfaction de la qualité des soins en 2014 et 2025, en pourcentage">
+  <rect width="960" height="452" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="236" y="46" font-size="14" fill="#6b7280">en % des personnes ayant eu recours aux soins</text>
+    <circle cx="700" cy="41" r="6" fill="#9fb2c9"/>
+    <text x="712" y="46" font-size="13.5" fill="#374151">2014</text>
+    <circle cx="778" cy="41" r="6" fill="#2f4a6d"/>
+    <text x="790" y="46" font-size="13.5" fill="#374151">2025</text>
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="236.0" y1="80" x2="236.0" y2="400"/>
+      <line x1="363.2" y1="80" x2="363.2" y2="400"/>
+      <line x1="490.4" y1="80" x2="490.4" y2="400"/>
+      <line x1="617.6" y1="80" x2="617.6" y2="400"/>
+      <line x1="744.8" y1="80" x2="744.8" y2="400"/>
+      <line x1="872.0" y1="80" x2="872.0" y2="400"/>
+    </g>
+    <line x1="566.7" y1="104" x2="719.4" y2="104" stroke="#cbd5e1" stroke-width="3"/>
+    <circle cx="719.4" cy="104" r="6.5" fill="#9fb2c9"/>
+    <circle cx="566.7" cy="104" r="6.5" fill="#2f4a6d"/>
+    <text x="552.7" y="109" font-size="15" font-weight="600" fill="#111827" text-anchor="end">66</text>
+    <text x="733.4" y="109" font-size="15" font-weight="600" fill="#111827">78</text>
+    <text x="220" y="109" font-size="15" fill="#374151" text-anchor="end">Hôpitaux publics</text>
+    <line x1="312.3" y1="190" x2="477.7" y2="190" stroke="#cbd5e1" stroke-width="3"/>
+    <circle cx="477.7" cy="190" r="6.5" fill="#9fb2c9"/>
+    <circle cx="312.3" cy="190" r="6.5" fill="#2f4a6d"/>
+    <text x="298.3" y="195" font-size="15" font-weight="600" fill="#111827" text-anchor="end">46</text>
+    <text x="491.7" y="195" font-size="15" font-weight="600" fill="#111827">59</text>
+    <text x="220" y="195" font-size="15" fill="#374151" text-anchor="end">Urgences hospitalières</text>
+    <line x1="693.9" y1="276" x2="808.4" y2="276" stroke="#cbd5e1" stroke-width="3"/>
+    <circle cx="808.4" cy="276" r="6.5" fill="#9fb2c9"/>
+    <circle cx="693.9" cy="276" r="6.5" fill="#2f4a6d"/>
+    <text x="679.9" y="281" font-size="15" font-weight="600" fill="#111827" text-anchor="end">76</text>
+    <text x="822.4" y="281" font-size="15" font-weight="600" fill="#111827">85</text>
+    <text x="220" y="281" font-size="15" fill="#374151" text-anchor="end">Maternités</text>
+    <line x1="719.4" y1="362" x2="757.5" y2="362" stroke="#cbd5e1" stroke-width="3"/>
+    <circle cx="757.5" cy="362" r="6.5" fill="#9fb2c9"/>
+    <circle cx="719.4" cy="362" r="6.5" fill="#2f4a6d"/>
+    <text x="705.4" y="367" font-size="15" font-weight="600" fill="#111827" text-anchor="end">78</text>
+    <text x="771.5" y="367" font-size="15" font-weight="600" fill="#111827">81</text>
+    <text x="220" y="367" font-size="15" fill="#374151" text-anchor="end">Cliniques privées</text>
+    <line x1="236" y1="400" x2="872" y2="400" stroke="#9ca3af" stroke-width="1.5"/>
+    <g font-size="13" fill="#6b7280" text-anchor="middle">
+      <text x="236.0" y="422">40</text>
+      <text x="363.2" y="422">50</text>
+      <text x="490.4" y="422">60</text>
+      <text x="617.6" y="422">70</text>
+      <text x="744.8" y="422">80</text>
+      <text x="872.0" y="422">90</text>
+    </g>
+  </g>
+</svg>

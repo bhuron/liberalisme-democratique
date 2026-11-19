@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 344" width="960" height="344" role="img" aria-label="Barres groupées du temps d’accès médian en voiture aux services publics, en minutes, dans les grands centres urbains et le rural non périurbain">
+  <rect width="960" height="344" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="240" y="46" font-size="14" fill="#6b7280">en minutes</text>
+    <rect x="540" y="34" width="14" height="14" rx="2" fill="#9fb2c9"/>
+    <text x="561" y="46" font-size="13.5" fill="#374151">Grands centres urbains</text>
+    <rect x="733" y="34" width="14" height="14" rx="2" fill="#2f4a6d"/>
+    <text x="754" y="46" font-size="13.5" fill="#374151">Rural non périurbain</text>
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="240.0" y1="76" x2="240.0" y2="292"/>
+      <line x1="400.0" y1="76" x2="400.0" y2="292"/>
+      <line x1="560.0" y1="76" x2="560.0" y2="292"/>
+      <line x1="720.0" y1="76" x2="720.0" y2="292"/>
+      <line x1="880.0" y1="76" x2="880.0" y2="292"/>
+    </g>
+    <rect x="240" y="92" width="96.0" height="20" rx="2" fill="#9fb2c9"/>
+    <text x="344.0" y="106.5" font-size="14.5" font-weight="600" fill="#111827">3</text>
+    <rect x="240" y="118" width="288.0" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="536.0" y="132.5" font-size="14.5" font-weight="600" fill="#111827">9</text>
+    <text x="226" y="121" font-size="15" fill="#374151" text-anchor="end">Services publics courants</text>
+    <rect x="240" y="164" width="160.0" height="20" rx="2" fill="#9fb2c9"/>
+    <text x="408.0" y="178.5" font-size="14.5" font-weight="600" fill="#111827">5</text>
+    <rect x="240" y="190" width="608.0" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="856.0" y="204.5" font-size="14.5" font-weight="600" fill="#111827">19</text>
+    <text x="226" y="193" font-size="15" fill="#374151" text-anchor="end">Gare</text>
+    <rect x="240" y="236" width="128.0" height="20" rx="2" fill="#9fb2c9"/>
+    <text x="376.0" y="250.5" font-size="14.5" font-weight="600" fill="#111827">4</text>
+    <rect x="240" y="262" width="288.0" height="20" rx="2" fill="#2f4a6d"/>
+    <text x="536.0" y="276.5" font-size="14.5" font-weight="600" fill="#111827">9</text>
+    <text x="226" y="265" font-size="15" fill="#374151" text-anchor="end">Collège</text>
+    <line x1="240" y1="292" x2="880" y2="292" stroke="#9ca3af" stroke-width="1.5"/>
+    <g font-size="13" fill="#6b7280" text-anchor="middle">
+      <text x="240.0" y="314">0</text>
+      <text x="400.0" y="314">5</text>
+      <text x="560.0" y="314">10</text>
+      <text x="720.0" y="314">15</text>
+      <text x="880.0" y="314">20</text>
+    </g>
+  </g>
+</svg>
