@@ -66,11 +66,11 @@ export const STAGES = {
   },
   package: {
     label: 'Paquet',
-    description: 'Titres, description, tags, liens et posts.',
+    description: 'Titre, description, tags, liens et post Mastodon.',
     roles: ['editeur'],
     requires: ['draft'],
     task: () =>
-      'Prépare le paquet de publication : un titre de travail (des variantes seulement si utiles), la description, les étiquettes, les liens internes et les posts Bluesky. Ne publie rien.',
+      'Prépare le paquet de publication : un titre de travail (des variantes seulement si utiles), la description, les étiquettes, les liens internes et un post Mastodon (500 signes maximum, en français, dans la voix des articles). Ne publie rien.',
   },
 };
 
@@ -182,7 +182,13 @@ Catalogue :
 ${catalog.text}`;
   }
 
-  if (roleId !== 'redacteur' && roleId !== 'relecture-style') return '';
+  if (
+    roleId !== 'redacteur' &&
+    roleId !== 'relecture-style' &&
+    roleId !== 'editeur'
+  ) {
+    return '';
+  }
 
   const chosen = parseChosenReferences(root, briefText);
   const refs = styleReferences(root, piece, sources, { chosen });

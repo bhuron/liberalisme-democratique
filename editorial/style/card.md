@@ -129,10 +129,31 @@ Les tics sont vérifiés séparément par `npm run desk -- style <slug>`.
 - [ ] `npm run desk -- style <slug> --strict` ne dépasse aucun budget.
 - [ ] Le brouillon a été relu dans le rendu du site, pas seulement en markdown.
 
-## 10. Posts sociaux
+## 10. Posts Mastodon
 
-Les posts Bluesky et X sont en anglais par défaut. Cette charte décrit l'article
-français ; pour les posts, suivre `editorial/agent/roles/editeur.md` et
+Mastodon.online est la plateforme par défaut. Un seul post, 500 signes maximum
+(URL comptée 23), en français sauf demande contraire. Un thread de 3 à 5 posts
+seulement si l'utilisateur le demande.
+
+- Même voix que les articles : un fait, une tension ou une conséquence. Pas un
+  résumé, pas le titre recopié, pas une liste de raisons.
+- Le lien de l'article à la fin, une seule fois. Pas de « lien en bio ».
+- Un à trois hashtags précis, en fin de post, en CamelCase (`#IA`, `#Russie`,
+  `#Économie`). Jamais de hashtag fourre-tout ni dans une phrase.
+- Pas d'emoji, de point d'exclamation, de « 🧵 », de « 1/ », de « thread », de
+  « 👇 », de « lisez la suite », d'appel à l'engagement.
+- Pas de formule de modèle : « Dans un monde où », « à l'ère de », « Plongeons »,
+  « explorons », « décryptons », « voici », « ce que personne ne vous dit »,
+  « il est important de », « force est de constater », « nul doute », « en
+  somme », « pour résumer », « en définitive ».
+- Pas de métaphore de marketeur : « game changer », « révolution »,
+  « vertigineux », « stupéfiant », « sismique », « big bang », « boussole »,
+  « fil rouge », « clé de voûte », « pierre angulaire », « cheval de Troie »,
+  « couteau suisse », « boîte de Pandore », « tempête parfaite », « cygne noir ».
+- `CW` si le sujet le justifie ; `Alt` si une image est jointe. Pas de cover
+  sans demande.
+
+Pour la procédure, suivre `editorial/agent/roles/editeur.md` et
 `.agents/skills/tweet/SKILL.md`.
 
 ## 11. Images de couverture
