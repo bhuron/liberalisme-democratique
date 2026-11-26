@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Histogramme des exportations des constructeurs automobiles chinois, en millions de véhicules : moins d’un million en 2020, 7,1 millions en 2025 et environ 12 millions prévus pour 2026">
+  <rect width="960" height="540" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="90" y="32" font-size="19" fill="#6b7280">exportations des constructeurs chinois, en millions de véhicules</text>
+
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="90" y1="357.6" x2="920" y2="357.6"/>
+      <line x1="90" y1="275.2" x2="920" y2="275.2"/>
+      <line x1="90" y1="192.8" x2="920" y2="192.8"/>
+      <line x1="90" y1="110.4" x2="920" y2="110.4"/>
+    </g>
+
+    <g font-size="16" fill="#6b7280" text-anchor="end">
+      <text x="76" y="444.6">0</text>
+      <text x="76" y="362.2">3</text>
+      <text x="76" y="279.8">6</text>
+      <text x="76" y="197.4">9</text>
+      <text x="76" y="115.0">12</text>
+    </g>
+
+    <line x1="90" y1="440" x2="920" y2="440" stroke="#9ca3af" stroke-width="1.5"/>
+
+    <g>
+      <rect x="185" y="415.3" width="130" height="24.7" fill="#2f4a6d"/>
+      <rect x="440" y="245.0" width="130" height="195.0" fill="#2f4a6d"/>
+      <rect x="695" y="110.4" width="130" height="329.6" fill="#9fb2c9"/>
+    </g>
+
+    <g font-size="21" font-weight="600" fill="#111827" text-anchor="middle">
+      <text x="250" y="401">moins de 1</text>
+      <text x="505" y="231">7,1</text>
+      <text x="760" y="96">≈ 12</text>
+    </g>
+
+    <g font-size="18" fill="#374151" text-anchor="middle">
+      <text x="250" y="466">2020</text>
+      <text x="505" y="466">2025</text>
+      <text x="760" y="466">2026</text>
+    </g>
+
+    <g font-size="14" fill="#6b7280" text-anchor="middle">
+      <text x="760" y="488">prévision</text>
+    </g>
+
+    <text x="90" y="522" font-size="13" fill="#9ca3af">Série annuelle, toutes motorisations ; 2026 est une prévision d’analystes.</text>
+  </g>
+</svg>
