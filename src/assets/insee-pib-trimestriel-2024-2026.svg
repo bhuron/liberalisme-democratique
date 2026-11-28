@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" role="img" aria-label="Histogramme de la variation trimestrielle du PIB français en volume, en pourcentage : 0,0 au quatrième trimestre 2024, 0,2, 0,2, 0,5, 0,2, puis − 0,2 au premier trimestre 2026, 0,0 au deuxième et − 0,2 au troisième.">
+  <rect width="960" height="470" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="32" y="40" font-size="19" fill="#6b7280">Variation trimestrielle du PIB en volume, en %</text>
+    <text x="32" y="64" font-size="14" fill="#6b7280">données corrigées des variations saisonnières et des jours ouvrables</text>
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="120.0" y1="100.0" x2="900.0" y2="100.0"/>
+      <line x1="120.0" y1="162.2" x2="900.0" y2="162.2"/>
+      <line x1="120.0" y1="224.4" x2="900.0" y2="224.4"/>
+      <line x1="120.0" y1="348.9" x2="900.0" y2="348.9"/>
+    </g>
+    <g font-size="14" fill="#6b7280" text-anchor="end">
+      <text x="104.0" y="105.0">0,6</text>
+      <text x="104.0" y="167.2">0,4</text>
+      <text x="104.0" y="229.4">0,2</text>
+      <text x="104.0" y="291.7">0</text>
+      <text x="104.0" y="353.9">−0,2</text>
+    </g>
+    <line x1="120.0" y1="286.7" x2="900.0" y2="286.7" stroke="#9ca3af" stroke-width="1.5"/>
+    <rect x="143.8" y="285.2" width="50.0" height="3" rx="1.5" fill="#6b7280"/>
+    <text x="168.8" y="275.7" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">0,0</text>
+    <text x="168.8" y="412" font-size="14" fill="#374151" text-anchor="middle">T4 2024</text>
+    <rect x="241.2" y="224.4" width="50.0" height="62.2" rx="2" fill="#2f4a6d"/>
+    <text x="266.2" y="214.4" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">+0,2</text>
+    <text x="266.2" y="412" font-size="14" fill="#374151" text-anchor="middle">T1 2025</text>
+    <rect x="338.8" y="224.4" width="50.0" height="62.2" rx="2" fill="#2f4a6d"/>
+    <text x="363.8" y="214.4" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">+0,2</text>
+    <text x="363.8" y="412" font-size="14" fill="#374151" text-anchor="middle">T2 2025</text>
+    <rect x="436.2" y="131.1" width="50.0" height="155.6" rx="2" fill="#2f4a6d"/>
+    <text x="461.2" y="121.1" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">+0,5</text>
+    <text x="461.2" y="412" font-size="14" fill="#374151" text-anchor="middle">T3 2025</text>
+    <rect x="533.8" y="224.4" width="50.0" height="62.2" rx="2" fill="#2f4a6d"/>
+    <text x="558.8" y="214.4" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">+0,2</text>
+    <text x="558.8" y="412" font-size="14" fill="#374151" text-anchor="middle">T4 2025</text>
+    <rect x="631.2" y="286.7" width="50.0" height="62.2" rx="2" fill="#a6503c"/>
+    <text x="656.2" y="368.9" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">−0,2</text>
+    <text x="656.2" y="412" font-size="14" fill="#374151" text-anchor="middle">T1 2026</text>
+    <rect x="728.8" y="285.2" width="50.0" height="3" rx="1.5" fill="#6b7280"/>
+    <text x="753.8" y="275.7" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">0,0</text>
+    <text x="753.8" y="412" font-size="14" fill="#374151" text-anchor="middle">T2 2026</text>
+    <rect x="826.2" y="286.7" width="50.0" height="62.2" rx="2" fill="#a6503c"/>
+    <text x="851.2" y="368.9" font-size="15" font-weight="600" fill="#111827" text-anchor="middle">−0,2</text>
+    <text x="851.2" y="412" font-size="14" fill="#374151" text-anchor="middle">T3 2026</text>
+    <text x="32" y="446" font-size="13" fill="#9ca3af">Le T3 2026 a été révisé à − 0,2 % le 27 novembre, contre − 0,1 % en première estimation ; le T2 2026 est stable à 0,0 %.</text>
+  </g>
+</svg>

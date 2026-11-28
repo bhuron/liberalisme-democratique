@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-label="Contributions à la variation du PIB français du troisième trimestre 2026, en points de PIB : investissement moins 0,21, commerce extérieur moins 0,58, consommation plus 0,23, variations de stocks plus 0,32.">
+  <rect width="960" height="400" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+    <text x="32" y="40" font-size="19" fill="#6b7280">Contributions à la variation du PIB, troisième trimestre 2026</text>
+    <text x="928" y="40" font-size="19" font-weight="600" fill="#111827" text-anchor="end">PIB : − 0,2 %</text>
+    <text x="32" y="64" font-size="14" fill="#6b7280">en points de PIB</text>
+    <g stroke="#e5e7eb" stroke-width="1">
+      <line x1="300.0" y1="92" x2="300.0" y2="322"/>
+      <line x1="400.0" y1="92" x2="400.0" y2="322"/>
+      <line x1="500.0" y1="92" x2="500.0" y2="322"/>
+      <line x1="700.0" y1="92" x2="700.0" y2="322"/>
+      <line x1="800.0" y1="92" x2="800.0" y2="322"/>
+      <line x1="900.0" y1="92" x2="900.0" y2="322"/>
+    </g>
+    <line x1="600.0" y1="92" x2="600.0" y2="322" stroke="#9ca3af" stroke-width="1.5"/>
+    <rect x="495.0" y="108" width="105.0" height="30" rx="2" fill="#a6503c"/>
+    <text x="246" y="128" font-size="15" fill="#374151" text-anchor="end">Investissement (FBCF)</text>
+    <text x="487.0" y="128" font-size="15" font-weight="600" fill="#111827" text-anchor="end">−0,21</text>
+    <rect x="310.0" y="154" width="290.0" height="30" rx="2" fill="#a6503c"/>
+    <text x="246" y="174" font-size="15" fill="#374151" text-anchor="end">Commerce extérieur</text>
+    <text x="302.0" y="174" font-size="15" font-weight="600" fill="#111827" text-anchor="end">−0,58</text>
+    <rect x="600.0" y="200" width="115.0" height="30" rx="2" fill="#2f4a6d"/>
+    <text x="246" y="220" font-size="15" fill="#374151" text-anchor="end">Consommation totale</text>
+    <text x="723.0" y="220" font-size="15" font-weight="600" fill="#111827" text-anchor="start">+0,23</text>
+    <rect x="600.0" y="246" width="160.0" height="30" rx="2" fill="#2f4a6d"/>
+    <text x="246" y="266" font-size="15" fill="#374151" text-anchor="end">Variations de stocks</text>
+    <text x="768.0" y="266" font-size="15" font-weight="600" fill="#111827" text-anchor="start">+0,32</text>
+    <g font-size="14" fill="#6b7280" text-anchor="middle">
+      <text x="300.0" y="348">−0,6</text>
+      <text x="400.0" y="348">−0,4</text>
+      <text x="500.0" y="348">−0,2</text>
+      <text x="600.0" y="348">0</text>
+      <text x="700.0" y="348">+0,2</text>
+      <text x="800.0" y="348">+0,4</text>
+      <text x="900.0" y="348">+0,6</text>
+    </g>
+    <text x="32" y="380" font-size="13" fill="#9ca3af">Somme des quatre contributions : − 0,24 point ; le PIB recule de 0,2 % (arrondi).</text>
+  </g>
+</svg>
